@@ -18,14 +18,15 @@ public class TeleOpMain extends LinearOpMode {
     motor1 = hardwareMap.get(DcMotor.class, "motor1");
     motor2 = hardwareMap.get(DcMotor.class, "motor2");
     motor3 = hardwareMap.get(DcMotor.class, "motor3");
-    
+
+    // Motor 1 is reversed for some reason
     motor1.setDirection(DcMotorSimple.Direction.REVERSE);
 
     telemetry.addData("Status", "Initialized");
     telemetry.update();
-  
+
     waitForStart();
-    
+
     while (opModeIsActive()) {
       telemetry.addData("Status", "Running");
 
@@ -38,6 +39,7 @@ public class TeleOpMain extends LinearOpMode {
   
   private void executeJoystick() {
     double joyX = gamepad1.left_stick_x;
+    // Negate joyY so up goes forward
     double joyY = -gamepad1.left_stick_y;
 
     telemetry.addData("Joy X", joyX);
