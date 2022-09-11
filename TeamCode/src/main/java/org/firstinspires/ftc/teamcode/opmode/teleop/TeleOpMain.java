@@ -5,13 +5,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.api.Robot;
+import org.firstinspires.ftc.teamcode.api.TripleTuple;
+
 @TeleOp(name = "Main")
 public class TeleOpMain extends LinearOpMode {
+  private Robot robot = new Robot(this);
   private DcMotor motor1, motor2, motor3;
-  
-  private double motor1Angle = 0.0;
-  private double motor2Angle = Math.PI * (2.0 / 3.0);
-  private double motor3Angle = 2.0 * Math.PI * (2.0 / 3.0);
   
   @Override
   public void runOpMode() {
@@ -45,25 +45,15 @@ public class TeleOpMain extends LinearOpMode {
     telemetry.addData("Joy X", joyX);
     telemetry.addData("Joy Y", joyY);
 
-    double joyRad = Math.atan2(joyY, joyX) - (Math.PI / 2.0);
-    double joyMag = Math.sqrt(joyY * joyY + joyX * joyX);
-      
-    telemetry.addData("Joy Rad", joyRad);
-    telemetry.addData("Joy Mag", joyMag);
-      
-    // Mag normalization?
-      
-    double motor1Speed = joyMag * Math.sin(motor1Angle - joyRad);
-    double motor2Speed = joyMag * Math.sin(motor2Angle - joyRad);
-    double motor3Speed = joyMag * Math.sin(motor3Angle - joyRad);
+    TripleTuple motorPower = Robot.motorPowerXY(joyX, joyY);
 
-    telemetry.addData("Motor 1", motor1Speed);
-    telemetry.addData("Motor 2", motor2Speed);
-    telemetry.addData("Motor 3", motor3Speed);
+    telemetry.addData("Motor 1", motorPower.one);
+    telemetry.addData("Motor 2", motorPower.two);
+    telemetry.addData("Motor 3", motorPower.three);
       
-    motor1.setPower(motor1Speed);
-    motor2.setPower(motor2Speed);
-    motor3.setPower(motor3Speed);
+    motor1.setPower(motorPower.one);
+    motor2.setPower(motorPower.two);
+    motor3.setPower(motorPower.three);
   }
   
   private void executeRotation() {
