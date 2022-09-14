@@ -1,16 +1,17 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.api.Robot;
-import org.firstinspires.ftc.teamcode.api.TripleTuple;
+import org.firstinspires.ftc.teamcode.api.TriRobot;
+
+import kotlin.Triple;
 
 @TeleOp(name = "Main")
 public class TeleOpMain extends LinearOpMode {
-  private Robot robot = new Robot(this);
+  private TriRobot robot = new TriRobot(this);
   private DcMotor motor1, motor2, motor3;
   
   @Override
@@ -45,15 +46,15 @@ public class TeleOpMain extends LinearOpMode {
     telemetry.addData("Joy X", joyX);
     telemetry.addData("Joy Y", joyY);
 
-    TripleTuple motorPower = Robot.motorPowerXY(joyX, joyY);
+    Triple<Double, Double, Double> motorPower = this.robot.motorPowerXY(joyX, joyY);
 
-    telemetry.addData("Motor 1", motorPower.one);
-    telemetry.addData("Motor 2", motorPower.two);
-    telemetry.addData("Motor 3", motorPower.three);
+    telemetry.addData("Motor 1", motorPower.component1());
+    telemetry.addData("Motor 2", motorPower.component2());
+    telemetry.addData("Motor 3", motorPower.component3());
       
-    motor1.setPower(motorPower.one);
-    motor2.setPower(motorPower.two);
-    motor3.setPower(motorPower.three);
+    motor1.setPower(motorPower.component1());
+    motor2.setPower(motorPower.component2());
+    motor3.setPower(motorPower.component3());
   }
   
   private void executeRotation() {
