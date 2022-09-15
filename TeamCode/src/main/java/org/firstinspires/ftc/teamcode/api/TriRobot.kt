@@ -6,7 +6,7 @@ import kotlin.math.*
 class TriRobot(private val opMode: LinearOpMode) {
     private val motor1Angle: Double = 0.0
     private val motor2Angle: Double = PI * (2.0 / 3.0)
-    private val motor3Angle: Double = 2.0 * motor2Angle;
+    private val motor3Angle: Double = 2.0 * motor2Angle
 
     /**
      * Returns the power of each motor from a joystick's polar coordinates.
