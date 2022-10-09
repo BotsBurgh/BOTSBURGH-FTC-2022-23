@@ -4,18 +4,21 @@ import org.firstinspires.ftc.teamcode.api.arch.Component
 import org.firstinspires.ftc.teamcode.api.arch.Context
 
 class Logger: Component() {
-    override val pre = fun(context: Context) {
-        context.teleop.telemetry.addData("Status", "Initialized")
-        context.teleop.telemetry.update()
+    // Run this component at the very end of each stage.
+    override val order = Byte.MAX_VALUE
+
+    override val pre = fun(ctx: Context) {
+        ctx.log("Status", "Initialized")
+        ctx.pushLog()
     }
 
-    override val cycle = fun(context: Context) {
-        context.teleop.telemetry.addData("Status", "Running")
-        context.teleop.telemetry.update()
+    override val cycle = fun(ctx: Context) {
+        ctx.log("Status", "Running")
+        ctx.pushLog()
     }
 
-    override val post = fun(context: Context) {
-        context.teleop.telemetry.addData("Status", "Finished")
-        context.teleop.telemetry.update()
+    override val post = fun(ctx: Context) {
+        ctx.log("Status", "Finished")
+        ctx.pushLog()
     }
 }
