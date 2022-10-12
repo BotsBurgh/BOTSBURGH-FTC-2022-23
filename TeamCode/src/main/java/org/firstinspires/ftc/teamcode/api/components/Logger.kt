@@ -22,3 +22,10 @@ class Logger: Component() {
         ctx.pushLog()
     }
 }
+
+// Extensions
+fun Context.log(title: String, data: String) {
+    this.teleop.telemetry.addData(title, data)
+}
+
+fun Context.pushLog() { this.teleop.telemetry.update() }
