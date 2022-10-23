@@ -88,3 +88,6 @@ lint/tmp/
 
 # Jetbrains IDEs
 .idea/
+
+# MacOS is weird
+.DS_Store
