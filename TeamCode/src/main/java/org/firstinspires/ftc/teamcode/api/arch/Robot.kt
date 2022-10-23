@@ -2,12 +2,11 @@ package org.firstinspires.ftc.teamcode.api.arch
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
-open class Robot(teleop: LinearOpMode, cfg: Config = Config()) {
+open class Robot(val teleop: LinearOpMode, val cfg: Config = Config()) {
     private var runtime: RuntimeBuilder = RuntimeBuilder()
-    private val context: Context
+    private val context: Context = Context(teleop, cfg)
 
     init {
-        this.context = Context(teleop, cfg)
         this.registerComponents()
     }
 
@@ -19,7 +18,7 @@ open class Robot(teleop: LinearOpMode, cfg: Config = Config()) {
     }
 
     fun run() {
-        val runtime = this.runtime.build()
+        val runtime = this.runtime.build(this.cfg)
         runtime.pre?.invokeRecursive(this.context)
 
         this.context.teleop.waitForStart()

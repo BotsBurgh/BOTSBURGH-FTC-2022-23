@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.firstinspires.ftc.teamcode.api.arch.Component
 import org.firstinspires.ftc.teamcode.api.arch.Context
+import org.firstinspires.ftc.teamcode.api.arch.OpMode
 import kotlin.math.*
 
 private const val motor1Angle: Double = 0.0
@@ -14,6 +15,8 @@ class Wheels: Component() {
     private var motor1: DcMotor? = null
     private var motor2: DcMotor? = null
     private var motor3: DcMotor? = null
+
+    override val opmode = OpMode.TeleOp
 
     override val pre = fun(ctx: Context) {
         this.motor1 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "motor1")
