@@ -22,15 +22,14 @@ class Wheels: Component() {
         this.motor1 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "motor1")
         this.motor2 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "motor2")
         this.motor3 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "motor3")
-
-        this.motor1?.direction = DcMotorSimple.Direction.REVERSE
     }
 
     override val cycle = fun(ctx: Context) {
         val joyX = ctx.teleop.gamepad1.left_stick_x.toDouble()
         val joyY = ctx.teleop.gamepad1.left_stick_y.toDouble()
 
-        val motorPower = this.motorPowerXY(joyX, joyY)
+        // Flip x-axis
+        val motorPower = this.motorPowerXY(-joyX, joyY)
 
         this.motor1?.power = motorPower.first
         this.motor2?.power = motorPower.second
