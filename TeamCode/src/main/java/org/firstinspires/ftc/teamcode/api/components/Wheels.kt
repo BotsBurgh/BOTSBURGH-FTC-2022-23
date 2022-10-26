@@ -29,7 +29,13 @@ class Wheels: Component() {
         val joyY = ctx.teleop.gamepad1.left_stick_y.toDouble()
 
         // Flip x-axis
-        val motorPower = this.motorPowerXY(-joyX, joyY)
+        var motorPower = this.motorPowerXY(-joyX, joyY)
+
+        if (ctx.teleop.gamepad1.left_bumper) {
+            motorPower = Triple(1.0, 1.0, 1.0)
+        } else if (ctx.teleop.gamepad1.right_bumper) {
+            motorPower = Triple(-1.0, -1.0, -1.0)
+        }
 
         this.motor1?.power = motorPower.first
         this.motor2?.power = motorPower.second
