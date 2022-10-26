@@ -23,7 +23,7 @@ class Logger: Component() {
     }
 }
 
-// Extensions
+// Plugins
 fun Context.log(title: String, data: String) {
     this.teleop.telemetry.addData(title, data)
 }
