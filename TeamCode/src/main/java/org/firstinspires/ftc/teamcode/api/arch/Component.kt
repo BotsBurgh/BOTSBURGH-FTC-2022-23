@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.api.arch
 /**
  * An open class that all components should extend.
  */
-open class Component {
+abstract class Component {
     /**
      * A function that is run once during the robot's initialization.
      */
