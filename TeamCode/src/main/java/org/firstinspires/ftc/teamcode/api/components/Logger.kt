@@ -15,17 +15,17 @@ class Logger: Component() {
     override val order = Byte.MAX_VALUE
 
     override val pre = fun(ctx: Context) {
-        ctx.log("Status", "Initialized")
+        ctx.logger.logTitle("Status", "Initialized")
         ctx.logger.pushLog()
     }
 
     override val cycle = fun(ctx: Context) {
-        ctx.log("Status", "Running")
+        ctx.logger.logTitle("Status", "Running")
         ctx.logger.pushLog()
     }
 
     override val post = fun(ctx: Context) {
-        ctx.log("Status", "Finished")
+        ctx.logger.logTitle("Status", "Finished")
         ctx.logger.pushLog()
     }
 }
