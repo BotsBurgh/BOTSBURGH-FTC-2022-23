@@ -12,7 +12,7 @@ abstract class Plugin {
     protected val ctx: Context
         get() = this._ctx!!
 
-    fun init(ctx: Context) {
+    fun initPlugin(ctx: Context) {
         this._ctx = ctx
     }
 }
