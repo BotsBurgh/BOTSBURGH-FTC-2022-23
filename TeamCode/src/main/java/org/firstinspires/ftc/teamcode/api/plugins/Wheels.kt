@@ -18,6 +18,9 @@ private const val MOTOR_1_ANGLE: Double = 0.0
 private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
 private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 
+/**
+ * A plugin for controlling the three wheels of the robot.
+ */
 class Wheels: Plugin() {
     private var motor1: DcMotor? = null
     private var motor2: DcMotor? = null

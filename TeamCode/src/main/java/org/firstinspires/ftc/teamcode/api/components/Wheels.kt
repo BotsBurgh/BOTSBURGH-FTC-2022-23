@@ -6,6 +6,9 @@ import org.firstinspires.ftc.teamcode.api.arch.OpMode
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
 import kotlin.math.*
 
+/**
+ * A component for controlling the wheels in a teleop context.
+ */
 class Wheels: Component() {
     override val opmode = OpMode.TeleOp
 

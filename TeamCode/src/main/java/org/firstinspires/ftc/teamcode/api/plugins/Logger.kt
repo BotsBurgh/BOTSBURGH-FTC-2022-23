@@ -56,4 +56,10 @@ class Logger(): Plugin() {
     }
 }
 
+/**
+ * A simple data class that contains log information.
+ *
+ * @param data The text to display on the controller.
+ * @param end The time that this should no longer be displayed after.
+ */
 private data class LogData(val data: String, val end: Double)

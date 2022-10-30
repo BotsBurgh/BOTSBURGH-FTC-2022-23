@@ -8,15 +8,22 @@ import org.firstinspires.ftc.teamcode.api.components.Logger
 import org.firstinspires.ftc.teamcode.api.components.PluginInit
 import org.firstinspires.ftc.teamcode.api.components.Wheels
 
+/**
+ * This is the main robot configuration for the three-wheeled robot.
+ *
+ * All components are registered below in [registerComponents].
+ */
 class TriRobot(teleop: LinearOpMode, cfg: Config): Robot(teleop, cfg) {
     override fun registerComponents() {
         this
             // Very important, do not remove
             .register(PluginInit())
 
-            // Can be enabled and disabled at will
+            // Teleop components
             .register(Logger())
             .register(Wheels())
             .register(LinearSlides())
+
+            // Autonomous components
     }
 }
