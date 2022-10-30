@@ -13,15 +13,14 @@ class LinearSlides : Component() {
 
     private var linearSlide1: DcMotor? = null
     private var linearSlide2: DcMotor? = null
-    private var linearSlide3: DcMotor? = null
     private var claw1: Servo? = null
+    private var claw2: Servo? = null
 
     override val pre = fun(ctx: Context) {
-        this.linearSlide1 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linearSlide1")
-       /** this.linearSlide2 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linearSlide2")
-        this.linearSlide3 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linerSlide3") **/
+        this.linearSlide1 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linear, aSlide1")
+       /** this.linearSlide2 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linearSlide2") **/
         this.claw1 = ctx.teleop.hardwareMap.get(Servo::class.java, "claw1")
-        linearSlide1?.zeroPowerBehavior
+        linearSlide1?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
     }
     override val cycle = fun(ctx: Context) {
