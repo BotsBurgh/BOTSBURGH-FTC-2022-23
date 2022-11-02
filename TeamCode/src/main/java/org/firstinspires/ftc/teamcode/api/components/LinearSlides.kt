@@ -18,22 +18,26 @@ class LinearSlides: Component() {
 
         this.claw1 = ctx.teleop.hardwareMap.get(Servo::class.java, "claw1")
 
+        // Prevent slide from moving down due to gravity.
         linearSlide1?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        // linearSlide2?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
     }
+
     override val cycle = fun(ctx: Context) {
         if (ctx.teleop.gamepad1.dpad_left) {
             if (ctx.teleop.gamepad1.x) {
                 linearSlide1?.power = 0.5
             } else if (ctx.teleop.gamepad1.y) {
                 linearSlide1?.power = -0.5
-            } else if (ctx.teleop.gamepad1.a) {
+            } else {
+                linearSlide1?.power = 0.0
+            }
+
+            if (ctx.teleop.gamepad1.a) {
                 claw1?.position = 0.4
             } else if (ctx.teleop.gamepad1.b) {
                 claw1?.position = 1.0
-            } else {
-                linearSlide1?.power = 0.0
-               // linearSlide2?.power = 0.0
             }
         }
     }
