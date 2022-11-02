@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.api.components
 
 import org.firstinspires.ftc.teamcode.api.arch.Component
 import org.firstinspires.ftc.teamcode.api.arch.Context
+import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 import org.firstinspires.ftc.teamcode.api.plugins.logger
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
 
@@ -17,5 +18,6 @@ class PluginInit: Component() {
     override val pre = fun(ctx: Context) {
         ctx.logger.initPlugin(ctx)
         ctx.wheels.initPlugin(ctx)
+        ctx.linear_slides.initPlugin(ctx)
     }
 }
