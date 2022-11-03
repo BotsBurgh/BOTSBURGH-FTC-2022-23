@@ -1,39 +1,34 @@
 package org.firstinspires.ftc.teamcode.api.components
 
-import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.api.arch.Component
 import org.firstinspires.ftc.teamcode.api.arch.Context
+import org.firstinspires.ftc.teamcode.api.arch.OpMode
+import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 
+/**
+ * Component for moving the linear slide in a teleop.
+ */
 class LinearSlides: Component() {
-    private var linearSlide1: DcMotor? = null
-    // private var linearSlide2: DcMotor? = null
-
-    private var claw1: Servo? = null
-    // private var claw2: Servo? = null
+    override val opmode = OpMode.TeleOp
 
     override val pre = fun(ctx: Context) {
-        this.linearSlide1 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linearSlide1")
-        // this.linearSlide2 = ctx.teleop.hardwareMap.get(DcMotor::class.java, "linearSlide2")
-
-        this.claw1 = ctx.teleop.hardwareMap.get(Servo::class.java, "claw1")
-
-        linearSlide1?.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-
+        ctx.linear_slides.init()
     }
+
     override val cycle = fun(ctx: Context) {
         if (ctx.teleop.gamepad1.dpad_left) {
             if (ctx.teleop.gamepad1.x) {
-                linearSlide1?.power = 0.5
+                ctx.linear_slides.powerSlide1(0.5)
             } else if (ctx.teleop.gamepad1.y) {
-                linearSlide1?.power = -0.5
-            } else if (ctx.teleop.gamepad1.a) {
-                claw1?.position = 0.4
-            } else if (ctx.teleop.gamepad1.b) {
-                claw1?.position = 1.0
+                ctx.linear_slides.powerSlide1(-0.5)
             } else {
-                linearSlide1?.power = 0.0
-               // linearSlide2?.power = 0.0
+                ctx.linear_slides.stopSlide1()
+            }
+
+            if (ctx.teleop.gamepad1.a) {
+                ctx.linear_slides.positionClaw1(0.4)
+            } else if (ctx.teleop.gamepad1.b) {
+                ctx.linear_slides.positionClaw1(1.0)
             }
         }
     }
