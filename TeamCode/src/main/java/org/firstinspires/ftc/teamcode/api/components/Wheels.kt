@@ -19,9 +19,9 @@ class Wheels: Component() {
     override val cycle = fun(ctx: Context) {
         // Spinning is prioritized over joystick
         if (ctx.teleop.gamepad1.left_bumper) {
-            ctx.wheels.powerRotation(1.0)
+            ctx.wheels.powerRotation(0.6)
         } else if (ctx.teleop.gamepad1.right_bumper) {
-            ctx.wheels.powerRotation(-1.0)
+            ctx.wheels.powerRotation(-0.6)
         } else {
             // Use joystick input
             val joyX = -ctx.teleop.gamepad1.left_stick_x.toDouble() // Flip x-axis
