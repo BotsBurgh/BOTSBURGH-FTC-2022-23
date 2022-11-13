@@ -30,6 +30,22 @@ class LinearSlides: Component() {
             } else if (ctx.teleop.gamepad1.b) {
                 ctx.linear_slides.positionClaw1(1.0)
             }
+            //-----------------------------------------------
+
+        } else if (ctx.teleop.gamepad1.dpad_right) {
+            if (ctx.teleop.gamepad1.x) {
+                ctx.linear_slides.powerSlide2(0.5)
+            } else if (ctx.teleop.gamepad1.y) {
+                ctx.linear_slides.powerSlide2(-0.5)
+            } else {
+                ctx.linear_slides.stopSlide2()
+            }
+
+            if (ctx.teleop.gamepad1.a) {
+                ctx.linear_slides.positionClaw2(0.4)
+            } else if (ctx.teleop.gamepad1.b) {
+                ctx.linear_slides.positionClaw2(1.0)
+            }
         }
     }
 }
