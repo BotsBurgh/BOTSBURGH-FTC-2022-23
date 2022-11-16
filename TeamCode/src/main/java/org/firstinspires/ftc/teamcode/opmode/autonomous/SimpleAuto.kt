@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.api.TriRobot
 import org.firstinspires.ftc.teamcode.api.arch.Config
 
 @Autonomous(name = "Simple Autonomous")
-@Disabled
 class SimpleAuto: LinearOpMode() {
     override fun runOpMode() {
         TriRobot(this, Config(autonomous = true)).run()
