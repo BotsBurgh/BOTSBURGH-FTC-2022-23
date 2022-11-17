@@ -17,6 +17,21 @@ open class Robot(val teleop: LinearOpMode, val cfg: Config = Config()) {
         return this
     }
 
+    fun registerPre(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
+        this.runtime.registerPre(func, order, opmode)
+        return this
+    }
+
+    fun registerCycle(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
+        this.runtime.registerCycle(func, order, opmode)
+        return this
+    }
+
+    fun registerPost(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
+        this.runtime.registerPost(func, order, opmode)
+        return this
+    }
+
     fun run() {
         val runtime = this.runtime.build(this.cfg)
         runtime.pre?.invokeRecursive(this.context)
