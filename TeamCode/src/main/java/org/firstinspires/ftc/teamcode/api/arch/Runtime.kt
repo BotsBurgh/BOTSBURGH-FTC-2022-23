@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 class Runtime {
-    var pre: Link? = null
-    var cycle: Link? = null
-    var post: Link? = null
+    private var pre: Link? = null
+    private var cycle: Link? = null
+    private var post: Link? = null
 
     /**
      * Low-level function that registers a component.
@@ -40,7 +40,7 @@ class Runtime {
     }
 }
 
-class Link(private val func: (Context) -> Unit) {
+private class Link(private val func: (Context) -> Unit) {
     private var next: Link? = null
 
     fun invoke(context: Context): Link? {
