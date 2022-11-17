@@ -6,36 +6,44 @@ class Runtime {
     var post: Link? = null
 
     /**
-     * Low-level function that registers a component.
+     * Low-level function that registers a pre function.
      *
      * This function adds all component functionality to the end of the Link.
      * If you need to control position, use RuntimeBuilder.
      */
-    fun register(component: Component) {
-        if (component.pre != null) {
-            if (this.pre == null) {
-                // Create pre
-                this.pre = Link(component.pre!!)
-            } else {
-                // Add to pre
-                this.pre!!.pushLast(Link(component.pre!!))
-            }
+    fun registerPre(func: ComponentFunction) {
+        if (this.pre == null) {
+            this.pre = Link(func)
+        } else {
+            this.pre!!.pushLast(Link(func))
         }
+    }
 
-        if (component.cycle != null) {
-            if (this.cycle == null) {
-                this.cycle = Link(component.cycle!!)
-            } else {
-                this.cycle!!.pushLast(Link(component.cycle!!))
-            }
+    /**
+     * Low-level function that registers a cycle function.
+     *
+     * This function adds all component functionality to the end of the Link.
+     * If you need to control position, use RuntimeBuilder.
+     */
+    fun registerCycle(func: ComponentFunction) {
+        if (this.cycle == null) {
+            this.cycle = Link(func)
+        } else {
+            this.cycle!!.pushLast(Link(func))
         }
+    }
 
-        if (component.post != null) {
-            if (this.post == null) {
-                this.post = Link(component.post!!)
-            } else {
-                this.post!!.pushLast(Link(component.post!!))
-            }
+    /**
+     * Low-level function that registers a post function.
+     *
+     * This function adds all component functionality to the end of the Link.
+     * If you need to control position, use RuntimeBuilder.
+     */
+    fun registerPost(func: ComponentFunction) {
+        if (this.post == null) {
+            this.post = Link(func)
+        } else {
+            this.post!!.pushLast(Link(func))
         }
     }
 }

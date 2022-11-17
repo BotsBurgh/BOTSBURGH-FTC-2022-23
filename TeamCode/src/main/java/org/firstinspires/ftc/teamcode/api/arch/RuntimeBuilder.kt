@@ -1,29 +1,66 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 class RuntimeBuilder {
-    private var components: MutableList<Component> = ArrayList()
+    private var preComponents: MutableList<ComponentFunctionEx> = ArrayList()
+    private var cycleComponents: MutableList<ComponentFunctionEx> = ArrayList()
+    private var postComponents: MutableList<ComponentFunctionEx> = ArrayList()
 
     fun register(component: Component) {
-        this.components.add(component)
+        // Split component into 3 separate functions
+        if (component.pre != null) {
+            this.preComponents.add(
+                ComponentFunctionEx(
+                component.pre!!,
+                order = component.order,
+                opmode = component.opmode,
+            )
+            )
+        }
+
+        if (component.cycle != null) {
+            this.cycleComponents.add(ComponentFunctionEx(
+                component.cycle!!,
+                order = component.order,
+                opmode = component.opmode,
+            ))
+        }
+
+        if (component.post != null) {
+            this.postComponents.add(ComponentFunctionEx(
+                component.cycle!!,
+                order = component.order,
+                opmode = component.opmode,
+            ))
+        }
     }
 
     fun build(cfg: Config): Runtime {
         val runtime = Runtime()
 
         // Sort components so lesser orders are first
-        this.components.sortedBy { it.order }
+        this.preComponents.sortedBy { it.order }
+        this.cycleComponents.sortedBy { it.order }
+        this.postComponents.sortedBy { it.order }
 
         // Remove components that shouldn't be run
         if (cfg.mode == RobotMode.Autonomous) {
             // Keep autonomous components
-            this.components.retainAll { it.opmode == OpMode.Autonomous || it.opmode == OpMode.Any }
+            this.preComponents.retainAll { it.opmode == OpMode.Autonomous || it.opmode == OpMode.Any }
+            this.cycleComponents.retainAll { it.opmode == OpMode.Autonomous || it.opmode == OpMode.Any }
+            this.postComponents.retainAll { it.opmode == OpMode.Autonomous || it.opmode == OpMode.Any }
         } else {
             // Keep teleop components
-            this.components.retainAll { it.opmode == OpMode.TeleOp || it.opmode == OpMode.Any }
+            this.preComponents.retainAll { it.opmode == OpMode.TeleOp || it.opmode == OpMode.Any }
+            this.cycleComponents.retainAll { it.opmode == OpMode.TeleOp || it.opmode == OpMode.Any }
+            this.postComponents.retainAll { it.opmode == OpMode.TeleOp || it.opmode == OpMode.Any }
         }
 
-        this.components.iterator().forEach { runtime.register(it) }
+        this.preComponents.iterator().forEach { runtime.registerPre(it.func) }
+        this.cycleComponents.iterator().forEach { runtime.registerCycle(it.func) }
+        this.postComponents.iterator().forEach { runtime.registerPost(it.func) }
 
         return runtime
     }
 }
+
+private data class ComponentFunctionEx(val func: ComponentFunction, val order: Byte, val opmode: OpMode)
