@@ -30,5 +30,3 @@ open class Robot(val teleop: LinearOpMode, val cfg: Config = Config()) {
         runtime.post?.invokeRecursive(this.context)
     }
 }
-
-data class Config(val autonomous: Boolean = false)

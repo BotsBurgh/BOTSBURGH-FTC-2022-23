@@ -14,7 +14,7 @@ class RuntimeBuilder {
         this.components.sortedBy { it.order }
 
         // Remove components that shouldn't be run
-        if (cfg.autonomous) {
+        if (cfg.mode == RobotMode.Autonomous) {
             // Keep autonomous components
             this.components.retainAll { it.opmode == OpMode.Autonomous || it.opmode == OpMode.Any }
         } else {
