@@ -34,6 +34,30 @@ class RuntimeBuilder {
         }
     }
 
+    fun registerPre(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE) {
+        this.preComponents.add(ComponentFunctionEx(
+            func,
+            order,
+            opmode,
+        ))
+    }
+
+    fun registerCycle(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE) {
+        this.cycleComponents.add(ComponentFunctionEx(
+            func,
+            order,
+            opmode,
+        ))
+    }
+
+    fun registerPost(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE) {
+        this.postComponents.add(ComponentFunctionEx(
+            func,
+            order,
+            opmode,
+        ))
+    }
+
     fun build(cfg: Config): Runtime {
         val runtime = Runtime()
 
