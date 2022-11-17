@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 class Runtime {
-    private var pre: Link? = null
-    private var cycle: Link? = null
-    private var post: Link? = null
+    val pre = LinkedList()
+    val cycle = LinkedList()
+    val post = LinkedList()
 
     /**
      * Low-level function that registers a component.
@@ -13,35 +13,40 @@ class Runtime {
      */
     fun register(component: Component) {
         if (component.pre != null) {
-            if (this.pre == null) {
-                // Create pre
-                this.pre = Link(component.pre!!)
-            } else {
-                // Add to pre
-                this.pre!!.pushLast(Link(component.pre!!))
-            }
+            this.pre.pushLast(Link(component.pre!!))
         }
 
         if (component.cycle != null) {
-            if (this.cycle == null) {
-                this.cycle = Link(component.cycle!!)
-            } else {
-                this.cycle!!.pushLast(Link(component.cycle!!))
-            }
+            this.cycle.pushLast(Link(component.cycle!!))
         }
 
         if (component.post != null) {
-            if (this.post == null) {
-                this.post = Link(component.post!!)
-            } else {
-                this.post!!.pushLast(Link(component.post!!))
-            }
+            this.post.pushLast(Link(component.post!!))
         }
     }
 }
 
-private class Link(private val func: (Context) -> Unit) {
-    private var next: Link? = null
+class LinkedList {
+    private var firstLink: Link? = null
+    private var lastLink: Link? = null
+
+    fun pushLast(link: Link) {
+        if (this.firstLink == null) {
+            this.firstLink = link
+        } else {
+            this.lastLink!!.next = link
+        }
+
+        this.lastLink = link
+    }
+
+    fun invoke(ctx: Context) {
+        this.firstLink?.invokeRecursive(ctx)
+    }
+}
+
+class Link(private val func: (Context) -> Unit) {
+    var next: Link? = null
 
     fun invoke(context: Context): Link? {
         this.func.invoke(context)
@@ -59,15 +64,5 @@ private class Link(private val func: (Context) -> Unit) {
         if (depth > 0) {
             this.next?.invokeRecursive(context, depth - 1)
         }
-    }
-
-    fun last(): Link {
-        // If there is a link after this, call "last()" on it
-        // Else, return self
-        return this.next?.last() ?: this
-    }
-
-    fun pushLast(link: Link) {
-        this.last().next = link
     }
 }
