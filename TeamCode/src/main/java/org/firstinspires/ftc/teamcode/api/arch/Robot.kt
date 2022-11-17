@@ -34,14 +34,14 @@ open class Robot(val teleop: LinearOpMode, val cfg: Config = Config()) {
 
     fun run() {
         val runtime = this.runtime.build(this.cfg)
-        runtime.pre.invoke(this.context)
+        runtime.pre?.invokeRecursive(this.context)
 
         this.context.teleop.waitForStart()
 
         while (this.context.teleop.opModeIsActive()) {
-            runtime.cycle.invoke(this.context)
+            runtime.cycle?.invokeRecursive(this.context)
         }
 
-        runtime.post.invoke(this.context)
+        runtime.post?.invokeRecursive(this.context)
     }
 }

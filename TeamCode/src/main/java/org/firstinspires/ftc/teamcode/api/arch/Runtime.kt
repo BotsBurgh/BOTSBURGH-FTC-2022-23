@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 class Runtime {
-    val pre = LinkedList()
-    val cycle = LinkedList()
-    val post = LinkedList()
+    var pre: Link? = null
+    var cycle: Link? = null
+    var post: Link? = null
 
     /**
      * Low-level function that registers a pre function.
@@ -48,27 +48,8 @@ class Runtime {
     }
 }
 
-class LinkedList {
-    private var firstLink: Link? = null
-    private var lastLink: Link? = null
-
-    fun pushLast(link: Link) {
-        if (this.firstLink == null) {
-            this.firstLink = link
-        } else {
-            this.lastLink!!.next = link
-        }
-
-        this.lastLink = link
-    }
-
-    fun invoke(ctx: Context) {
-        this.firstLink?.invokeRecursive(ctx)
-    }
-}
-
 class Link(private val func: ComponentFunction) {
-    var next: Link? = null
+    private var next: Link? = null
 
     fun invoke(context: Context): Link? {
         this.func.invoke(context)
@@ -86,5 +67,15 @@ class Link(private val func: ComponentFunction) {
         if (depth > 0) {
             this.next?.invokeRecursive(context, depth - 1)
         }
+    }
+
+    fun last(): Link {
+        // If there is a link after this, call "last()" on it
+        // Else, return self
+        return this.next?.last() ?: this
+    }
+
+    fun pushLast(link: Link) {
+        this.last().next = link
     }
 }
