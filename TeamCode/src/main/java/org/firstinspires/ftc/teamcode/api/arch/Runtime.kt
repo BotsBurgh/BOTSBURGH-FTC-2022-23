@@ -40,7 +40,7 @@ class Runtime {
     }
 }
 
-class Link(private val func: (Context) -> Unit) {
+class Link(private val func: ComponentFunction) {
     private var next: Link? = null
 
     fun invoke(context: Context): Link? {

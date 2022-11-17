@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
+typealias ComponentFunction = (ctx: Context) -> Unit
+
 /**
  * An open class that all components should extend.
  */
@@ -7,18 +9,18 @@ abstract class Component {
     /**
      * A function that is run once during the robot's initialization.
      */
-    open val pre: ((ctx: Context) -> Unit)? = null
+    open val pre: ComponentFunction? = null
 
     /**
      * A function that is run multiple times during a robot's runtime.
      * Each component's [cycle] is run once per loop. This loop runs until the stop button is pressed.
      */
-    open val cycle: ((ctx: Context) -> Unit)? = null
+    open val cycle: ComponentFunction? = null
 
     /**
      * A function that is run once during the robot's shutdown phase.
      */
-    open val post: ((ctx: Context) -> Unit)? = null
+    open val post: ComponentFunction? = null
 
     /**
      * The order that a component's functions are run.
