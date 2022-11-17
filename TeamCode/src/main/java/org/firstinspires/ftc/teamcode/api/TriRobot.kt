@@ -11,10 +11,10 @@ import org.firstinspires.ftc.teamcode.api.components.Wheels
 /**
  * This is the main robot configuration for the three-wheeled robot.
  *
- * All components are registered below in [registerComponents].
+ * All components are registered below in [configure].
  */
 class TriRobot(teleop: LinearOpMode, cfg: Config): Robot(teleop, cfg) {
-    override fun registerComponents() {
+    override fun configure() {
         this
             // Very important, do not remove
             .register(PluginInit())
