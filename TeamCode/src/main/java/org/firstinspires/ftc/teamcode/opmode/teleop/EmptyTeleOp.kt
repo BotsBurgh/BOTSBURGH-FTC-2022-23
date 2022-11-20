@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.arch.Config
-import org.firstinspires.ftc.teamcode.api.arch.Robot
 
 /**
  * This is an empty teleop for debugging purposes.

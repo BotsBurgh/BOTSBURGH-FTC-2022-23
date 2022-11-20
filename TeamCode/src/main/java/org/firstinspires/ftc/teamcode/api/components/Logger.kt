@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.api.components
 
 import org.firstinspires.ftc.teamcode.api.arch.Component
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.plugins.log
 import org.firstinspires.ftc.teamcode.api.plugins.logger
 
 /**

@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
-
 // Backend that enables data persistence with the plugin.
 private val logger_store = Logger()
 

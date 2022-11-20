@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
 
 private val linear_slides_store = LinearSlides()
 

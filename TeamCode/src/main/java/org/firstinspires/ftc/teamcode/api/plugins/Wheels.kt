@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
 import kotlin.math.*
 
 private val wheels_store = Wheels()
