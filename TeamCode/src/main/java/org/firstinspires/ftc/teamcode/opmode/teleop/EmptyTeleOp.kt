@@ -28,7 +28,7 @@ class EmptyTeleOp: LinearOpMode() {
  * The actual [Robot] class used in production is [TriRobot][org.firstinspires.ftc.teamcode.api.TriRobot].
  */
 private class EmptyRobot(teleop: LinearOpMode, cfg: Config): Robot(teleop, cfg) {
-    override fun registerComponents() {
+    override fun configure() {
         // Register any components here!
         // this.register(MyComponent())
     }

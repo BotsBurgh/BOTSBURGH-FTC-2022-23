@@ -7,13 +7,28 @@ open class Robot(val teleop: LinearOpMode, val cfg: Config = Config()) {
     private val context: Context = Context(teleop, cfg)
 
     init {
-        this.registerComponents()
+        this.configure()
     }
 
-    open fun registerComponents() {}
+    open fun configure() {}
 
     fun register(component: Component): Robot {
         this.runtime.register(component)
+        return this
+    }
+
+    fun registerPre(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
+        this.runtime.registerPre(func, order, opmode)
+        return this
+    }
+
+    fun registerCycle(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
+        this.runtime.registerCycle(func, order, opmode)
+        return this
+    }
+
+    fun registerPost(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
+        this.runtime.registerPost(func, order, opmode)
         return this
     }
 
