@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode.api.components
 
 import org.firstinspires.ftc.teamcode.api.arch.Component
+import org.firstinspires.ftc.teamcode.api.arch.Context
+import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 
 /**
  * Component for moving the linear slide in a teleop.
  */
-class LinearSlides: Component() {
-    override val opmode = OpMode.TeleOp
+class LinearSlidesTeleOp: Component() {
+    override val runMode = RunMode.TeleOp
 
     override val pre = fun(ctx: Context) {
         ctx.linear_slides.init()

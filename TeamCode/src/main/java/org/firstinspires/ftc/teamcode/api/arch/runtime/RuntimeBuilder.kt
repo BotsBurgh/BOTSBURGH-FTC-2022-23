@@ -47,7 +47,7 @@ class RuntimeBuilder {
             list.sortedBy { it.order }
 
             // Remove all items that's mode is not cfg.mode or null
-            list.retainAll { it.runMode == cfg.mode || it.runMode == null }
+            list.retainAll { it.runMode == cfg.runMode || it.runMode == null }
         }
 
         filter(this.pre)

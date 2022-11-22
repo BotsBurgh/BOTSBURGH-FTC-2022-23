@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 data class Config(
-    val mode: RunMode,
-    val autoStrategy: AutoStrategy,
+    val runMode: RunMode,
+    val autoStrategy: AutoStrategy = AutoStrategy(ArenaSide.TopBlue), // TODO: Consider different default strategy
 )
 
 enum class RunMode {

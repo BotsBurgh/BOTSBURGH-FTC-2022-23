@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.arch.Config
+import org.firstinspires.ftc.teamcode.api.arch.Robot
+import org.firstinspires.ftc.teamcode.api.arch.RunMode
 
 /**
  * This is an empty teleop for debugging purposes.
@@ -18,7 +20,7 @@ import org.firstinspires.ftc.teamcode.api.arch.Config
 @Disabled
 class EmptyTeleOp: LinearOpMode() {
     override fun runOpMode() {
-        EmptyRobot(this, Config()).run()
+        EmptyRobot(this, Config(RunMode.TeleOp)).run()
     }
 }
 
