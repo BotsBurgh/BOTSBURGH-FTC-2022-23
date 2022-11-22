@@ -22,9 +22,12 @@ private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
  * A plugin for controlling the three wheels of the robot.
  */
 class Wheels: Plugin() {
-    private var motor1: DcMotor? = null
-    private var motor2: DcMotor? = null
-    private var motor3: DcMotor? = null
+    var motor1: DcMotor? = null
+        private set
+    var motor2: DcMotor? = null
+        private set
+    var motor3: DcMotor? = null
+        private set
 
     /**
      * Initializes the motors from the given hardwareMap.

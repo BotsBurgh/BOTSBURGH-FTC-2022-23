@@ -20,11 +20,16 @@ private const val CLAW_2_NAME = "claw2"
  * Plugin for controlling the 2 linear slides on the robot.
  */
 class LinearSlides: Plugin() {
-    private var linearSlide1: DcMotor? = null
-    private var linearSlide2: DcMotor? = null
+    // Can be read by anything, but can only by set by itself (aka .init())
+    var linearSlide1: DcMotor? = null
+        private set
+    var linearSlide2: DcMotor? = null
+        private set
 
-    private var claw1: Servo? = null
-    private var claw2: Servo? = null
+    var claw1: Servo? = null
+        private set
+    var claw2: Servo? = null
+        private set
 
     fun init() {
         this.linearSlide1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
