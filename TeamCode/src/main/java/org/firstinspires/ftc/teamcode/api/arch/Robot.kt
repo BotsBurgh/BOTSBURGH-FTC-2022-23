@@ -1,47 +1,22 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.api.arch.runtime.RuntimeBuilder
 
-open class Robot(val teleop: LinearOpMode, val cfg: Config = Config()) {
-    private var runtime: RuntimeBuilder = RuntimeBuilder()
-    private val context: Context = Context(teleop, cfg)
+const val DEFAULT_ORDER: Byte = 0
+
+open class Robot(val teleop: LinearOpMode, val cfg: Config) {
+    private val runtimeBuilder: RuntimeBuilder = RuntimeBuilder()
+    private val ctx: Context = Context(teleop, cfg)
 
     init {
-        this.configure()
+        this.configure(this.runtimeBuilder)
     }
 
-    open fun configure() {}
-
-    fun register(component: Component): Robot {
-        this.runtime.register(component)
-        return this
-    }
-
-    fun registerPre(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
-        this.runtime.registerPre(func, order, opmode)
-        return this
-    }
-
-    fun registerCycle(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
-        this.runtime.registerCycle(func, order, opmode)
-        return this
-    }
-
-    fun registerPost(func: ComponentFunction, order: Byte = DEFAULT_ORDER, opmode: OpMode = DEFAULT_OPMODE): Robot {
-        this.runtime.registerPost(func, order, opmode)
-        return this
-    }
+    open fun configure(builder: RuntimeBuilder) {}
 
     fun run() {
-        val runtime = this.runtime.build(this.cfg)
-        runtime.pre?.invokeRecursive(this.context)
-
-        this.context.teleop.waitForStart()
-
-        while (this.context.teleop.opModeIsActive()) {
-            runtime.cycle?.invokeRecursive(this.context)
-        }
-
-        runtime.post?.invokeRecursive(this.context)
+        val runtime = runtimeBuilder.build(this.cfg)
+        runtime.run(this.ctx)
     }
 }

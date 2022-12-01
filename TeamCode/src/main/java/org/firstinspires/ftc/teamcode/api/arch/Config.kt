@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.api.arch
 
 data class Config(
-    val mode: RobotMode = RobotMode.Autonomous,
-    val autoStrategy: AutoStrategy = AutoStrategy(ArenaSide.TopBlue) // Consider different default?
+    val runMode: RunMode,
+    val autoStrategy: AutoStrategy = AutoStrategy(ArenaSide.TopBlue), // TODO: Consider different default strategy
 )
 
-enum class RobotMode {
+enum class RunMode {
     TeleOp,
     Autonomous,
 }

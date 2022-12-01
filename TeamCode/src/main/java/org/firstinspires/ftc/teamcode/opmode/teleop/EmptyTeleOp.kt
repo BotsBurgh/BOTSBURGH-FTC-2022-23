@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.arch.Config
 import org.firstinspires.ftc.teamcode.api.arch.Robot
+import org.firstinspires.ftc.teamcode.api.arch.RunMode
+import org.firstinspires.ftc.teamcode.api.arch.runtime.RuntimeBuilder
 
 /**
  * This is an empty teleop for debugging purposes.
@@ -19,7 +21,7 @@ import org.firstinspires.ftc.teamcode.api.arch.Robot
 @Disabled
 class EmptyTeleOp: LinearOpMode() {
     override fun runOpMode() {
-        EmptyRobot(this, Config()).run()
+        EmptyRobot(this, Config(RunMode.TeleOp)).run()
     }
 }
 
@@ -28,8 +30,8 @@ class EmptyTeleOp: LinearOpMode() {
  * The actual [Robot] class used in production is [TriRobot][org.firstinspires.ftc.teamcode.api.TriRobot].
  */
 private class EmptyRobot(teleop: LinearOpMode, cfg: Config): Robot(teleop, cfg) {
-    override fun configure() {
+    override fun configure(builder: RuntimeBuilder) {
         // Register any components here!
-        // this.register(MyComponent())
+        // builder.registerComponent(MyComponent())
     }
 }
