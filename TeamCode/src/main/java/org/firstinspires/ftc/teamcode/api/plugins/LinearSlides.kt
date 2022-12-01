@@ -5,10 +5,10 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.Plugin
 
-private val linear_slides_store = LinearSlides()
+private var linear_slides_store: LinearSlides? = null
 
 val Context.linear_slides
-    get() = linear_slides_store
+    get() = linear_slides_store!!
 
 private const val LINEAR_SLIDE_1_NAME = "linearSlide1"
 private const val LINEAR_SLIDE_2_NAME = "linearSlide2"
@@ -20,6 +20,10 @@ private const val CLAW_2_NAME = "claw2"
  * Plugin for controlling the 2 linear slides on the robot.
  */
 class LinearSlides: Plugin() {
+    init {
+        linear_slides_store = this
+    }
+
     // Can be read by anything, but can only by set by itself (aka .init())
     var linearSlide1: DcMotor? = null
         private set

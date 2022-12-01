@@ -5,10 +5,10 @@ import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.Plugin
 import kotlin.math.*
 
-private val wheels_store = Wheels()
+private var wheels_store: Wheels? = null
 
 val Context.wheels
-    get() = wheels_store
+    get() = wheels_store!!
 
 private const val MOTOR_1_NAME = "motor1"
 private const val MOTOR_2_NAME = "motor2"
@@ -22,6 +22,10 @@ private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
  * A plugin for controlling the three wheels of the robot.
  */
 class Wheels: Plugin() {
+    init {
+        wheels_store = this
+    }
+
     var motor1: DcMotor? = null
         private set
     var motor2: DcMotor? = null
