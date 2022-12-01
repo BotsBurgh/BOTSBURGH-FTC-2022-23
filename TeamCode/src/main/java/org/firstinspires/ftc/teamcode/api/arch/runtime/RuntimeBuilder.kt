@@ -9,19 +9,22 @@ class RuntimeBuilder {
 
     private val plugins: MutableList<Plugin> = ArrayList()
 
-    fun registerPre(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null) {
+    fun registerPre(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null): RuntimeBuilder {
         this.pre.add(PhaseData(func, order, runMode))
+        return this
     }
 
-    fun registerCycle(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null) {
+    fun registerCycle(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null): RuntimeBuilder {
         this.cycle.add(PhaseData(func, order, runMode))
+        return this
     }
 
-    fun registerPost(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null) {
+    fun registerPost(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null): RuntimeBuilder {
         this.post.add(PhaseData(func, order, runMode))
+        return this
     }
 
-    fun registerComponent(component: Component) {
+    fun registerComponent(component: Component): RuntimeBuilder {
         if (component.pre != null) {
             this.registerPre(component.pre!!, order = component.order, runMode = component.runMode)
         }
@@ -33,10 +36,13 @@ class RuntimeBuilder {
         if (component.post != null) {
             this.registerPost(component.post!!, order = component.order, runMode = component.runMode)
         }
+
+        return this
     }
 
-    fun registerPlugin(plugin: Plugin) {
+    fun registerPlugin(plugin: Plugin): RuntimeBuilder {
         this.plugins.add(plugin)
+        return this
     }
 
     fun build(cfg: Config): Runtime {
