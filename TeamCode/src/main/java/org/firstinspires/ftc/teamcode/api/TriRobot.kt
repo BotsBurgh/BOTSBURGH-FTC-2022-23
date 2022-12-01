@@ -5,7 +5,6 @@ import org.firstinspires.ftc.teamcode.api.arch.Config
 import org.firstinspires.ftc.teamcode.api.arch.Robot
 import org.firstinspires.ftc.teamcode.api.arch.runtime.RuntimeBuilder
 import org.firstinspires.ftc.teamcode.api.components.LinearSlidesTeleOp
-import org.firstinspires.ftc.teamcode.api.components.TestTeleOp
 import org.firstinspires.ftc.teamcode.api.components.WheelsTeleOp
 import org.firstinspires.ftc.teamcode.api.plugins.*
 
