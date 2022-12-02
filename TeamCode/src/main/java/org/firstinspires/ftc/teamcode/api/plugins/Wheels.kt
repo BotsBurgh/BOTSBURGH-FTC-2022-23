@@ -77,7 +77,7 @@ class Wheels: Plugin() {
         this.motor3?.power = 0.0
     }
 
-    private fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
+    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
         magnitude * sin(MOTOR_1_ANGLE - radians),
         magnitude * sin(MOTOR_2_ANGLE - radians),
         magnitude * sin(MOTOR_3_ANGLE - radians),
