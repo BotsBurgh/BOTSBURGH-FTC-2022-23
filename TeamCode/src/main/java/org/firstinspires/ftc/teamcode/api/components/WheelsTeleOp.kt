@@ -17,21 +17,29 @@ class WheelsTeleOp: Component() {
     }
 
     override val cycle = fun(ctx: Context) {
-        // Spinning is prioritized over joystick
-        if (ctx.teleop.gamepad1.left_trigger > 0.0) {
-            ctx.wheels.powerRotation(ctx.teleop.gamepad1.left_trigger.toDouble())
-        } else if (ctx.teleop.gamepad1.right_trigger > 0.0) {
-            ctx.wheels.powerRotation(-ctx.teleop.gamepad1.right_trigger.toDouble())
-        } else {
-            // Use joystick input
-            val joyX = ctx.teleop.gamepad1.left_stick_x.toDouble()
-            val joyY = ctx.teleop.gamepad1.left_stick_y.toDouble()
+        // Alias gamepad1
+        val gamepad = ctx.teleop.gamepad1
 
-            // Convert xy coords to polar coords, then move robot
-            ctx.wheels.powerDirection(
-                atan2(joyY, joyX) - (PI / 2.0),
-                sqrt(joyY * joyY + joyX * joyX)
-            )
-        }
+        // Get rotation power as right stick left and right movement
+        val rotationPower = -gamepad.right_stick_x.toDouble()
+
+        // Use joystick input
+        val joyX = gamepad.left_stick_x.toDouble()
+        val joyY = -gamepad.left_stick_y.toDouble()
+
+        // Convert xy coords to polar coords, then calculate power
+        val directionPower = ctx.wheels.calculatePower(
+            atan2(joyY, joyX) - (PI / 2.0),
+            sqrt(joyY * joyY + joyX * joyX)
+        )
+
+        // Combine the rotation and direction powers together
+        val totalPower = Triple(
+            directionPower.first + rotationPower,
+            directionPower.second + rotationPower,
+            directionPower.third + rotationPower,
+        )
+
+        ctx.wheels.power(totalPower)
     }
 }

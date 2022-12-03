@@ -43,6 +43,37 @@ class Wheels: Plugin() {
     }
 
     /**
+     * Sets the power of all motors.
+     *
+     * @param power1 The power to apply [motor1].
+     * @param power2 The power to apply [motor2].
+     * @param power3 The power to apply [motor3].
+     */
+    fun power(power1: Double, power2: Double, power3: Double) {
+        this.motor1?.power = power1
+        this.motor2?.power = power2
+        this.motor3?.power = power3
+    }
+
+    /**
+     * Sets the power of all motors.
+     *
+     * @param power A [Triple] of [Double]s representing the power of each motor.
+     */
+    fun power(power: Triple<Double, Double, Double>) {
+        this.power(power.first, power.second, power.third)
+    }
+
+    /**
+     * Sets the power of all motors.
+     *
+     * @param power A [Double] to apply to each motor.
+     */
+    fun power(power: Double) {
+        this.power(power, power, power)
+    }
+
+    /**
      * Sets the power of the motors based on an angle and strength.
      *
      * @param radians The angle (in radians) the robot should move towards.
@@ -50,11 +81,7 @@ class Wheels: Plugin() {
      */
     fun powerDirection(radians: Double, magnitude: Double) {
         val power = calculatePower(radians, magnitude)
-
-        // TODO: see if `?` can be changed with `!!`
-        this.motor1?.power = power.first
-        this.motor2?.power = power.second
-        this.motor3?.power = power.third
+        this.power(power)
     }
 
     /**
@@ -63,21 +90,17 @@ class Wheels: Plugin() {
      * @param power The power to apply to each motor to affect how fast it spins.
      */
     fun powerRotation(power: Double) {
-        this.motor1?.power = power
-        this.motor2?.power = power
-        this.motor3?.power = power
+        this.power(power)
     }
 
     /**
      * Shorthand to setting power to 0, or stopping the wheels from moving.
      */
     fun stop() {
-        this.motor1?.power = 0.0
-        this.motor2?.power = 0.0
-        this.motor3?.power = 0.0
+        this.power(0.0)
     }
 
-    private fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
+    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
         magnitude * sin(MOTOR_1_ANGLE - radians),
         magnitude * sin(MOTOR_2_ANGLE - radians),
         magnitude * sin(MOTOR_3_ANGLE - radians),
