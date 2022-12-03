@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 
 const val SLIDE_UP_POWER = 0.8
-const val CLAW_CLOSE_POWER = 0.8
-const val CLAW_OPEN_POWER = 0.4
+const val CLAW_CLOSE_POSITION = 0.4
+const val CLAW_OPEN_POSITION = 1.0
 
 /**
  * Component for moving the linear slide in a teleop.
@@ -30,9 +30,9 @@ class LinearSlidesTeleOp: Component() {
         }
 
         if (ctx.teleop.gamepad1.a) {
-            ctx.linear_slides.positionClaw1(CLAW_CLOSE_POWER)
+            ctx.linear_slides.positionClaw1(CLAW_CLOSE_POSITION)
         } else if (ctx.teleop.gamepad1.b) {
-            ctx.linear_slides.positionClaw1(CLAW_OPEN_POWER)
+            ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
         }
 
         /*
@@ -46,9 +46,9 @@ class LinearSlidesTeleOp: Component() {
             }
 
             if (ctx.teleop.gamepad1.a) {
-                ctx.linear_slides.positionClaw1(CLAW_CLOSE_POWER)
+                ctx.linear_slides.positionClaw1(CLAW_CLOSE_POSITION)
             } else if (ctx.teleop.gamepad1.b) {
-                ctx.linear_slides.positionClaw1(CLAW_OPEN_POWER)
+                ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
             }
         } else if (ctx.teleop.gamepad1.dpad_right) {
             if (ctx.teleop.gamepad1.x) {
@@ -60,9 +60,9 @@ class LinearSlidesTeleOp: Component() {
             }
 
             if (ctx.teleop.gamepad1.a) {
-                ctx.linear_slides.positionClaw2(CLAW_CLOSE_POWER)
+                ctx.linear_slides.positionClaw2(CLAW_CLOSE_POSITION)
             } else if (ctx.teleop.gamepad1.b) {
-                ctx.linear_slides.positionClaw2(CLAW_OPEN_POWER)
+                ctx.linear_slides.positionClaw2(CLAW_OPEN_POSITION)
             }
         }
          */
