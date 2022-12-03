@@ -17,21 +17,23 @@ class WheelsTeleOp: Component() {
     }
 
     override val cycle = fun(ctx: Context) {
+        // Alias gamepad1
         val gamepad = ctx.teleop.gamepad1
 
+        // Get rotation power as right stick left and right movement
         val rotationPower = -gamepad.right_stick_x.toDouble()
-        // rotationPower *= rotationPower * rotationPower // Cube values
 
         // Use joystick input
         val joyX = gamepad.left_stick_x.toDouble()
         val joyY = -gamepad.left_stick_y.toDouble()
 
-        // Convert xy coords to polar coords, then move robot
+        // Convert xy coords to polar coords, then calculate power
         val directionPower = ctx.wheels.calculatePower(
             atan2(joyY, joyX) - (PI / 2.0),
             sqrt(joyY * joyY + joyX * joyX)
         )
 
+        // Combine the rotation and direction powers together
         val totalPower = Triple(
             directionPower.first + rotationPower,
             directionPower.second + rotationPower,
