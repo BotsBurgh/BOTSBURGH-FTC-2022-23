@@ -5,7 +5,8 @@ import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 
-const val SLIDE_UP_POWER = 0.8
+const val SLIDE_UP_POWER = 0.6
+const val SLIDE_DOWN_POWER = 0.4
 const val CLAW_CLOSE_POSITION = 0.4
 const val CLAW_OPEN_POSITION = 1.0
 
@@ -17,6 +18,8 @@ class LinearSlidesTeleOp: Component() {
 
     override val pre = fun(ctx: Context) {
         ctx.linear_slides.init()
+
+        ctx.teleop.telemetry.addData("LS", ctx.linear_slides.linearSlide1!!.currentPosition)
     }
 
     override val cycle = fun(ctx: Context) {
@@ -24,7 +27,7 @@ class LinearSlidesTeleOp: Component() {
         if (ctx.teleop.gamepad1.x) {
             ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
         } else if (ctx.teleop.gamepad1.y) {
-            ctx.linear_slides.powerSlide1(-SLIDE_UP_POWER)
+            ctx.linear_slides.powerSlide1(SLIDE_DOWN_POWER)
         } else {
             ctx.linear_slides.stopSlide1()
         }
@@ -35,12 +38,14 @@ class LinearSlidesTeleOp: Component() {
             ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
         }
 
+        ctx.teleop.telemetry.addData("LS", ctx.linear_slides.linearSlide1!!.currentPosition)
+
         /*
         if (ctx.teleop.gamepad1.dpad_left) {
             if (ctx.teleop.gamepad1.x) {
                 ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
             } else if (ctx.teleop.gamepad1.y) {
-                ctx.linear_slides.powerSlide1(-SLIDE_UP_POWER)
+                ctx.linear_slides.powerSlide1(SLIDE_DOWN_POWER)
             } else {
                 ctx.linear_slides.stopSlide1()
             }
@@ -54,7 +59,7 @@ class LinearSlidesTeleOp: Component() {
             if (ctx.teleop.gamepad1.x) {
                 ctx.linear_slides.powerSlide2(SLIDE_UP_POWER)
             } else if (ctx.teleop.gamepad1.y) {
-                ctx.linear_slides.powerSlide2(-SLIDE_UP_POWER)
+                ctx.linear_slides.powerSlide2(SLIDE_DOWN_POWER)
             } else {
                 ctx.linear_slides.stopSlide2()
             }
