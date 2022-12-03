@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.components
 
+import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.arch.Component
 import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.RunMode
@@ -19,6 +21,10 @@ class LinearSlidesTeleOp: Component() {
     override val pre = fun(ctx: Context) {
         ctx.linear_slides.init()
 
+        // Reset encoders
+        ctx.linear_slides.linearSlide1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        ctx.linear_slides.linearSlide1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
         ctx.teleop.telemetry.addData("LS", ctx.linear_slides.linearSlide1!!.currentPosition)
     }
 
@@ -27,7 +33,7 @@ class LinearSlidesTeleOp: Component() {
         if (ctx.teleop.gamepad1.x) {
             ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
         } else if (ctx.teleop.gamepad1.y) {
-            ctx.linear_slides.powerSlide1(SLIDE_DOWN_POWER)
+            ctx.linear_slides.powerSlide1(-SLIDE_DOWN_POWER)
         } else {
             ctx.linear_slides.stopSlide1()
         }
@@ -45,7 +51,7 @@ class LinearSlidesTeleOp: Component() {
             if (ctx.teleop.gamepad1.x) {
                 ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
             } else if (ctx.teleop.gamepad1.y) {
-                ctx.linear_slides.powerSlide1(SLIDE_DOWN_POWER)
+                ctx.linear_slides.powerSlide1(-SLIDE_DOWN_POWER)
             } else {
                 ctx.linear_slides.stopSlide1()
             }
@@ -59,7 +65,7 @@ class LinearSlidesTeleOp: Component() {
             if (ctx.teleop.gamepad1.x) {
                 ctx.linear_slides.powerSlide2(SLIDE_UP_POWER)
             } else if (ctx.teleop.gamepad1.y) {
-                ctx.linear_slides.powerSlide2(SLIDE_DOWN_POWER)
+                ctx.linear_slides.powerSlide2(-SLIDE_DOWN_POWER)
             } else {
                 ctx.linear_slides.stopSlide2()
             }
@@ -71,5 +77,23 @@ class LinearSlidesTeleOp: Component() {
             }
         }
          */
+    }
+
+    override val post = fun(ctx: Context) {
+        val runtime = ElapsedTime()
+
+        ctx.linear_slides.linearSlide1!!.targetPosition = 0
+        ctx.linear_slides.linearSlide1!!.mode = DcMotor.RunMode.RUN_TO_POSITION
+
+        runtime.reset()
+
+        ctx.linear_slides.powerSlide1(SLIDE_DOWN_POWER)
+
+        while (runtime.seconds() < 1.5 && ctx.linear_slides.linearSlide1!!.isBusy) {
+            ctx.teleop.idle()
+        }
+
+        ctx.linear_slides.stopSlide1()
+        ctx.linear_slides.linearSlide1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 }
