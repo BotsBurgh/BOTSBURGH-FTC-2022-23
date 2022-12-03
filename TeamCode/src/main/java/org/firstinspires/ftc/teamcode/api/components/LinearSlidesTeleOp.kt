@@ -20,6 +20,22 @@ class LinearSlidesTeleOp: Component() {
     }
 
     override val cycle = fun(ctx: Context) {
+        // The second linear slide is broken, so this prevents it from being used
+        if (ctx.teleop.gamepad1.x) {
+            ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
+        } else if (ctx.teleop.gamepad1.y) {
+            ctx.linear_slides.powerSlide1(-SLIDE_UP_POWER)
+        } else {
+            ctx.linear_slides.stopSlide1()
+        }
+
+        if (ctx.teleop.gamepad1.a) {
+            ctx.linear_slides.positionClaw1(CLAW_CLOSE_POWER)
+        } else if (ctx.teleop.gamepad1.b) {
+            ctx.linear_slides.positionClaw1(CLAW_OPEN_POWER)
+        }
+
+        /*
         if (ctx.teleop.gamepad1.dpad_left) {
             if (ctx.teleop.gamepad1.x) {
                 ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
@@ -49,5 +65,6 @@ class LinearSlidesTeleOp: Component() {
                 ctx.linear_slides.positionClaw2(CLAW_OPEN_POWER)
             }
         }
+         */
     }
 }
