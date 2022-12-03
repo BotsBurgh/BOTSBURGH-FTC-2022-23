@@ -37,18 +37,18 @@ class LinearSlides: Plugin() {
 
     fun init() {
         this.linearSlide1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
-        this.linearSlide2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_2_NAME)
+        // this.linearSlide2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_2_NAME)
 
         this.claw1 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_1_NAME)
-        this.claw2 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_2_NAME)
+        // this.claw2 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_2_NAME)
 
         // Prevent slide from moving down due to gravity as best as possible.
         this.linearSlide1!!.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        this.linearSlide2!!.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        // this.linearSlide2!!.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     }
 
     fun powerSlide1(power: Double) {
-        this.linearSlide1?.power = power
+        this.linearSlide1!!.power = power
     }
 
     fun stopSlide1() {
@@ -56,11 +56,11 @@ class LinearSlides: Plugin() {
     }
 
     fun positionClaw1(position: Double) {
-        this.claw1?.position = position
+        this.claw1!!.position = position
     }
 
     fun powerSlide2(power: Double) {
-        this.linearSlide2?.power = power
+        this.linearSlide2!!.power = power
     }
 
     fun stopSlide2() {
@@ -68,6 +68,6 @@ class LinearSlides: Plugin() {
     }
 
     fun positionClaw2(position: Double) {
-        this.claw2?.position = position
+        this.claw2!!.position = position
     }
 }
