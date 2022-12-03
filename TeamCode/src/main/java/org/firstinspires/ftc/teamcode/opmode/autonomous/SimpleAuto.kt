@@ -48,7 +48,7 @@ abstract class SimpleAuto: LinearOpMode() {
 
         runtime.reset()
 
-        while (runtime.seconds() < 0.5 && opModeIsActive()) {
+        while (runtime.seconds() < 1.0 && opModeIsActive()) {
             this.wheels.powerDirection(this.direction, 0.5)
         }
 
