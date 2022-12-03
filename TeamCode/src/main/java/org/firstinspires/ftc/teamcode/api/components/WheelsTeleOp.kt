@@ -40,8 +40,6 @@ class WheelsTeleOp: Component() {
             directionPower.third + rotationPower,
         )
 
-        ctx.wheels.motor1!!.power = totalPower.first
-        ctx.wheels.motor2!!.power = totalPower.second
-        ctx.wheels.motor3!!.power = totalPower.third
+        ctx.wheels.power(totalPower)
     }
 }
