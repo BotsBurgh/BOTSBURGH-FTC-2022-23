@@ -2,48 +2,66 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.api.TriRobot
+import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.arch.Config
 import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.RunMode
-import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
+import kotlin.math.PI
 
-@Autonomous(name = "Simple Autonomous")
-class SimpleAuto: LinearOpMode() {
+abstract class SimpleAuto: LinearOpMode() {
+    abstract val direction: Double
+
     private val config = Config(runMode = RunMode.Autonomous)
 
     private var ctx: Context? = null
 
-    private var wheels_store: Wheels? = null
+    private var wheelsStore: Wheels? = null
     private val wheels: Wheels
-        get() = wheels_store!!
+        get() = wheelsStore!!
 
+    /*
     private var linear_slides_store: LinearSlides? = null
     private val linear_slides: LinearSlides
         get() = linear_slides_store!!
+     */
 
     override fun runOpMode() {
         this.ctx = Context(this, this.config)
 
-        this.wheels_store = Wheels()
+        this.wheelsStore = Wheels()
         this.wheels.initPlugin(this.ctx!!)
         this.wheels.init()
 
+        /*
         this.linear_slides_store = LinearSlides()
         this.linear_slides.initPlugin(this.ctx!!)
         this.linear_slides.init()
+         */
 
         telemetry.addData("Status", "Initialized")
         telemetry.update()
 
         waitForStart()
 
-        while (opModeIsActive()) {
-            this.wheels.powerRotation(0.5)
+        val runtime = ElapsedTime()
 
-            telemetry.addData("Status", "Running")
-            telemetry.update()
+        runtime.reset()
+
+        while (runtime.seconds() < 0.5 && opModeIsActive()) {
+            this.wheels.powerDirection(this.direction, 0.5)
         }
+
+        this.wheels.stop()
     }
+}
+
+@Autonomous(name = "Simple Auto Left")
+class SimpleAutoLeft: SimpleAuto() {
+    override val direction = PI / 2.0
+}
+
+@Autonomous(name = "Simple Auto Right")
+class SimpleAutoRight: SimpleAuto() {
+    override val direction = 3.0 * (PI / 2.0)
 }
