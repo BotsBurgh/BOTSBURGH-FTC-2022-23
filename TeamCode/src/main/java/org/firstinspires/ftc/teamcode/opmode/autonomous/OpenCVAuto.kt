@@ -41,7 +41,7 @@ class TestPipeline: OpenCvPipeline() {
         Blue,
     }
 
-    var output = Color.Red
+    var output = Color.Blue
         private set
 
     private var input: Mat? = null
@@ -58,6 +58,16 @@ class TestPipeline: OpenCvPipeline() {
 
     override fun processFrame(_input: Mat?): Mat {
         Imgproc.blur(input, blurred, Size(100.0, 100.0))
+        val p = blurred.get(blurred.rows() / 2, blurred.cols() / 2)
+
+        output = if (p[0] >= p[1] && p[0] >= p[2]) {
+            Color.Red
+        } else if (p[1] >= p[0] && p[1] >= p[2]) {
+            Color.Green
+        } else {
+            Color.Blue
+        }
+
         return blurred
     }
 }
