@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.Plugin
+import kotlin.math.sign
 
 private var linear_slides_store: LinearSlides? = null
 
@@ -48,7 +49,10 @@ class LinearSlides: Plugin() {
     }
 
     fun powerSlide1(power: Double) {
-        this.linearSlide1!!.power = power
+        // TODO: Flip signs with reversed motors GH#24
+        if ((power.sign == -1.0 && this.linearSlide1!!.currentPosition < 360 * 10) || (power.sign == 1.0 && this.linearSlide1!!.currentPosition >= 0)) {
+            this.linearSlide1!!.power = power
+        }
     }
 
     fun stopSlide1() {
