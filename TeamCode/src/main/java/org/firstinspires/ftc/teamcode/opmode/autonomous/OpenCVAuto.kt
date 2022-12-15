@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.opencv.core.Mat
-import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import org.openftc.easyopencv.OpenCvCameraFactory
 import org.openftc.easyopencv.OpenCvCameraRotation
@@ -19,7 +18,8 @@ class OpenCVAuto: LinearOpMode() {
             cameraMonitorViewId
         )
 
-        camera.setPipeline(TestPipeline())
+        val pipeline = TestPipeline()
+        camera.setPipeline(pipeline)
 
         camera.openCameraDevice()
         camera.startStreaming(320, 240, OpenCvCameraRotation.UPSIDE_DOWN)
@@ -27,7 +27,10 @@ class OpenCVAuto: LinearOpMode() {
         telemetry.addData("Status", "Initialized aa")
         telemetry.update()
 
-        waitForStart()
+        while (opModeInInit()) {
+            telemetry.addData("Color", pipeline.output)
+            telemetry.update()
+        }
 
         camera.stopStreaming()
         camera.closeCameraDevice()
@@ -45,20 +48,24 @@ class TestPipeline: OpenCvPipeline() {
         private set
 
     private var input: Mat? = null
-    private var blurred = Mat()
+    // private var blurred = Mat()
+    private var contrasted = Mat()
 
     override fun init(_firstFrame: Mat?) {
         val firstFrame = _firstFrame!!
 
-        val left = (firstFrame.width() / 2) - 50
-        val top = (firstFrame.height() / 2) - 50
+        // val left = (firstFrame.width() / 2) - 50
+        // val top = (firstFrame.height() / 2) - 50
 
-        input = firstFrame.submat(left, left + 100, top, top + 100)
+        //input = firstFrame.submat(left, left + 100, top, top + 100)
+        input = firstFrame
     }
 
     override fun processFrame(_input: Mat?): Mat {
-        Imgproc.blur(input, blurred, Size(100.0, 100.0))
-        val p = blurred.get(blurred.rows() / 2, blurred.cols() / 2)
+        // Imgproc.blur(input, blurred, Size(10.0, 10.0))
+        input!!.convertTo(contrasted, -1, 0.6)
+
+        val p = contrasted.get(contrasted.rows() / 2, contrasted.cols() / 2)
 
         output = if (p[0] >= p[1] && p[0] >= p[2]) {
             Color.Red
@@ -68,6 +75,6 @@ class TestPipeline: OpenCvPipeline() {
             Color.Blue
         }
 
-        return blurred
+        return contrasted
     }
 }
