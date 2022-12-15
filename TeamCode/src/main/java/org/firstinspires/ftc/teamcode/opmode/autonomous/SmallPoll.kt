@@ -10,6 +10,11 @@ import org.firstinspires.ftc.teamcode.api.components.CLAW_CLOSE_POSITION
 import org.firstinspires.ftc.teamcode.api.components.CLAW_OPEN_POSITION
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
+import org.opencv.core.Mat
+import org.openftc.easyopencv.OpenCvCameraFactory
+import org.openftc.easyopencv.OpenCvCameraRotation
+import org.openftc.easyopencv.OpenCvInternalCamera
+import org.openftc.easyopencv.OpenCvPipeline
 import kotlin.math.PI
 
 abstract class SmallPoll: LinearOpMode() {
@@ -36,18 +41,36 @@ abstract class SmallPoll: LinearOpMode() {
         this.wheels.initPlugin(this.ctx!!)
         this.wheels.init()
 
-
         this.linear_slides_store = LinearSlides()
         this.linear_slides.initPlugin(this.ctx!!)
         this.linear_slides.init()
 
+        val cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
+        val camera = OpenCvCameraFactory.getInstance().createInternalCamera(
+            OpenCvInternalCamera.CameraDirection.BACK,
+            cameraMonitorViewId
+        )
 
-        telemetry.addData("Status", "Initialized")
-        telemetry.update()
+        val pipeline = ConeScanPipeline()
+        camera.setPipeline(pipeline)
+
+        camera.openCameraDevice()
+        camera.startStreaming(320, 240, OpenCvCameraRotation.UPSIDE_DOWN)
+
+        while (opModeInInit()) {
+            telemetry.addData("Status", "Initialized")
+            telemetry.addData("Color", pipeline.output)
+            telemetry.update()
+        }
 
         waitForStart()
 
         val runtime = ElapsedTime()
+
+        // TODO: SCAN COLOR AND STORE IT IN A VARIABLE FOR LATER
+
+        camera.stopStreaming()
+        camera.closeCameraDevice()
 
         runtime.reset()
 
@@ -85,4 +108,33 @@ abstract class SmallPoll: LinearOpMode() {
 class SmallPollRed: SmallPoll() {
     override val direction = 0.0
 
+}
+
+class ConeScanPipeline: OpenCvPipeline() {
+    enum class Color {
+        Red,
+        Green,
+        Blue,
+    }
+
+    var output = Color.Blue
+        private set
+
+    private var contrasted = Mat()
+
+    override fun processFrame(input: Mat?): Mat {
+        input!!.convertTo(contrasted, -1, 0.6)
+
+        val p = contrasted.get(contrasted.rows() / 2, contrasted.cols() / 2)
+
+        output = if (p[0] >= p[1] && p[0] >= p[2]) {
+            Color.Red
+        } else if (p[1] >= p[0] && p[1] >= p[2]) {
+            Color.Green
+        } else {
+            Color.Blue
+        }
+
+        return contrasted
+    }
 }
