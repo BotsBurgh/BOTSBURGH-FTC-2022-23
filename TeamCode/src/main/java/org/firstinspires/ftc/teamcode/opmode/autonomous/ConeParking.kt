@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.arch.Config
 import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.RunMode
+import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
 import org.opencv.core.Mat
@@ -31,6 +32,10 @@ abstract class ConeParking : LinearOpMode() {
     private val linear_slides: LinearSlides
         get() = linear_slides_store!!
 
+    private var distance_sensor_store: DistanceSensors? = null
+    private val distance_sensor: DistanceSensors
+        get() = distance_sensor_store!!
+
 
     override fun runOpMode() {
         this.ctx = Context(this, this.config)
@@ -42,6 +47,10 @@ abstract class ConeParking : LinearOpMode() {
         this.linear_slides_store = LinearSlides()
         this.linear_slides.initPlugin(this.ctx!!)
         this.linear_slides.init()
+
+        this.distance_sensor_store = DistanceSensors()
+        this.distance_sensor.initPlugin(this.ctx!!)
+        this.distance_sensor.init()
 
         val cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
         val camera = OpenCvCameraFactory.getInstance().createInternalCamera(
@@ -58,6 +67,9 @@ abstract class ConeParking : LinearOpMode() {
         while (opModeInInit()) {
             telemetry.addData("Status", "Initialized")
             telemetry.addData("Color", pipeline.output)
+            telemetry.addData("Left", this.distance_sensor.getLeft())
+            telemetry.addData("Back", this.distance_sensor.getBack())
+            telemetry.addData("Right", this.distance_sensor.getRight())
             telemetry.update()
         }
 
