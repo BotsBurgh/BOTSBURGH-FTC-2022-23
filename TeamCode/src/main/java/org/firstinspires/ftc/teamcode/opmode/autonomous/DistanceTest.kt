@@ -8,12 +8,11 @@ import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
 import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
-import org.firstinspires.ftc.teamcode.api.plugins.distance_sensors
 
 import kotlin.math.PI
 
 abstract class DistanceTest : LinearOpMode() {
-    abstract val direction: Double
+    abstract val sideBlue: Boolean
 
     private val config = Config(runMode = RunMode.Autonomous)
 
@@ -24,10 +23,9 @@ abstract class DistanceTest : LinearOpMode() {
         get() = wheelsStore!!
 
 
-    private var distance_sensor_store: DistanceSensors? = null
-    private val distance_sensor: DistanceSensors
-        get() = distance_sensor_store!!
-
+    private var distanceSensorStore: DistanceSensors? = null
+    private val distanceSensors: DistanceSensors
+        get() = distanceSensorStore!!
 
     override fun runOpMode() {
         this.ctx = Context(this, this.config)
@@ -36,15 +34,15 @@ abstract class DistanceTest : LinearOpMode() {
         this.wheels.initPlugin(this.ctx!!)
         this.wheels.init()
 
-        this.distance_sensor_store = DistanceSensors()
-        this.distance_sensor.initPlugin(this.ctx!!)
-        this.distance_sensor.init()
+        this.distanceSensorStore = DistanceSensors()
+        this.distanceSensors.initPlugin(this.ctx!!)
+        this.distanceSensors.init()
 
         while (opModeInInit()) {
             telemetry.addData("Status", "Initialized")
-            telemetry.addData("Left", this.distance_sensor.getLeft())
-            telemetry.addData("Back", this.distance_sensor.getBack())
-            telemetry.addData("Right", this.distance_sensor.getRight())
+            telemetry.addData("Left", this.distanceSensors.getLeft())
+            telemetry.addData("Back", this.distanceSensors.getBack())
+            telemetry.addData("Right", this.distanceSensors.getRight())
             telemetry.update()
         }
 
@@ -54,19 +52,30 @@ abstract class DistanceTest : LinearOpMode() {
 
         runtime.reset()
 
-        while (this.distance_sensor.getBack() < 9) {
+        while (this.distanceSensors.getBack() < 9) {
             wheels.powerDirection(2 * PI / 3, 0.5)
-        }; wheels.stop()
+        }
 
-        while (this.distance_sensor.getRight() > 12)
-            wheels.powerDirection(PI / 6, 0.5)
+        wheels.stop()
 
+        if (this.sideBlue) {
+            while (this.distanceSensors.getLeft() > 12) {
+                wheels.powerDirection((7 * PI) / 6, 0.5)
+            }
+        } else {
+            while (this.distanceSensors.getRight() > 12) {
+                wheels.powerDirection(PI / 6, 0.5)
+            }
+        }
     }
 }
 
-@Autonomous(name = "DistanceTest")
-class DistaneTestOne : DistanceTest() {
-    override val direction = PI / 2.0
+@Autonomous(name = "Distance Test Red")
+class DistanceTestRed : DistanceTest() {
+    override val sideBlue = false
 }
 
-
+@Autonomous(name = "Distance Test Blue")
+class DistanceTestBlue : DistanceTest() {
+    override val sideBlue = true
+}
