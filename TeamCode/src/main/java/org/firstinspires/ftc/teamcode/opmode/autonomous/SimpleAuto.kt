@@ -20,24 +20,12 @@ abstract class SimpleAuto: LinearOpMode() {
     private val wheels: Wheels
         get() = wheelsStore!!
 
-    /*
-    private var linear_slides_store: LinearSlides? = null
-    private val linear_slides: LinearSlides
-        get() = linear_slides_store!!
-     */
-
     override fun runOpMode() {
         this.ctx = Context(this, this.config)
 
         this.wheelsStore = Wheels()
         this.wheels.initPlugin(this.ctx!!)
         this.wheels.init()
-
-        /*
-        this.linear_slides_store = LinearSlides()
-        this.linear_slides.initPlugin(this.ctx!!)
-        this.linear_slides.init()
-         */
 
         telemetry.addData("Status", "Initialized")
         telemetry.update()
@@ -56,12 +44,12 @@ abstract class SimpleAuto: LinearOpMode() {
     }
 }
 
-@Autonomous(name = "Simple Auto Left")
+@Autonomous(name = "Simple Auto Left", group = "Simple Auto")
 class SimpleAutoLeft: SimpleAuto() {
     override val direction = PI / 2.0
 }
 
-@Autonomous(name = "Simple Auto Right")
+@Autonomous(name = "Simple Auto Right", group = "Simple Auto")
 class SimpleAutoRight: SimpleAuto() {
     override val direction = 3.0 * (PI / 2.0)
 }
