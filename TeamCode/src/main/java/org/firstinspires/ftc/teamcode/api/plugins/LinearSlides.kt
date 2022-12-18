@@ -17,10 +17,12 @@ private const val LINEAR_SLIDE_1_NAME = "linearSlide1"
 private const val CLAW_1_NAME = "claw1"
 // private const val CLAW_2_NAME = "claw2"
 
+private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.4) / (5800 - 5200)
+
 /**
  * Plugin for controlling the 2 linear slides on the robot.
  */
-class LinearSlides: Plugin() {
+class LinearSlides : Plugin() {
     init {
         linear_slides_store = this
     }
@@ -37,7 +39,8 @@ class LinearSlides: Plugin() {
     //    private set
 
     fun init() {
-        this.linearSlide1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
+        this.linearSlide1 =
+            this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
         // this.linearSlide2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_2_NAME)
 
         this.claw1 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_1_NAME)
@@ -55,7 +58,13 @@ class LinearSlides: Plugin() {
     fun powerSlide1(power: Double) {
         if (power > 0f && this.linearSlide1!!.currentPosition < 5800) {
             // Positive
-            this.linearSlide1!!.power = power
+            if (this.linearSlide1!!.currentPosition > 5000) {
+                // y - y1 = m(x - x1)
+                this.linearSlide1!!.power =
+                    LINEAR_SLIDE_REDUCTION_SLOPE * (this.linearSlide1!!.currentPosition - 5800)
+            } else {
+                this.linearSlide1!!.power = power
+            }
         } else if (power < 0f && this.linearSlide1!!.currentPosition > 20) {
             // Negative
             this.linearSlide1!!.power = power
