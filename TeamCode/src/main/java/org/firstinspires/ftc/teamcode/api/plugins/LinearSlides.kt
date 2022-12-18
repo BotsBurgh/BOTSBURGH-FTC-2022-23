@@ -53,10 +53,10 @@ class LinearSlides: Plugin() {
     }
 
     fun powerSlide1(power: Double) {
-        if (power > 0f && this.linearSlide1!!.currentPosition < 6090) {
+        if (power > 0f && this.linearSlide1!!.currentPosition < 5800) {
             // Positive
             this.linearSlide1!!.power = power
-        } else if (power < 0f && this.linearSlide1!!.currentPosition > 10) {
+        } else if (power < 0f && this.linearSlide1!!.currentPosition > 20) {
             // Negative
             this.linearSlide1!!.power = power
         } else {
