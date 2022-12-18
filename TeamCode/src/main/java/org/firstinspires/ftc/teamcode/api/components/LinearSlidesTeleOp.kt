@@ -30,9 +30,18 @@ class LinearSlidesTeleOp: Component() {
     override val cycle = fun(ctx: Context) {
         // The second linear slide is broken, so this prevents it from being used
         if (ctx.teleop.gamepad1.x) {
-            ctx.linear_slides.powerSlide1(-SLIDE_DOWN_POWER)
+            // Bypass restrictions with left DPad
+            if (ctx.teleop.gamepad1.dpad_left) {
+                ctx.linear_slides.powerSlide1Unchecked(-SLIDE_DOWN_POWER)
+            } else {
+                ctx.linear_slides.powerSlide1(-SLIDE_DOWN_POWER)
+            }
         } else if (ctx.teleop.gamepad1.y) {
-            ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
+            if (ctx.teleop.gamepad1.dpad_left) {
+                ctx.linear_slides.powerSlide1Unchecked(SLIDE_UP_POWER)
+            } else {
+                ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
+            }
         } else {
             ctx.linear_slides.stopSlide1()
         }
