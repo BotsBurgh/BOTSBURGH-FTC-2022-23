@@ -28,5 +28,6 @@ class TriRobot(teleop: LinearOpMode, cfg: Config): Robot(teleop, cfg) {
         // Plugins
             .registerPlugin(Wheels())
             .registerPlugin(LinearSlides())
+            .registerPlugin(DistanceSensors())
     }
 }
