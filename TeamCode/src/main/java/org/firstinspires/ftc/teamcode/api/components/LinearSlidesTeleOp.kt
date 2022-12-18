@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.api.arch.Context
 import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 
-const val SLIDE_UP_POWER = 0.3
-const val SLIDE_DOWN_POWER = 0.4
+const val SLIDE_UP_POWER = 0.8
+const val SLIDE_DOWN_POWER = 0.5
 const val CLAW_CLOSE_POSITION = 0.4
 const val CLAW_OPEN_POSITION = 1.0
 

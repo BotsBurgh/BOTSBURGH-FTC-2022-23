@@ -17,7 +17,7 @@ private const val LINEAR_SLIDE_1_NAME = "linearSlide1"
 private const val CLAW_1_NAME = "claw1"
 // private const val CLAW_2_NAME = "claw2"
 
-private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.4) / (5800 - 5200)
+private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (5800 - 5000)
 
 /**
  * Plugin for controlling the 2 linear slides on the robot.
