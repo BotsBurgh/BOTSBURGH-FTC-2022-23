@@ -21,7 +21,13 @@ class WheelsTeleOp: Component() {
         val gamepad = ctx.teleop.gamepad1
 
         // Get rotation power as right stick left and right movement
-        val rotationPower = 0.4 * -gamepad.right_stick_x.toDouble()
+        var rotationPower = 0.4 * -gamepad.right_stick_x.toDouble()
+
+        if (gamepad.left_bumper) {
+            rotationPower += 0.1
+        } else if (gamepad.right_bumper) {
+            rotationPower -= 0.1
+        }
 
         // Use joystick input
         val joyX = gamepad.left_stick_x.toDouble()
