@@ -6,7 +6,6 @@ import org.firstinspires.ftc.teamcode.api.arch.Plugin
 class Runtime(private val plugins: MutableList<Plugin> = ArrayList()) {
     val pre = LinkedList()
     val cycle = LinkedList()
-    val post = LinkedList()
 
     fun run(ctx: Context) {
         // Initialize plugins
@@ -19,7 +18,5 @@ class Runtime(private val plugins: MutableList<Plugin> = ArrayList()) {
         while (ctx.teleop.opModeIsActive()) {
             this.cycle.invokeRecursive(ctx)
         }
-
-        this.post.invokeRecursive(ctx)
     }
 }

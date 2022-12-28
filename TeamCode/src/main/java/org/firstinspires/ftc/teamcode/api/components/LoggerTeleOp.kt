@@ -15,9 +15,4 @@ class LoggerTeleOp: Component() {
         ctx.teleop.telemetry.addData("Status", "Running")
         ctx.teleop.telemetry.update()
     }
-
-    override val post = fun(ctx: Context) {
-        ctx.teleop.telemetry.addData("Status", "Finished")
-        ctx.teleop.telemetry.update()
-    }
 }

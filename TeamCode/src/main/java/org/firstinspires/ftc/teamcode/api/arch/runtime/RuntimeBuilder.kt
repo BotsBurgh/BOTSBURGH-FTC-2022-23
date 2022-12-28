@@ -19,8 +19,8 @@ class RuntimeBuilder {
         return this
     }
 
+    @Deprecated("The post phase has never worked in a standard TeleOp.", level = DeprecationLevel.ERROR)
     fun registerPost(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null): RuntimeBuilder {
-        this.post.add(PhaseData(func, order, runMode))
         return this
     }
 
@@ -31,10 +31,6 @@ class RuntimeBuilder {
 
         if (component.cycle != null) {
             this.registerCycle(component.cycle!!, order = component.order, runMode = component.runMode)
-        }
-
-        if (component.post != null) {
-            this.registerPost(component.post!!, order = component.order, runMode = component.runMode)
         }
 
         return this
@@ -58,12 +54,10 @@ class RuntimeBuilder {
 
         filter(this.pre)
         filter(this.cycle)
-        filter(this.post)
 
         // Register all functions, discarding unneeded data
         this.pre.forEach { runtime.pre.push(Link(it.func)) }
         this.cycle.forEach { runtime.cycle.push(Link(it.func)) }
-        this.post.forEach { runtime.post.push(Link(it.func)) }
 
         return runtime
     }
