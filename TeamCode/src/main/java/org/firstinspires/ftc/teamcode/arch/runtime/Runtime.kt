@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.api.arch.runtime
+package org.firstinspires.ftc.teamcode.arch.runtime
 
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.Plugin
 
 class Runtime(private val plugins: MutableList<Plugin> = ArrayList()) {
     val pre = LinkedList()

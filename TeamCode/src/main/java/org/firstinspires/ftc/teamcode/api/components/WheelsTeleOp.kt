@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.api.components
 
-import org.firstinspires.ftc.teamcode.api.arch.Component
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
+import org.firstinspires.ftc.teamcode.arch.Component
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
 import kotlin.math.*
 

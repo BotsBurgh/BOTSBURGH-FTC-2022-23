@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.api.arch.Config
-import org.firstinspires.ftc.teamcode.api.arch.Robot
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
-import org.firstinspires.ftc.teamcode.api.arch.runtime.RuntimeBuilder
+import org.firstinspires.ftc.teamcode.arch.Config
+import org.firstinspires.ftc.teamcode.arch.Robot
+import org.firstinspires.ftc.teamcode.arch.RunMode
+import org.firstinspires.ftc.teamcode.arch.runtime.RuntimeBuilder
 
 /**
  * This is an empty teleop for debugging purposes.

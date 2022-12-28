@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.api.arch
+package org.firstinspires.ftc.teamcode.arch
 
 abstract class Plugin {
     private var _ctx: Context? = null

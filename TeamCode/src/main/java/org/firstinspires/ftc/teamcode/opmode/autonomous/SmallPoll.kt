@@ -3,9 +3,9 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.api.arch.Config
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
+import org.firstinspires.ftc.teamcode.arch.Config
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.components.CLAW_CLOSE_POSITION
 import org.firstinspires.ftc.teamcode.api.components.CLAW_OPEN_POSITION
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides

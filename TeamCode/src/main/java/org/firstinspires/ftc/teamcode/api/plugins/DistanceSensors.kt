@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.qualcomm.robotcore.hardware.DistanceSensor
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.Plugin
 
 private var distance_sensors_store: DistanceSensors? = null
 
