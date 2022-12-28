@@ -20,7 +20,7 @@ class RuntimeBuilder {
     }
 
     @Deprecated("The post phase has never worked in a standard TeleOp.", level = DeprecationLevel.ERROR)
-    fun registerPost(func: CtxFunc, order: Byte = DEFAULT_ORDER, runMode: RunMode? = null): RuntimeBuilder {
+    fun registerPost(_func: CtxFunc, _order: Byte = DEFAULT_ORDER, _runMode: RunMode? = null): RuntimeBuilder {
         return this
     }
 
