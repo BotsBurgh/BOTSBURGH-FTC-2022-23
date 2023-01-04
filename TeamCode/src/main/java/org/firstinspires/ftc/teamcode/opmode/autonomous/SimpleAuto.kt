@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.arch.Config
@@ -45,11 +46,13 @@ abstract class SimpleAuto: LinearOpMode() {
 }
 
 @Autonomous(name = "Simple Auto Left", group = "Simple Auto")
+@Disabled
 class SimpleAutoLeft: SimpleAuto() {
     override val direction = PI / 2.0
 }
 
 @Autonomous(name = "Simple Auto Right", group = "Simple Auto")
+@Disabled
 class SimpleAutoRight: SimpleAuto() {
     override val direction = 3.0 * (PI / 2.0)
 }
