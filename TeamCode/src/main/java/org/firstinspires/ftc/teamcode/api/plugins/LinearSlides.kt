@@ -17,7 +17,7 @@ private const val LINEAR_SLIDE_1_NAME = "linearSlide1"
 private const val CLAW_1_NAME = "claw1"
 // private const val CLAW_2_NAME = "claw2"
 
-private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (5800 - 5000)
+private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (5600 - 5000)
 
 /**
  * Plugin for controlling the 2 linear slides on the robot.
@@ -56,12 +56,12 @@ class LinearSlides : Plugin() {
     }
 
     fun powerSlide1(power: Double) {
-        if (power > 0f && this.linearSlide1!!.currentPosition < 5800) {
+        if (power > 0f && this.linearSlide1!!.currentPosition < 5600) {
             // Positive
             if (this.linearSlide1!!.currentPosition > 5000) {
                 // y - y1 = m(x - x1)
                 this.linearSlide1!!.power =
-                    LINEAR_SLIDE_REDUCTION_SLOPE * (this.linearSlide1!!.currentPosition - 5800)
+                    LINEAR_SLIDE_REDUCTION_SLOPE * (this.linearSlide1!!.currentPosition - 5600)
             } else {
                 this.linearSlide1!!.power = power
             }

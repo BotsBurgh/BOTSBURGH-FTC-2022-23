@@ -28,18 +28,21 @@ class LinearSlidesTeleOp: Component() {
     }
 
     override val cycle = fun(ctx: Context) {
+
+        val joyX = ctx.teleop.gamepad2.left_stick_x.toDouble()
+        val joyY = -ctx.teleop.gamepad2.left_stick_y.toDouble()
+
         // The second linear slide is broken, so this prevents it from being used
-        if (ctx.teleop.gamepad1.x) {
-            ctx.linear_slides.powerSlide1(-SLIDE_DOWN_POWER)
-        } else if (ctx.teleop.gamepad1.y) {
-            ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
+        if (ctx.teleop.gamepad2.left_stick_y != 0f) {
+            ctx.linear_slides.powerSlide1(joyY)
+
         } else {
             ctx.linear_slides.stopSlide1()
         }
 
-        if (ctx.teleop.gamepad1.a) {
+        if (ctx.teleop.gamepad2.a) {
             ctx.linear_slides.positionClaw1(CLAW_CLOSE_POSITION)
-        } else if (ctx.teleop.gamepad1.b) {
+        } else if (ctx.teleop.gamepad2.b) {
             ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
         }
 

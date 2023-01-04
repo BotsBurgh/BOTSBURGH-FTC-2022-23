@@ -41,9 +41,9 @@ class WheelsTeleOp: Component() {
 
         // Combine the rotation and direction powers together
         val totalPower = Triple(
-            directionPower.first + rotationPower,
-            directionPower.second + rotationPower,
-            directionPower.third + rotationPower,
+                (directionPower.first) + rotationPower,
+                (directionPower.second) + rotationPower,
+                (directionPower.third) + rotationPower,
         )
 
         ctx.wheels.power(totalPower)
