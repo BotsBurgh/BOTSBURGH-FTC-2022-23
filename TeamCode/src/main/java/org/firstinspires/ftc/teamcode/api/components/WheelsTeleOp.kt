@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.api.components
 
-import org.firstinspires.ftc.teamcode.api.arch.Component
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
+import org.firstinspires.ftc.teamcode.arch.Component
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
 import kotlin.math.*
 
@@ -33,11 +33,13 @@ class WheelsTeleOp: Component() {
         val joyX = gamepad.left_stick_x.toDouble()
         val joyY = -gamepad.left_stick_y.toDouble()
 
-        // Convert xy coords to polar coords, then calculate power
-        val directionPower = ctx.wheels.calculatePower(
-            atan2(joyY, joyX) - (PI / 2.0),
-            sqrt(joyY * joyY + joyX * joyX)
-        )
+        // Angle
+        val joyRadians = atan2(joyY, joyX) - (PI / 2.0)
+        // Strength
+        val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
+
+        // Calculate power of each wheel from polar coordinates
+        val directionPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)
 
         // Combine the rotation and direction powers together
         val totalPower = Triple(

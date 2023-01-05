@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.api.arch.runtime
+package org.firstinspires.ftc.teamcode.arch.runtime
 
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.CtxFunc
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.CtxFunc
 
 class LinkedList {
     private var firstLink: Link? = null

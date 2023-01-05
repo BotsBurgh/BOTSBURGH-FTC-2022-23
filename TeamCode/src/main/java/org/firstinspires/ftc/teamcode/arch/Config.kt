@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.api.arch
+package org.firstinspires.ftc.teamcode.arch
 
 data class Config(
     val runMode: RunMode,

@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.opmode.teleop
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import org.firstinspires.ftc.teamcode.api.TriRobot
-import org.firstinspires.ftc.teamcode.api.arch.Config
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
+import org.firstinspires.ftc.teamcode.arch.Config
+import org.firstinspires.ftc.teamcode.arch.RunMode
 
 /**
  * This is the main teleop run during competition.

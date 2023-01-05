@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.api.arch
+package org.firstinspires.ftc.teamcode.arch
 
 abstract class Component {
     open val pre: CtxFunc? = null
     open val cycle: CtxFunc? = null
+
+    @Deprecated("The post phase has never worked in a standard TeleOp.", level = DeprecationLevel.ERROR)
     open val post: CtxFunc? = null
 
     open val order: Byte = DEFAULT_ORDER
