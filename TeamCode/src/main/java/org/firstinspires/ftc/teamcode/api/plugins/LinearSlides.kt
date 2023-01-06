@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.api.plugins
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.Plugin
 
 private var linear_slides_store: LinearSlides? = null
 
@@ -38,9 +38,8 @@ class LinearSlides : Plugin() {
     // var claw2: Servo? = null
     //    private set
 
-    fun init() {
-        this.linearSlide1 =
-            this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
+    override fun init() {
+        this.linearSlide1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
         // this.linearSlide2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_2_NAME)
 
         this.claw1 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_1_NAME)

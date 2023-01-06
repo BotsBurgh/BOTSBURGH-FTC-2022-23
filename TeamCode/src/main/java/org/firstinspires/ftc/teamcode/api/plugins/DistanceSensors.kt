@@ -22,7 +22,7 @@ class DistanceSensors: Plugin() {
     var distanceBack: DistanceSensor? = null
         private set
 
-    fun init() {
+    override fun init() {
         this.distanceLeft = this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceLeft")
         this.distanceRight = this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceRight")
         this.distanceBack = this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceBack")

@@ -36,7 +36,7 @@ class Wheels: Plugin() {
     /**
      * Initializes the motors from the given hardwareMap.
      */
-    fun init() {
+    override fun init() {
         this.motor1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_1_NAME)
         this.motor2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_2_NAME)
         this.motor3 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_3_NAME)

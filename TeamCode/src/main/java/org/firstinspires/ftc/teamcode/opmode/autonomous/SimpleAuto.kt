@@ -25,7 +25,7 @@ abstract class SimpleAuto: LinearOpMode() {
         this.ctx = Context(this, this.config)
 
         this.wheelsStore = Wheels()
-        this.wheels.initPlugin(this.ctx!!)
+        this.wheels._init(this.ctx!!)
         this.wheels.init()
 
         telemetry.addData("Status", "Initialized")

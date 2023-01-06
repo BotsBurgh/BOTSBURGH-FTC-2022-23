@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.api.components
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.api.arch.Component
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
+import org.firstinspires.ftc.teamcode.arch.Component
+import org.firstinspires.ftc.teamcode.arch.Context
+import org.firstinspires.ftc.teamcode.arch.RunMode
 
 const val SLIDE_UP_POWER = 0.8
 const val SLIDE_DOWN_POWER = 0.6

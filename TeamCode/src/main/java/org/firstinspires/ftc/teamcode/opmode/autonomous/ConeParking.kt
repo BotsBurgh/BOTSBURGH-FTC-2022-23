@@ -9,11 +9,9 @@ import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
-import org.opencv.core.Mat
 import org.openftc.easyopencv.OpenCvCameraFactory
 import org.openftc.easyopencv.OpenCvCameraRotation
 import org.openftc.easyopencv.OpenCvInternalCamera
-import org.openftc.easyopencv.OpenCvPipeline
 import kotlin.math.PI
 
 @Autonomous(name = "Cone Parking")
@@ -40,15 +38,15 @@ class ConeParking : LinearOpMode() {
         this.ctx = Context(this, this.config)
 
         this.wheelsStore = Wheels()
-        this.wheels.initPlugin(this.ctx!!)
+        this.wheels._init(this.ctx!!)
         this.wheels.init()
 
         this.linear_slides_store = LinearSlides()
-        this.linear_slides.initPlugin(this.ctx!!)
+        this.linear_slides._init(this.ctx!!)
         this.linear_slides.init()
 
         this.distance_sensor_store = DistanceSensors()
-        this.distance_sensor.initPlugin(this.ctx!!)
+        this.distance_sensor._init(this.ctx!!)
         this.distance_sensor.init()
 
         val cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier(

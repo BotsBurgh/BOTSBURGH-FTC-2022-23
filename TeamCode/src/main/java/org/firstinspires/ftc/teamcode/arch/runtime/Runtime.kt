@@ -9,7 +9,7 @@ class Runtime(private val plugins: MutableList<Plugin> = ArrayList()) {
 
     fun run(ctx: Context) {
         // Initialize plugins
-        plugins.forEach { it.initPlugin(ctx) }
+        plugins.forEach { it._init(ctx) }
 
         this.pre.invokeRecursive(ctx)
 
