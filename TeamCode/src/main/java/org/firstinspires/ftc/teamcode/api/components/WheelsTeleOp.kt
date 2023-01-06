@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.api.components
 
-import org.firstinspires.ftc.teamcode.arch.Component
-import org.firstinspires.ftc.teamcode.arch.Context
-import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.runloop.Component
 import kotlin.math.*
 
 /**
  * A component for controlling the wheels in a teleop context.
  */
 class WheelsTeleOp: Component() {
-    override val runMode = RunMode.TeleOp
-
     override val pre = fun(ctx: Context) {
         ctx.wheels.init()
     }

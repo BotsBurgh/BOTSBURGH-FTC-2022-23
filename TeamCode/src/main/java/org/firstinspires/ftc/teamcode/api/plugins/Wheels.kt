@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.arch.Context
-import org.firstinspires.ftc.teamcode.arch.Plugin
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.base.Plugin
 import kotlin.math.*
 
 private var wheels_store: Wheels? = null

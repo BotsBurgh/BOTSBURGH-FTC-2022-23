@@ -2,9 +2,8 @@ package org.firstinspires.ftc.teamcode.api.components
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
-import org.firstinspires.ftc.teamcode.arch.Component
-import org.firstinspires.ftc.teamcode.arch.Context
-import org.firstinspires.ftc.teamcode.arch.RunMode
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
 const val SLIDE_UP_POWER = 0.8
 const val SLIDE_DOWN_POWER = 0.6
@@ -15,8 +14,6 @@ const val CLAW_OPEN_POSITION = 1.0
  * Component for moving the linear slide in a teleop.
  */
 class LinearSlidesTeleOp: Component() {
-    override val runMode = RunMode.TeleOp
-
     override val pre = fun(ctx: Context) {
         ctx.linear_slides.init()
 
