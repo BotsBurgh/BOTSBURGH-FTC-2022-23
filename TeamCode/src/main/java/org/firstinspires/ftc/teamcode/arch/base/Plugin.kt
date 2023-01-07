@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.arch.base
 
+/**
+ * Abstract class that all plugins inherit.
+ */
 abstract class Plugin {
     private var _ctx: Context? = null
 

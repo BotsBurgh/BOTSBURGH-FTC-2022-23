@@ -11,21 +11,33 @@ class RunloopRuntimeBuilder: RuntimeBuilder {
     private val pre: MutableList<PhaseData> = ArrayList()
     private val cycle: MutableList<PhaseData> = ArrayList()
 
+    /**
+     * Registers a [Plugin].
+     */
     override fun registerPlugin(plugin: Plugin): RunloopRuntimeBuilder {
         this.plugins.add(plugin)
         return this
     }
 
+    /**
+     * Registers a [CtxFunc] to be run in the initialization phase.
+     */
     fun registerPre(func: CtxFunc, order: Byte = 0): RunloopRuntimeBuilder {
         this.pre.add(PhaseData(func, order))
         return this
     }
 
+    /**
+     * Registers a [CtxFunc] to be run during the main (repeating) phase.
+     */
     fun registerCycle(func: CtxFunc, order: Byte = 0): RunloopRuntimeBuilder {
         this.cycle.add(PhaseData(func, order))
         return this
     }
 
+    /**
+     * Registers a [Component].
+     */
     fun registerComponent(component: Component): RunloopRuntimeBuilder {
         if (component.pre != null) {
             this.registerPre(component.pre!!, order = component.order)
@@ -38,7 +50,10 @@ class RunloopRuntimeBuilder: RuntimeBuilder {
         return this
     }
 
-    override fun build(): IRuntime {
+    /**
+     * Builds a [RunloopRuntime] and returns it.
+     */
+    override fun build(): RunloopRuntime {
         val runtime = RunloopRuntime(this.plugins)
 
         this.pre.sortBy { it.order }
