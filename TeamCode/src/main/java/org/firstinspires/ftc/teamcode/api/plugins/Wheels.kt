@@ -114,18 +114,18 @@ class Wheels: Plugin() {
         val distance = (inches * 2.54 * 10.0) / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
         val motorPower = this.calculatePower(radians, 1.0)
 
-        var singleMotorPower = 0.0
-        var singleMotor: DcMotor? = null
+        var singleMotorPower: Double
+        var singleMotor: DcMotor
 
         if (abs(motorPower.first) >= abs(motorPower.second) && abs(motorPower.first) >= abs(motorPower.third)) {
             singleMotorPower = abs(motorPower.first)
-            singleMotor = ctx.wheels.motor1
+            singleMotor = ctx.wheels.motor1!!
         } else if (abs(motorPower.second) >= abs(motorPower.third)) {
             singleMotorPower = abs(motorPower.second)
-            singleMotor = ctx.wheels.motor2
+            singleMotor = ctx.wheels.motor2!!
         } else {
             singleMotorPower = abs(motorPower.third)
-            singleMotor = ctx.wheels.motor3
+            singleMotor = ctx.wheels.motor3!!
         }
 
         val singleMotorDistance = distance * singleMotorPower
