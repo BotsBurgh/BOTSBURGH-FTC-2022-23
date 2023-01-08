@@ -31,7 +31,7 @@ class WheelsTeleOp: Component() {
         val joyY = -gamepad.left_stick_y.toDouble()
 
         // Angle
-        val joyRadians = atan2(joyY, joyX) - (PI / 2.0)
+        val joyRadians = atan2(joyY, joyX)
         // Strength
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
