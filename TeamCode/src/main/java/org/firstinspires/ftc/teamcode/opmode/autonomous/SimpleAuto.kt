@@ -5,50 +5,43 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
-import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.api.plugins.wheels
+import org.firstinspires.ftc.teamcode.api.steps.LoggerAuto
+import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRobot
+import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRuntimeBuilder
 import kotlin.math.PI
 
-abstract class SimpleAuto: LinearOpMode() {
-    abstract val direction: Double
+private class SimpleAutoRobot(teleop: LinearOpMode, private val direction: Double): SequentialRobot(teleop) {
+    override fun configure(builder: SequentialRuntimeBuilder) {
+        builder
+            .registerPlugin(Wheels())
+            .registerStep(LoggerAuto())
+            .registerMain {
+                val runtime = ElapsedTime()
 
-    private var ctx: Context? = null
+                runtime.reset()
 
-    private var wheelsStore: Wheels? = null
-    private val wheels: Wheels
-        get() = wheelsStore!!
+                while (runtime.seconds() < 2.0 && it.teleop.opModeIsActive()) {
+                    it.wheels.powerDirection(this.direction, 0.5)
+                }
 
-    override fun runOpMode() {
-        this.ctx = Context(this)
-
-        this.wheelsStore = Wheels()
-        this.wheels._init(this.ctx!!)
-        this.wheels.init()
-
-        telemetry.addData("Status", "Initialized")
-        telemetry.update()
-
-        waitForStart()
-
-        val runtime = ElapsedTime()
-
-        runtime.reset()
-
-        while (runtime.seconds() < 2.0 && opModeIsActive()) {
-            this.wheels.powerDirection(this.direction, 0.5)
-        }
-
-        this.wheels.stop()
+                it.wheels.stop()
+            }
     }
 }
 
 @Autonomous(name = "Simple Auto Left", group = "Simple Auto")
 @Disabled
-class SimpleAutoLeft: SimpleAuto() {
-    override val direction = PI / 2.0
+class SimpleAutoLeft: LinearOpMode() {
+    override fun runOpMode() {
+        SimpleAutoRobot(this, PI / 2.0).run()
+    }
 }
 
-@Autonomous(name = "Simple Auto Right", group = "Simple Auto")
+@Autonomous(name = "Simple Auto Left", group = "Simple Auto")
 @Disabled
-class SimpleAutoRight: SimpleAuto() {
-    override val direction = 3.0 * (PI / 2.0)
+class SimpleAutoRight: LinearOpMode() {
+    override fun runOpMode() {
+        SimpleAutoRobot(this, 3.0 * (PI / 2.0)).run()
+    }
 }
