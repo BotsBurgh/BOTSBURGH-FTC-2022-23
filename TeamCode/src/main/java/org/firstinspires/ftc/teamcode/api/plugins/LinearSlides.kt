@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.api.plugins
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
-import org.firstinspires.ftc.teamcode.arch.Context
-import org.firstinspires.ftc.teamcode.arch.Plugin
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
 private var linear_slides_store: LinearSlides? = null
 
