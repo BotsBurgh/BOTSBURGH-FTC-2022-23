@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.autonomous
+package org.firstinspires.ftc.teamcode.api.plugins.opencv
 
 import org.opencv.core.Mat
 import org.openftc.easyopencv.OpenCvPipeline
@@ -10,9 +10,10 @@ class ConeScanPipeline: OpenCvPipeline() {
         Blue,
     }
 
-    var output = Color.Blue
+    var output = Color.Green
         private set
 
+    // Matrice phases
     private var contrasted = Mat()
 
     override fun processFrame(input: Mat?): Mat {
