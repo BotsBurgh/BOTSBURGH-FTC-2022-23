@@ -2,10 +2,9 @@ package org.firstinspires.ftc.teamcode.arch.runloop
 
 import org.firstinspires.ftc.teamcode.arch.base.CtxFunc
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
-import org.firstinspires.ftc.teamcode.arch.base.IRuntime
-import org.firstinspires.ftc.teamcode.arch.base.RuntimeBuilder
+import org.firstinspires.ftc.teamcode.arch.base.IRuntimeBuilder
 
-class RunloopRuntimeBuilder: RuntimeBuilder {
+class RunloopRuntimeBuilder: IRuntimeBuilder {
     private val plugins: MutableList<Plugin> = ArrayList()
 
     private val pre: MutableList<PhaseData> = ArrayList()

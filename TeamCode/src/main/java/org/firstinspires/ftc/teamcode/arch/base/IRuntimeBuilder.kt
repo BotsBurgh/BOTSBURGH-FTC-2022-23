@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.arch.base
 /**
  * Interface for all runtime builders.
  */
-interface RuntimeBuilder {
-    fun registerPlugin(plugin: Plugin): RuntimeBuilder
+interface IRuntimeBuilder {
+    fun registerPlugin(plugin: Plugin): IRuntimeBuilder
     fun build(): IRuntime
 }
