@@ -4,16 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.arch.Config
-import org.firstinspires.ftc.teamcode.arch.Context
-import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
+import org.firstinspires.ftc.teamcode.arch.base.Context
 import kotlin.math.PI
 
 abstract class SimpleAuto: LinearOpMode() {
     abstract val direction: Double
-
-    private val config = Config(runMode = RunMode.Autonomous)
 
     private var ctx: Context? = null
 
@@ -22,7 +18,7 @@ abstract class SimpleAuto: LinearOpMode() {
         get() = wheelsStore!!
 
     override fun runOpMode() {
-        this.ctx = Context(this, this.config)
+        this.ctx = Context(this)
 
         this.wheelsStore = Wheels()
         this.wheels._init(this.ctx!!)

@@ -3,12 +3,10 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.arch.Config
-import org.firstinspires.ftc.teamcode.arch.Context
-import org.firstinspires.ftc.teamcode.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
+import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.openftc.easyopencv.OpenCvCameraFactory
 import org.openftc.easyopencv.OpenCvCameraRotation
 import org.openftc.easyopencv.OpenCvInternalCamera
@@ -16,8 +14,6 @@ import kotlin.math.PI
 
 @Autonomous(name = "Cone Parking")
 class ConeParking : LinearOpMode() {
-    private val config = Config(runMode = RunMode.Autonomous)
-
     private var ctx: Context? = null
 
     private var wheelsStore: Wheels? = null
@@ -35,7 +31,7 @@ class ConeParking : LinearOpMode() {
 
 
     override fun runOpMode() {
-        this.ctx = Context(this, this.config)
+        this.ctx = Context(this)
 
         this.wheelsStore = Wheels()
         this.wheels._init(this.ctx!!)
