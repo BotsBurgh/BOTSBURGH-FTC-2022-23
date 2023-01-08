@@ -4,35 +4,37 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
-import org.openftc.easyopencv.OpenCvCameraFactory
-import org.openftc.easyopencv.OpenCvCameraRotation
-import org.openftc.easyopencv.OpenCvInternalCamera
+import org.firstinspires.ftc.teamcode.api.plugins.opencv.OpenCV
+import org.firstinspires.ftc.teamcode.api.plugins.opencv.opencv
+import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRobot
+import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRuntimeBuilder
+
+private class OpenCVTestRobot(teleop: LinearOpMode): SequentialRobot(teleop) {
+    override fun configure(builder: SequentialRuntimeBuilder) {
+        val pipeline = ConeScanPipeline()
+
+        builder
+            .registerPlugin(OpenCV(pipeline))
+            .registerPre {
+                // Camera streaming only works in the init (pre) phase
+
+                it.opencv.begin()
+
+                while (it.teleop.opModeInInit()) {
+                    it.teleop.telemetry.addData("Status", "Streaming during Pre")
+                    it.teleop.telemetry.addData("Color", pipeline.output)
+                    it.teleop.telemetry.update()
+                }
+
+                it.opencv.end()
+            }
+    }
+}
 
 @Autonomous(name = "Test OpenCV")
 @Disabled
 class TestOpenCV: LinearOpMode() {
     override fun runOpMode() {
-        val cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.packageName)
-        val camera = OpenCvCameraFactory.getInstance().createInternalCamera(
-            OpenCvInternalCamera.CameraDirection.BACK,
-            cameraMonitorViewId
-        )
-
-        val pipeline = ConeScanPipeline()
-        camera.setPipeline(pipeline)
-
-        camera.openCameraDevice()
-        camera.startStreaming(320, 240, OpenCvCameraRotation.UPSIDE_DOWN)
-
-        telemetry.addData("Status", "Initialized aa")
-        telemetry.update()
-
-        while (opModeInInit()) {
-            telemetry.addData("Color", pipeline.output)
-            telemetry.update()
-        }
-
-        camera.stopStreaming()
-        camera.closeCameraDevice()
+        OpenCVTestRobot(this).run()
     }
 }
