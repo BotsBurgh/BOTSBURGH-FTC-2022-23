@@ -18,6 +18,9 @@ private const val MOTOR_1_ANGLE: Double = 0.0
 private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
 private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 
+private const val ENCODER_RESOLUTION: Double = (((1.0 + (46.0 / 11.0))) * (1.0 + (46.0 / 11.0))) * 28.0 // ~751.8 ticks per full rotation
+private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In millimeters
+
 /**
  * A plugin for controlling the three wheels of the robot.
  */
@@ -105,4 +108,45 @@ class Wheels: Plugin() {
         magnitude * sin(MOTOR_2_ANGLE - radians),
         magnitude * sin(MOTOR_3_ANGLE - radians),
     )
+
+    fun driveEncoderDirection(radians: Double, inches: Double) {
+        // Inches -> cm -> mm -> rotations -> encoder ticks
+        val distance = (inches * 2.54 * 10.0) / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
+        val motorPower = this.calculatePower(radians, 1.0)
+
+        var singleMotorPower = 0.0
+        var singleMotor: DcMotor? = null
+
+        if (abs(motorPower.first) >= abs(motorPower.second) && abs(motorPower.first) >= abs(motorPower.third)) {
+            singleMotorPower = abs(motorPower.first)
+            singleMotor = ctx.wheels.motor1
+        } else if (abs(motorPower.second) >= abs(motorPower.third)) {
+            singleMotorPower = abs(motorPower.second)
+            singleMotor = ctx.wheels.motor2
+        } else {
+            singleMotorPower = abs(motorPower.third)
+            singleMotor = ctx.wheels.motor3
+        }
+
+        val singleMotorDistance = distance * singleMotorPower
+
+        // TODO: Temporary
+        val telemetry = ctx.teleop.telemetry
+
+        while (singleMotor!!.currentPosition < singleMotorDistance && ctx.teleop.opModeIsActive()) {
+            this.powerDirection(radians, 0.2)
+
+            telemetry.addData("Radians", radians)
+            telemetry.addData("Inches", inches)
+            telemetry.addData("Total Distance", distance)
+            telemetry.addData("Current Distance", singleMotor.currentPosition)
+            telemetry.addData("Motor Power", motorPower)
+            telemetry.addData("Single Motor Power", singleMotorPower)
+            telemetry.addData("Single Motor Distance", singleMotorDistance)
+
+            telemetry.update()
+        }
+
+        this.stop()
+    }
 }
