@@ -18,7 +18,7 @@ private const val MOTOR_1_ANGLE: Double = 0.0
 private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
 private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 
-private const val ENCODER_RESOLUTION: Double = (((1.0 + (46.0 / 11.0))) * (1.0 + (46.0 / 11.0))) * 28.0 // ~751.8 ticks per full rotation
+private const val ENCODER_RESOLUTION: Double = 537.689839572
 private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In millimeters
 
 /**
@@ -128,8 +128,8 @@ class Wheels: Plugin() {
         val distance = (inches * 2.54 * 10.0) / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
         val motorPower = this.calculatePower(radians, 1.0)
 
-        var singleMotorPower: Double
-        var singleMotor: DcMotor
+        val singleMotorPower: Double
+        val singleMotor: DcMotor
 
         if (abs(motorPower.first) >= abs(motorPower.second) && abs(motorPower.first) >= abs(motorPower.third)) {
             singleMotorPower = abs(motorPower.first)
@@ -147,8 +147,10 @@ class Wheels: Plugin() {
         // TODO: Temporary
         val telemetry = ctx.teleop.telemetry
 
+        this.resetEncoders()
+
         while (singleMotor!!.currentPosition < singleMotorDistance && ctx.teleop.opModeIsActive()) {
-            this.powerDirection(radians, 0.5)
+            this.powerDirection(radians, singleMotorPower)
 
             telemetry.addData("Radians", radians)
             telemetry.addData("Inches", inches)
