@@ -43,6 +43,10 @@ class Wheels: Plugin() {
         this.motor1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_1_NAME)
         this.motor2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_2_NAME)
         this.motor3 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_3_NAME)
+
+        this.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
     /**
@@ -103,6 +107,16 @@ class Wheels: Plugin() {
         this.power(0.0)
     }
 
+    fun resetEncoders() {
+        this.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        this.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        this.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+
+        this.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+    }
+
     fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
         magnitude * sin(MOTOR_1_ANGLE - radians),
         magnitude * sin(MOTOR_2_ANGLE - radians),
@@ -134,7 +148,7 @@ class Wheels: Plugin() {
         val telemetry = ctx.teleop.telemetry
 
         while (singleMotor!!.currentPosition < singleMotorDistance && ctx.teleop.opModeIsActive()) {
-            this.powerDirection(radians, 0.2)
+            this.powerDirection(radians, 0.5)
 
             telemetry.addData("Radians", radians)
             telemetry.addData("Inches", inches)
