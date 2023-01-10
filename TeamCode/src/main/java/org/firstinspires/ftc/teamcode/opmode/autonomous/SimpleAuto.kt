@@ -38,7 +38,7 @@ class SimpleAutoLeft: LinearOpMode() {
     }
 }
 
-@Autonomous(name = "Simple Auto Left", group = "Simple Auto")
+@Autonomous(name = "Simple Auto Right", group = "Simple Auto")
 @Disabled
 class SimpleAutoRight: LinearOpMode() {
     override fun runOpMode() {

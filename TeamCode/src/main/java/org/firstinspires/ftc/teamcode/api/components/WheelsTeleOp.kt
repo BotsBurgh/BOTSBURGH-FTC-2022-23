@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 import kotlin.math.*
 
-private const val DIRECTION_MULTIPLIER: Double = 15.0
+private const val DIRECTION_MULTIPLIER: Double = 100.0
 
 /**
  * A component for controlling the wheels in a teleop context.
@@ -20,12 +20,12 @@ class WheelsTeleOp : Component() {
         val gamepad = ctx.teleop.gamepad1
 
         // Get rotation power as right stick left and right movement
-        var rotationPower = 0.4 * -gamepad.right_stick_x.toDouble()
+        var rotationPower = 0.6 * -gamepad.right_stick_x.toDouble()
 
         if (gamepad.left_bumper) {
-            rotationPower += 0.1
+            rotationPower += 0.3
         } else if (gamepad.right_bumper) {
-            rotationPower -= 0.1
+            rotationPower -= 0.3
         }
 
         // Use joystick input
@@ -36,6 +36,7 @@ class WheelsTeleOp : Component() {
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
         // Strength
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
+
 
         // Calculate power of each wheel from polar coordinates
         val rawPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)

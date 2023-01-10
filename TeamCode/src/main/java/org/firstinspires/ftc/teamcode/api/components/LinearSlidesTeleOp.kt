@@ -31,7 +31,7 @@ class LinearSlidesTeleOp: Component() {
 
         // The second linear slide is broken, so this prevents it from being used
         if (ctx.teleop.gamepad2.left_stick_y != 0f) {
-            ctx.linear_slides.powerSlide1(joyY)
+            ctx.linear_slides.powerSlide1(joyY * 5)
 
         } else {
             ctx.linear_slides.stopSlide1()
