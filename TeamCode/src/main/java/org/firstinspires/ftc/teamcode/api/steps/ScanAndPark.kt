@@ -4,6 +4,7 @@ import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline.Color
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.opencv
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
+import org.firstinspires.ftc.teamcode.api.plugins.wheels_ex
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.sequential.Step
 import kotlin.math.PI
@@ -36,13 +37,13 @@ class ScanAndPark: Step() {
 
         // Driving //
 
-        ctx.wheels.driveEncoderDirection(LEFT, GRID_SIDE)
-        ctx.wheels.driveEncoderDirection(FORWARD, 3.0 * GRID_SIDE)
+        ctx.wheels_ex.driveEncoderDirection(LEFT, GRID_SIDE)
+        ctx.wheels_ex.driveEncoderDirection(FORWARD, 3.0 * GRID_SIDE)
 
         when (color) {
             Color.Red -> {}
-            Color.Green -> ctx.wheels.driveEncoderDirection(RIGHT, GRID_SIDE)
-            Color.Blue -> ctx.wheels.driveEncoderDirection(RIGHT, 2.0 * GRID_SIDE)
+            Color.Green -> ctx.wheels_ex.driveEncoderDirection(RIGHT, GRID_SIDE)
+            Color.Blue -> ctx.wheels_ex.driveEncoderDirection(RIGHT, 2.0 * GRID_SIDE)
         }
     }
 }
