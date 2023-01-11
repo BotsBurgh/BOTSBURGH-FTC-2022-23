@@ -20,7 +20,10 @@ private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 private const val ENCODER_RESOLUTION: Double = 537.689839572
 private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In centimeters
 
-class WheelsEx: Plugin() {
+/**
+ * An extension to the [Wheels] plugin that enables using the encoders to drive to a certain distance.
+ */
+class WheelsEx : Plugin() {
     init {
         wheelsExStore = this
     }
@@ -43,8 +46,6 @@ class WheelsEx: Plugin() {
     fun driveEncoderDirection(radians: Double, inches: Double) {
         this.stopAndResetEncoders()
 
-        val motorPower = ctx.wheels.calculatePower(radians, 0.5)
-
         val wheelVectors = constructWheelVectors(radians, inches)
         val targetPosition = toCartesian(radians, inches)
 
@@ -54,27 +55,18 @@ class WheelsEx: Plugin() {
             -inchesToEncoderTicks(wheelVectors.third.dot(targetPosition)),
         )
 
-        // TODO: Temporary
+        val motorPower = ctx.wheels.calculatePower(radians, 0.5)
         val t = ctx.teleop.telemetry
 
-        t.addData("Status", "Waiting")
-
-        t.addData("1 Current", ctx.wheels.motor1!!.currentPosition)
-        t.addData("2 Current", ctx.wheels.motor2!!.currentPosition)
-        t.addData("3 Current", ctx.wheels.motor3!!.currentPosition)
-
-        t.addData("1 Target", distanceNeeded.first)
-        t.addData("2 Target", distanceNeeded.second)
-        t.addData("3 Target", distanceNeeded.third)
-
-        t.update()
-
-        ctx.teleop.sleep(1500)
-
-        while (abs(distanceNeeded.second - ctx.wheels.motor2!!.currentPosition) > 15 && ctx.teleop.opModeIsActive()) {
+        while (!atLeastTwo(
+                abs(distanceNeeded.first - ctx.wheels.motor1!!.currentPosition) < 15,
+                abs(distanceNeeded.second - ctx.wheels.motor2!!.currentPosition) < 15,
+                abs(distanceNeeded.third - ctx.wheels.motor3!!.currentPosition) < 15,
+            ) && ctx.teleop.opModeIsActive()
+        ) {
             ctx.wheels.power(motorPower)
 
-            t.addData("Status", "Running please")
+            t.addData("Status", "Driving $inches inches at a $radians angle")
 
             t.addData("1 Current", ctx.wheels.motor1!!.currentPosition)
             t.addData("2 Current", ctx.wheels.motor2!!.currentPosition)
@@ -106,17 +98,12 @@ class WheelsEx: Plugin() {
             return toCartesian(motorDirection, 1.0)
         }
 
-        return Triple(directionSingle(MOTOR_1_ANGLE), directionSingle(MOTOR_2_ANGLE), directionSingle(
-            MOTOR_3_ANGLE))
+        return Triple(
+            directionSingle(MOTOR_1_ANGLE), directionSingle(MOTOR_2_ANGLE), directionSingle(
+                MOTOR_3_ANGLE
+            )
+        )
     }
-}
-
-private data class MutableTriple<A, B, C>(
-    var first: A,
-    var second: B,
-    var third: C,
-) {
-    override fun toString(): String = "($first, $second, $third)"
 }
 
 private data class Vec2(var x: Double, var y: Double) {
@@ -137,4 +124,12 @@ private fun toCartesian(radians: Double, magnitude: Double): Vec2 = Vec2(
     magnitude * sin(radians),
 )
 
-private fun inchesToEncoderTicks(inches: Double): Double = inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
+private fun inchesToEncoderTicks(inches: Double): Double =
+    inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
+
+// a has to be true, along with b or c, or both b and c must be true.
+private fun atLeastTwo(a: Boolean, b: Boolean, c: Boolean): Boolean = if (a) {
+    b || c
+} else {
+    b && c
+}
