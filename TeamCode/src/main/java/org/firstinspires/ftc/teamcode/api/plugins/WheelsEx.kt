@@ -39,6 +39,11 @@ class WheelsEx : Plugin() {
         ctx.wheels.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
+    /**
+     * Drives the robot in a direction for a given amount of inches.
+     *
+     * This function will block until the robot reaches its destination.
+     */
     fun driveEncoderDirection(radians: Double, inches: Double) {
         this.stopAndResetEncoders()
 
@@ -78,6 +83,9 @@ class WheelsEx : Plugin() {
         ctx.wheels.stop()
     }
 
+    /**
+     * Constructs 3 unit vectors for each wheel, given the direction they need to travel towards.
+     */
     private fun constructWheelVectors(radians: Double, inches: Double): Triple<Vec2, Vec2, Vec2> {
         val targetPosition = toCartesian(radians, inches)
 
@@ -95,17 +103,23 @@ class WheelsEx : Plugin() {
         }
 
         return Triple(
-            directionSingle(MOTOR_1_ANGLE), directionSingle(MOTOR_2_ANGLE), directionSingle(
-                MOTOR_3_ANGLE
-            )
+            directionSingle(MOTOR_1_ANGLE),
+            directionSingle(MOTOR_2_ANGLE),
+            directionSingle(MOTOR_3_ANGLE),
         )
     }
 }
 
+/**
+ * A vector of two [Double]s.
+ */
 private data class Vec2(var x: Double, var y: Double) {
     fun dot(rhs: Vec2): Double = this.x * rhs.x + this.y * rhs.y
 }
 
+/**
+ * Returns true if a given coordinate is left of a slope with an optional beta.
+ */
 private fun isLeftOf(coordinate: Vec2, slope: Double, beta: Double = 0.0): Boolean {
     // Is positive?
     return if (slope >= 0) {
@@ -115,15 +129,23 @@ private fun isLeftOf(coordinate: Vec2, slope: Double, beta: Double = 0.0): Boole
     }
 }
 
+/**
+ * Converts polar to cartesian (XY) coordinates.
+ */
 private fun toCartesian(radians: Double, magnitude: Double): Vec2 = Vec2(
     magnitude * cos(radians),
     magnitude * sin(radians),
 )
 
+/**
+ * Converts a given amount of inches to encoder ticks.
+ */
 private fun inchesToEncoderTicks(inches: Double): Double =
     inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
 
-// a has to be true, along with b or c, or both b and c must be true.
+/**
+ * Returns true if two of the three inputs are true.
+ */
 private fun atLeastTwo(a: Boolean, b: Boolean, c: Boolean): Boolean = if (a) {
     b || c
 } else {
