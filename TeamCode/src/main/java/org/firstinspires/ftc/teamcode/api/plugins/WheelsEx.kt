@@ -13,10 +13,6 @@ private var wheelsExStore: WheelsEx? = null
 val Context.wheels_ex
     get() = wheelsExStore!!
 
-private const val MOTOR_1_ANGLE: Double = 0.0
-private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
-private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
-
 private const val ENCODER_RESOLUTION: Double = 537.689839572
 private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In centimeters
 
