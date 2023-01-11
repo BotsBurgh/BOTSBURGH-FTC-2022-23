@@ -104,9 +104,13 @@ class Wheels: Plugin() {
         this.power(0.0)
     }
 
-    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
-        magnitude * sin(MOTOR_1_ANGLE - radians),
-        magnitude * sin(MOTOR_2_ANGLE - radians),
-        magnitude * sin(MOTOR_3_ANGLE - radians),
-    )
+    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double>  {
+        val adjustedRadians = radians - (PI / 2.0)
+
+        return Triple(
+            magnitude * sin(MOTOR_1_ANGLE - adjustedRadians),
+            magnitude * sin(MOTOR_2_ANGLE - adjustedRadians),
+            magnitude * sin(MOTOR_3_ANGLE - adjustedRadians),
+        )
+    }
 }
