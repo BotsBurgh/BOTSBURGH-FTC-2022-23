@@ -12,7 +12,7 @@ private var opencvStore: OpenCV? = null
 val Context.opencv
     get() = opencvStore!!
 
-class OpenCV(private var pipeline: OpenCvPipeline = DefaultPipeline()): Plugin() {
+class OpenCV(private var pipeline: OpenCvPipeline = DefaultPipeline()) : Plugin() {
     private var cameraMonitorViewId: Int? = null
     private var camera: OpenCvInternalCamera? = null
 
@@ -21,7 +21,11 @@ class OpenCV(private var pipeline: OpenCvPipeline = DefaultPipeline()): Plugin()
     }
 
     override fun init() {
-        this.cameraMonitorViewId = ctx.teleop.hardwareMap.appContext.resources.getIdentifier("cameraMonitorViewId", "id", ctx.teleop.hardwareMap.appContext.packageName)
+        this.cameraMonitorViewId = ctx.teleop.hardwareMap.appContext.resources.getIdentifier(
+            "cameraMonitorViewId",
+            "id",
+            ctx.teleop.hardwareMap.appContext.packageName
+        )
         this.camera = OpenCvCameraFactory.getInstance().createInternalCamera(
             OpenCvInternalCamera.CameraDirection.BACK,
             this.cameraMonitorViewId!!,

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 
 @TeleOp(name = "Linear Slide Encoder Test")
 @Disabled
-class LinearSlideEncoderTest: LinearOpMode() {
+class LinearSlideEncoderTest : LinearOpMode() {
     override fun runOpMode() {
         val linearSlide1 = hardwareMap.get(DcMotor::class.java, "linearSlide1")
         linearSlide1.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE

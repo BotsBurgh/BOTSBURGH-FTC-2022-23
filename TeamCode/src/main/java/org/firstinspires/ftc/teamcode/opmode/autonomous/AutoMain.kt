@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.api.TriRobotAutonomous
 
 @Autonomous(name = "Autonomous Main")
 @Disabled
-class AutoMain: LinearOpMode() {
+class AutoMain : LinearOpMode() {
     override fun runOpMode() {
         TriRobotAutonomous(this).run()
     }

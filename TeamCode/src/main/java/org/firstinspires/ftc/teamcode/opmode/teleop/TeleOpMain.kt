@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.api.TriRobotTeleOp
  * For an empty class used just for testing singular components, look at [EmptyTeleOp].
  */
 @TeleOp(name = "TeleOp Main")
-class TeleOpMain: LinearOpMode() {
+class TeleOpMain : LinearOpMode() {
     override fun runOpMode() {
         TriRobotTeleOp(this).run()
     }

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.IRobot
 
-open class SequentialRobot(val teleop: LinearOpMode): IRobot<SequentialRuntimeBuilder> {
+open class SequentialRobot(val teleop: LinearOpMode) : IRobot<SequentialRuntimeBuilder> {
     private val runtimeBuilder = SequentialRuntimeBuilder()
     private val ctx = Context(teleop)
 

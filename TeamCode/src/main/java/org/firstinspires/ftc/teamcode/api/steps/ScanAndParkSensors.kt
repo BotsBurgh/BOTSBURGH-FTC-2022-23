@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.sequential.Step
 import kotlin.math.PI
 
-class ScanAndParkSensors(private val pipeline: ConeScanPipeline = ConeScanPipeline()): Step() {
+class ScanAndParkSensors(private val pipeline: ConeScanPipeline = ConeScanPipeline()) : Step() {
     override val main = fun(ctx: Context) {
         val runtime = ElapsedTime()
 
@@ -36,7 +36,7 @@ class ScanAndParkSensors(private val pipeline: ConeScanPipeline = ConeScanPipeli
                 ctx.wheels.stop()
 
                 while (ctx.distance_sensors.getBack() < 30 && ctx.teleop.opModeIsActive()) {
-                    ctx.wheels.powerDirection(3 * PI / 4 , 0.5)
+                    ctx.wheels.powerDirection(3 * PI / 4, 0.5)
                 }
             }
 

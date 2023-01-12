@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.arch.base.Plugin
 /**
  * The runtime used for running components.
  */
-class RunloopRuntime(private val plugins: List<Plugin>): IRuntime {
+class RunloopRuntime(private val plugins: List<Plugin>) : IRuntime {
     val pre = ComponentList()
     val cycle = ComponentList()
 

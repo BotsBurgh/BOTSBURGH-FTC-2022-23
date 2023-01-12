@@ -91,7 +91,7 @@ class ConeParking : LinearOpMode() {
                 wheels.powerDirection(7 * PI / 6, 0.5)
             }; wheels.stop()
             while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
-                wheels.powerDirection(3 * PI / 4 , 0.5)
+                wheels.powerDirection(3 * PI / 4, 0.5)
             }
         } else if (coneColor == ConeScanPipeline.Color.Red) {
             while (runtime.seconds() < 1.25 && opModeIsActive()) {

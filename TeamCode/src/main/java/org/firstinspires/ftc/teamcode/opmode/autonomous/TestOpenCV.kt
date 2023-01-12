@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.api.plugins.opencv.opencv
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRobot
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRuntimeBuilder
 
-private class OpenCVTestRobot(teleop: LinearOpMode): SequentialRobot(teleop) {
+private class OpenCVTestRobot(teleop: LinearOpMode) : SequentialRobot(teleop) {
     override fun configure(builder: SequentialRuntimeBuilder) {
         val pipeline = ConeScanPipeline()
 
@@ -33,7 +33,7 @@ private class OpenCVTestRobot(teleop: LinearOpMode): SequentialRobot(teleop) {
 
 @Autonomous(name = "Test OpenCV")
 @Disabled
-class TestOpenCV: LinearOpMode() {
+class TestOpenCV : LinearOpMode() {
     override fun runOpMode() {
         OpenCVTestRobot(this).run()
     }

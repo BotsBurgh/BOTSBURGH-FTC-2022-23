@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.IRuntime
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
-class SequentialRuntime(private val plugins: List<Plugin>): IRuntime {
+class SequentialRuntime(private val plugins: List<Plugin>) : IRuntime {
     val pre = StepList()
     val main = StepList()
 

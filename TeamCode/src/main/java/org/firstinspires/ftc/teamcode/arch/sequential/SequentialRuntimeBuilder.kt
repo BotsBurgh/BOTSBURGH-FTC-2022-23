@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.arch.base.CtxFunc
 import org.firstinspires.ftc.teamcode.arch.base.IRuntimeBuilder
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
-class SequentialRuntimeBuilder: IRuntimeBuilder {
+class SequentialRuntimeBuilder : IRuntimeBuilder {
     private val plugins: MutableList<Plugin> = ArrayList()
 
     private val pre: MutableList<CtxFunc> = ArrayList()

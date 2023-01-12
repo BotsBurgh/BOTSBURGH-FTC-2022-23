@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.api.steps.ScanAndParkSensors
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRobot
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRuntimeBuilder
 
-class TriRobotAutonomous(teleop: LinearOpMode): SequentialRobot(teleop) {
+class TriRobotAutonomous(teleop: LinearOpMode) : SequentialRobot(teleop) {
     override fun configure(builder: SequentialRuntimeBuilder) {
         builder
 

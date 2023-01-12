@@ -15,16 +15,16 @@ import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRuntimeBuilder
  *
  * All components are registered below in [configure].
  */
-class TriRobotTeleOp(teleop: LinearOpMode): RunloopRobot(teleop) {
+class TriRobotTeleOp(teleop: LinearOpMode) : RunloopRobot(teleop) {
     override fun configure(builder: RunloopRuntimeBuilder) {
         builder
 
-        // Teleop components
+            // Teleop components
             .registerComponent(WheelsTeleOp())
             .registerComponent(LinearSlidesTeleOp())
             .registerComponent(LoggerTeleOp())
 
-        // Plugins
+            // Plugins
             .registerPlugin(Wheels())
             .registerPlugin(LinearSlides())
             .registerPlugin(DistanceSensors())

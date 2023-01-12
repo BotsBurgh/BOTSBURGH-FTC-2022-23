@@ -18,7 +18,7 @@ private const val GRID_SIDE: Double = 24.0
 /**
  * Scans cone color and parks in correct spot.
  */
-class ScanAndPark: Step() {
+class ScanAndPark : Step() {
     override val main = fun(ctx: Context) {
         // OpenCV cone scanning //
 

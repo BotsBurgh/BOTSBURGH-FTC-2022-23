@@ -22,7 +22,7 @@ const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 /**
  * A plugin for controlling the three wheels of the robot.
  */
-class Wheels: Plugin() {
+class Wheels : Plugin() {
     init {
         wheels_store = this
     }
@@ -108,7 +108,7 @@ class Wheels: Plugin() {
     /**
      * Calculates the power needed for each of the wheels, with motor1 at 0 radians.
      */
-    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double>  {
+    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> {
         return Triple(
             magnitude * sin(MOTOR_1_ANGLE - radians),
             magnitude * sin(MOTOR_2_ANGLE - radians),

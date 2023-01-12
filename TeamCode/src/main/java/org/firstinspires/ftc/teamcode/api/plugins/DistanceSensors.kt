@@ -10,7 +10,7 @@ private var distance_sensors_store: DistanceSensors? = null
 val Context.distance_sensors
     get() = distance_sensors_store!!
 
-class DistanceSensors: Plugin() {
+class DistanceSensors : Plugin() {
     init {
         distance_sensors_store = this
     }
@@ -23,9 +23,12 @@ class DistanceSensors: Plugin() {
         private set
 
     override fun init() {
-        this.distanceLeft = this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceLeft")
-        this.distanceRight = this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceRight")
-        this.distanceBack = this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceBack")
+        this.distanceLeft =
+            this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceLeft")
+        this.distanceRight =
+            this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceRight")
+        this.distanceBack =
+            this.ctx.teleop.hardwareMap.get(DistanceSensor::class.java, "distanceBack")
     }
 
     fun getLeft(): Double = distanceLeft!!.getDistance(DistanceUnit.INCH)

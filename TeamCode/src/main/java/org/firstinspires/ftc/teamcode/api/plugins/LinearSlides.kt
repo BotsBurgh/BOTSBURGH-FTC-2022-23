@@ -39,7 +39,8 @@ class LinearSlides : Plugin() {
     //    private set
 
     override fun init() {
-        this.linearSlide1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
+        this.linearSlide1 =
+            this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
         // this.linearSlide2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_2_NAME)
 
         this.claw1 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_1_NAME)

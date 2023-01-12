@@ -6,7 +6,7 @@ import org.openftc.easyopencv.OpenCvPipeline
 /**
  * An OpenCV pipeline that does not process or modify the input.
  */
-class DefaultPipeline: OpenCvPipeline() {
+class DefaultPipeline : OpenCvPipeline() {
     override fun processFrame(input: Mat?): Mat {
         return input!!
     }

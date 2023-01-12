@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.api.plugins.opencv
 import org.opencv.core.Mat
 import org.openftc.easyopencv.OpenCvPipeline
 
-class ConeScanPipeline: OpenCvPipeline() {
+class ConeScanPipeline : OpenCvPipeline() {
     enum class Color {
         Red,
         Green,

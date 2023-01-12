@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.api.components
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
-class LoggerTeleOp: Component() {
+class LoggerTeleOp : Component() {
     override val order = Byte.MAX_VALUE
 
     override val pre = fun(ctx: Context) {

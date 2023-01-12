@@ -11,7 +11,8 @@ import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRobot
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRuntimeBuilder
 import kotlin.math.PI
 
-private class SimpleAutoRobot(teleop: LinearOpMode, private val direction: Double): SequentialRobot(teleop) {
+private class SimpleAutoRobot(teleop: LinearOpMode, private val direction: Double) :
+    SequentialRobot(teleop) {
     override fun configure(builder: SequentialRuntimeBuilder) {
         builder
             .registerPlugin(Wheels())
@@ -32,7 +33,7 @@ private class SimpleAutoRobot(teleop: LinearOpMode, private val direction: Doubl
 
 @Autonomous(name = "Simple Auto Left", group = "Simple Auto")
 @Disabled
-class SimpleAutoLeft: LinearOpMode() {
+class SimpleAutoLeft : LinearOpMode() {
     override fun runOpMode() {
         SimpleAutoRobot(this, PI / 2.0).run()
     }
@@ -40,7 +41,7 @@ class SimpleAutoLeft: LinearOpMode() {
 
 @Autonomous(name = "Simple Auto Right", group = "Simple Auto")
 @Disabled
-class SimpleAutoRight: LinearOpMode() {
+class SimpleAutoRight : LinearOpMode() {
     override fun runOpMode() {
         SimpleAutoRobot(this, 3.0 * (PI / 2.0)).run()
     }

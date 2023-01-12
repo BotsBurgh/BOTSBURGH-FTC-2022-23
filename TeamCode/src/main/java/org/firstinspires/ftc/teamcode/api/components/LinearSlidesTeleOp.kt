@@ -13,7 +13,7 @@ const val CLAW_OPEN_POSITION = 1.0
 /**
  * Component for moving the linear slide in a teleop.
  */
-class LinearSlidesTeleOp: Component() {
+class LinearSlidesTeleOp : Component() {
     override val pre = fun(ctx: Context) {
         ctx.linear_slides.init()
 
