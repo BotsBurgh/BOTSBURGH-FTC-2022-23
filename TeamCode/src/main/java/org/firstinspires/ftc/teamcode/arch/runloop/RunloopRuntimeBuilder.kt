@@ -38,12 +38,12 @@ class RunloopRuntimeBuilder : IRuntimeBuilder {
      * Registers a [Component].
      */
     fun registerComponent(component: Component): RunloopRuntimeBuilder {
-        if (component.pre != null) {
-            this.registerPre(component.pre!!, order = component.order)
+        component.pre?.let {
+            this.registerPre(it, order = component.order)
         }
 
-        if (component.cycle != null) {
-            this.registerCycle(component.cycle!!, order = component.order)
+        component.cycle?.let {
+            this.registerCycle(it, order = component.order)
         }
 
         return this

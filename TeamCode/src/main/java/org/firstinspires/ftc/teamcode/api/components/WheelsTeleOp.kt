@@ -42,7 +42,6 @@ class WheelsTeleOp : Component() {
 
         // Calculate power of each wheel from polar coordinates
         val rawPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)
-        val multiplier = 15.0
 
         // Multi
         val directionPower = Triple(
