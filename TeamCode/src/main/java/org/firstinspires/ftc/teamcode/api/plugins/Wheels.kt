@@ -14,9 +14,9 @@ private const val MOTOR_1_NAME = "motor1"
 private const val MOTOR_2_NAME = "motor2"
 private const val MOTOR_3_NAME = "motor3"
 
-private const val MOTOR_1_ANGLE: Double = 0.0
-private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
-private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
+const val MOTOR_1_ANGLE: Double = 0.0
+const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
+const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 
 /**
  * A plugin for controlling the three wheels of the robot.
@@ -40,6 +40,10 @@ class Wheels: Plugin() {
         this.motor1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_1_NAME)
         this.motor2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_2_NAME)
         this.motor3 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_3_NAME)
+
+        this.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
     /**
@@ -101,12 +105,10 @@ class Wheels: Plugin() {
     }
 
     fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double>  {
-        val adjustedRadians = radians - (PI / 2.0)
-
         return Triple(
-            magnitude * sin(MOTOR_1_ANGLE - adjustedRadians),
-            magnitude * sin(MOTOR_2_ANGLE - adjustedRadians),
-            magnitude * sin(MOTOR_3_ANGLE - adjustedRadians),
+            magnitude * sin(MOTOR_1_ANGLE - radians),
+            magnitude * sin(MOTOR_2_ANGLE - radians),
+            magnitude * sin(MOTOR_3_ANGLE - radians),
         )
     }
 }
