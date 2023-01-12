@@ -13,7 +13,7 @@ class ConeScanPipeline : OpenCvPipeline() {
     var output = Color.Green
         private set
 
-    // Matrice phases
+    // Matrix phases
     private var contrasted = Mat()
 
     override fun processFrame(input: Mat?): Mat {
