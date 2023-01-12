@@ -82,26 +82,37 @@ class ConeParking : LinearOpMode() {
 
         runtime.reset()
 
-        if (coneColor == ConeScanPipeline.Color.Green) {
-            while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
-                wheels.powerDirection(2 * PI / 3 + 0.1, 0.5)
+        when (coneColor) {
+            ConeScanPipeline.Color.Green -> {
+                while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
+                    wheels.powerDirection(2 * PI / 3 + 0.1, 0.5)
+                }
             }
-        } else if (coneColor == ConeScanPipeline.Color.Blue) {
-            while (this.distance_sensor.getLeft() > 13 && opModeIsActive()) {
-                wheels.powerDirection(7 * PI / 6, 0.5)
-            }; wheels.stop()
-            while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
-                wheels.powerDirection(3 * PI / 4, 0.5)
-            }
-        } else if (coneColor == ConeScanPipeline.Color.Red) {
-            while (runtime.seconds() < 1.25 && opModeIsActive()) {
-                wheels.powerDirection(PI / 6, 0.5)
-            }; wheels.stop()
-            while (runtime.seconds() < 2.55 && opModeIsActive()) {
+            ConeScanPipeline.Color.Blue -> {
+                while (this.distance_sensor.getLeft() > 13 && opModeIsActive()) {
+                    wheels.powerDirection(7 * PI / 6, 0.5)
+                }
+
                 wheels.stop()
+
+                while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
+                    wheels.powerDirection(3 * PI / 4, 0.5)
+                }
             }
-            while (runtime.seconds() < 4.0 && opModeIsActive()) {
-                wheels.powerDirection((2 * PI / 3) - 0.1, 0.5)
+            ConeScanPipeline.Color.Red -> {
+                while (runtime.seconds() < 1.25 && opModeIsActive()) {
+                    wheels.powerDirection(PI / 6, 0.5)
+                }
+
+                wheels.stop()
+
+                while (runtime.seconds() < 2.55 && opModeIsActive()) {
+                    wheels.stop()
+                }
+
+                while (runtime.seconds() < 4.0 && opModeIsActive()) {
+                    wheels.powerDirection((2 * PI / 3) - 0.1, 0.5)
+                }
             }
         }
     }
