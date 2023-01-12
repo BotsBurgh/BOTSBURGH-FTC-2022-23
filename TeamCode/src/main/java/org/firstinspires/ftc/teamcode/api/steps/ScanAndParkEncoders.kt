@@ -37,7 +37,9 @@ class ScanAndPark: Step() {
         // Driving //
 
         ctx.wheels_ex.driveEncoderDirection(LEFT, GRID_SIDE)
+        ctx.teleop.sleep(1000)
         ctx.wheels_ex.driveEncoderDirection(FORWARD, 3.0 * GRID_SIDE)
+        ctx.teleop.sleep(1000)
 
         when (color) {
             Color.Red -> {}

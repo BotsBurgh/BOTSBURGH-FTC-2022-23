@@ -33,7 +33,7 @@ class WheelsTeleOp : Component() {
         val joyY = -gamepad.left_stick_y.toDouble()
 
         // Angle, adjusted so linear slide is front
-        val joyRadians = atan2(joyY, joyX) - (PI / 3.0)
+        val joyRadians = atan2(joyY, joyX) - (PI / 3.0) - (PI / 2.0)
         // Strength
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
 
