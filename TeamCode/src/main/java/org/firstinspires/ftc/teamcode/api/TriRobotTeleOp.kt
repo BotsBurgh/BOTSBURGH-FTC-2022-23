@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.firstinspires.ftc.teamcode.api.components.LinearSlidesTeleOp
 import org.firstinspires.ftc.teamcode.api.components.LoggerTeleOp
 import org.firstinspires.ftc.teamcode.api.components.WheelsTeleOp
-import org.firstinspires.ftc.teamcode.api.plugins.*
+import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
+import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
+import org.firstinspires.ftc.teamcode.api.plugins.Wheels
 import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRobot
 import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRuntimeBuilder
 

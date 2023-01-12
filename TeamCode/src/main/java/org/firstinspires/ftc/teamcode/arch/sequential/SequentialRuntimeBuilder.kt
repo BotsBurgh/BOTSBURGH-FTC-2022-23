@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.arch.sequential
 
 import org.firstinspires.ftc.teamcode.arch.base.CtxFunc
-import org.firstinspires.ftc.teamcode.arch.base.Plugin
 import org.firstinspires.ftc.teamcode.arch.base.IRuntimeBuilder
+import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
 class SequentialRuntimeBuilder: IRuntimeBuilder {
     private val plugins: MutableList<Plugin> = ArrayList()

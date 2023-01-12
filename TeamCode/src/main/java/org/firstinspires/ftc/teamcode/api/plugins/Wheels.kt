@@ -3,7 +3,8 @@ package org.firstinspires.ftc.teamcode.api.plugins
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.sin
 
 private var wheels_store: Wheels? = null
 
@@ -104,6 +105,9 @@ class Wheels: Plugin() {
         this.power(0.0)
     }
 
+    /**
+     * Calculates the power needed for each of the wheels, with motor1 at 0 radians.
+     */
     fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double>  {
         return Triple(
             magnitude * sin(MOTOR_1_ANGLE - radians),

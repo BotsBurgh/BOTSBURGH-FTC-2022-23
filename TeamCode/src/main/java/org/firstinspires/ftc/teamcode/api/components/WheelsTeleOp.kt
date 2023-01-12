@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.api.components
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 private const val DIRECTION_MULTIPLIER: Double = 100.0
 
