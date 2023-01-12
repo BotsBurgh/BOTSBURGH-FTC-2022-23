@@ -5,8 +5,6 @@ import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
-const val SLIDE_UP_POWER = 0.8
-const val SLIDE_DOWN_POWER = 0.6
 const val CLAW_CLOSE_POSITION = 0.4
 const val CLAW_OPEN_POSITION = 1.0
 
@@ -25,8 +23,6 @@ class LinearSlidesTeleOp : Component() {
     }
 
     override val cycle = fun(ctx: Context) {
-
-        val joyX = ctx.teleop.gamepad2.left_stick_x.toDouble()
         val joyY = -ctx.teleop.gamepad2.left_stick_y.toDouble()
 
         // The second linear slide is broken, so this prevents it from being used
@@ -42,7 +38,5 @@ class LinearSlidesTeleOp : Component() {
         } else if (ctx.teleop.gamepad2.b) {
             ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
         }
-
-        ctx.teleop.telemetry.addData("LS", ctx.linear_slides.linearSlide1!!.currentPosition)
     }
 }
