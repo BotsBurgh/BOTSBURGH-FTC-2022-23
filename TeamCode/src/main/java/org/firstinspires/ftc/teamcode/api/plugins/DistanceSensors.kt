@@ -5,14 +5,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
-private var distance_sensors_store: DistanceSensors? = null
+private var distanceSensorsStore: DistanceSensors? = null
 
 val Context.distance_sensors
-    get() = distance_sensors_store!!
+    get() = distanceSensorsStore!!
 
 class DistanceSensors : Plugin() {
     init {
-        distance_sensors_store = this
+        distanceSensorsStore = this
     }
 
     var distanceLeft: DistanceSensor? = null

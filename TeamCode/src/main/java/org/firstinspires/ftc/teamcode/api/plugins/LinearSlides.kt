@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
-private var linear_slides_store: LinearSlides? = null
+private var linearSlidesStore: LinearSlides? = null
 
 val Context.linear_slides
-    get() = linear_slides_store!!
+    get() = linearSlidesStore!!
 
 private const val LINEAR_SLIDE_1_NAME = "linearSlide1"
 // private const val LINEAR_SLIDE_2_NAME = "linearSlide2"
@@ -24,7 +24,7 @@ private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (6600 - 500
  */
 class LinearSlides : Plugin() {
     init {
-        linear_slides_store = this
+        linearSlidesStore = this
     }
 
     // Can be read by anything, but can only by set by itself (aka .init())
