@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
-const val CLAW_CLOSE_POSITION = 0.4
+const val CLAW_CLOSE_POSITION = 0.3
 const val CLAW_OPEN_POSITION = 1.0
 
 /**

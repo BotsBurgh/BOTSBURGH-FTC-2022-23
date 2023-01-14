@@ -7,7 +7,7 @@ import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-private const val DIRECTION_MULTIPLIER: Double = 100.0
+private const val DIRECTION_MULTIPLIER: Double = 1.0
 
 /**
  * A component for controlling the wheels in a teleop context.
