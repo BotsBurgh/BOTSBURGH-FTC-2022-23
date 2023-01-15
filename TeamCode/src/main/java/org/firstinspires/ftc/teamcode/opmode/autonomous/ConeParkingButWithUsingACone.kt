@@ -71,7 +71,7 @@ class ConeParkingButWithUsingACone : LinearOpMode() {
             telemetry.addData("Left", this.distance_sensor.getLeft())
             telemetry.addData("Back", this.distance_sensor.getBack())
             telemetry.addData("Right", this.distance_sensor.getRight())
-            telemetry.addData("Slide", this.distance_sensor.getSlide1())
+            //telemetry.addData("Slide", this.distance_sensor.getSlide1())
             telemetry.update()
         }
 
@@ -101,8 +101,8 @@ class ConeParkingButWithUsingACone : LinearOpMode() {
             wheels.stop();
         }  ;runtime.reset()
 
-        while(runtime.seconds() < 1.25 && opModeIsActive())  {
-            telemetry.addData("SlideDistance", distance_sensor.getSlide1())
+        while(runtime.seconds() < 1.1 && opModeIsActive())  {
+            //telemetry.addData("SlideDistance", distance_sensor.getSlide1())
             telemetry.update()
             wheels.power(0.25)
         }; wheels.stop(); runtime.reset()
@@ -114,7 +114,7 @@ class ConeParkingButWithUsingACone : LinearOpMode() {
 
         }; linear_slides.stopSlide1(); runtime.reset()
 
-        while(runtime.seconds() < 0.65 && opModeIsActive()) {
+        while(runtime.seconds() < 0.8 && opModeIsActive()) {
             wheels.powerDirection(7* PI / 4, 0.25)
         }; wheels.stop(); runtime.reset()
 
@@ -122,7 +122,7 @@ class ConeParkingButWithUsingACone : LinearOpMode() {
 
         }
 
-        linear_slides.claw1!!.position = 1.0
+        linear_slides.claw1!!.position = 0.6
 
         runtime.reset()
 
@@ -143,13 +143,22 @@ class ConeParkingButWithUsingACone : LinearOpMode() {
 
         } else if(coneColor == ConeScanPipeline.Color.Blue)  {
             runtime.reset()
-            while (runtime.seconds() < 4 && opModeIsActive()){
+            while (runtime.seconds() < 1.75 && opModeIsActive()){
                 wheels.powerDirection(PI, 0.25)
+            }
+
+            while(linear_slides.linearSlide1!!.currentPosition > -20 && opModeIsActive()) {
+                linear_slides.linearSlide1!!.power = -0.4
             }
         }   else if(coneColor == ConeScanPipeline.Color.Red) {
             runtime.reset()
-            while (runtime.seconds() < 1.5 && opModeIsActive()) {
+            while (runtime.seconds() < 1.25 && opModeIsActive()) {
                 wheels.powerDirection(0.0, 0.25)
+
+            }; wheels.stop()
+
+                while(linear_slides.linearSlide1!!.currentPosition > -20 && opModeIsActive()) {
+                linear_slides.linearSlide1!!.power = -0.4
             }
         }
 

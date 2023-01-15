@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
 const val CLAW_CLOSE_POSITION = 0.3
-const val CLAW_OPEN_POSITION = 1.0
+const val CLAW_OPEN_POSITION = 0.6
 
 /**
  * Component for moving the linear slide in a teleop.

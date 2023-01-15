@@ -21,8 +21,8 @@ class DistanceSensors : Plugin() {
         private set
     var distanceBack: DistanceSensor? = null
         private set
-    var distanceSlide1: DistanceSensor? = null
-        private set
+    //var distanceSlide1: DistanceSensor? = null
+    //    private set
 
     override fun init() {
         this.distanceLeft =
@@ -36,5 +36,5 @@ class DistanceSensors : Plugin() {
     fun getLeft(): Double = distanceLeft!!.getDistance(DistanceUnit.INCH)
     fun getRight(): Double = distanceRight!!.getDistance(DistanceUnit.INCH)
     fun getBack(): Double = distanceBack!!.getDistance(DistanceUnit.INCH)
-    fun getSlide1(): Double = distanceSlide1!!.getDistance(DistanceUnit.INCH)
+    //fun getSlide1(): Double = distanceSlide1!!.getDistance(DistanceUnit.INCH)
 }
