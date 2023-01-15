@@ -20,8 +20,8 @@ var wheelTwo: DcMotor? = null
 var wheelCurrentDistanceOne: Int? = null
 var wheelCurrentDistanceTwo: Int? = null
 
-var wheelFinalDistanceOne: Double? = null
-var wheelFinalDistanceTwo: Double? = null
+var wheelFinalDistanceOne: Int? = null
+var wheelFinalDistanceTwo: Int? = null
 
 var tick: Double? = null
 
@@ -48,6 +48,8 @@ class WheelEncoders : Plugin() {
         getWheelPosition(wheelOne)
         getWheelPosition(wheelTwo)
 
+        wheelFinalDistanceOne =  wheelCurrentDistanceOne
+
     }
 
     private fun wheelEncoderDirection(front: Double, inches: Double, power: Double) {
@@ -64,7 +66,6 @@ class WheelEncoders : Plugin() {
         }
 
         inchesToTicks(inches)
-
 
     }
 }
