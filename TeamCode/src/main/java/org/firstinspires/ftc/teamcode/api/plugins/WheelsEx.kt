@@ -13,8 +13,8 @@ private var wheelsExStore: WheelsEx? = null
 val Context.wheels_ex
     get() = wheelsExStore!!
 
-private const val ENCODER_RESOLUTION: Double = 537.689839572
-private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In centimeters
+    private const val ENCODER_RESOLUTION: Double = 537.689839572
+    private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In centimeters
 
 /**
  * An extension to the [Wheels] plugin that enables using the encoders to drive to a certain distance.
