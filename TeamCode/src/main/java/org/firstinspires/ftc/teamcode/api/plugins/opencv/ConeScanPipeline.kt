@@ -1,18 +1,19 @@
-package org.firstinspires.ftc.teamcode.opmode.autonomous
+package org.firstinspires.ftc.teamcode.api.plugins.opencv
 
 import org.opencv.core.Mat
 import org.openftc.easyopencv.OpenCvPipeline
 
-class ConeScanPipeline: OpenCvPipeline() {
+class ConeScanPipeline : OpenCvPipeline() {
     enum class Color {
         Red,
         Green,
         Blue,
     }
 
-    var output = Color.Blue
+    var output = Color.Green
         private set
 
+    // Matrix phases
     private var contrasted = Mat()
 
     override fun processFrame(input: Mat?): Mat {

@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.Plugin
-import kotlin.math.*
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.base.Plugin
+import kotlin.math.PI
+import kotlin.math.sin
 
 private var wheels_store: Wheels? = null
 
@@ -14,14 +15,14 @@ private const val MOTOR_1_NAME = "motor1"
 private const val MOTOR_2_NAME = "motor2"
 private const val MOTOR_3_NAME = "motor3"
 
-private const val MOTOR_1_ANGLE: Double = 0.0
-private const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
-private const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
+const val MOTOR_1_ANGLE: Double = 0.0
+const val MOTOR_2_ANGLE: Double = PI * (2.0 / 3.0)
+const val MOTOR_3_ANGLE: Double = 2.0 * MOTOR_2_ANGLE
 
 /**
  * A plugin for controlling the three wheels of the robot.
  */
-class Wheels: Plugin() {
+class Wheels : Plugin() {
     init {
         wheels_store = this
     }
@@ -36,10 +37,14 @@ class Wheels: Plugin() {
     /**
      * Initializes the motors from the given hardwareMap.
      */
-    fun init() {
+    override fun init() {
         this.motor1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_1_NAME)
         this.motor2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_2_NAME)
         this.motor3 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_3_NAME)
+
+        this.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        this.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
     /**
@@ -100,9 +105,14 @@ class Wheels: Plugin() {
         this.power(0.0)
     }
 
-    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> = Triple(
-        magnitude * sin(MOTOR_1_ANGLE - radians),
-        magnitude * sin(MOTOR_2_ANGLE - radians),
-        magnitude * sin(MOTOR_3_ANGLE - radians),
-    )
+    /**
+     * Calculates the power needed for each of the wheels, with motor1 at 0 radians.
+     */
+    fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> {
+        return Triple(
+            magnitude * sin(MOTOR_1_ANGLE - radians),
+            magnitude * sin(MOTOR_2_ANGLE - radians),
+            magnitude * sin(MOTOR_3_ANGLE - radians),
+        )
+    }
 }

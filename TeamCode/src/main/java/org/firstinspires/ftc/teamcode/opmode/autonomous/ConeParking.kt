@@ -3,23 +3,18 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.teamcode.api.arch.Config
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
-import org.opencv.core.Mat
+import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
+import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.openftc.easyopencv.OpenCvCameraFactory
 import org.openftc.easyopencv.OpenCvCameraRotation
 import org.openftc.easyopencv.OpenCvInternalCamera
-import org.openftc.easyopencv.OpenCvPipeline
 import kotlin.math.PI
 
 @Autonomous(name = "Cone Parking")
 class ConeParking : LinearOpMode() {
-    private val config = Config(runMode = RunMode.Autonomous)
-
     private var ctx: Context? = null
 
     private var wheelsStore: Wheels? = null
@@ -37,18 +32,20 @@ class ConeParking : LinearOpMode() {
 
 
     override fun runOpMode() {
-        this.ctx = Context(this, this.config)
+
+
+        this.ctx = Context(this)
 
         this.wheelsStore = Wheels()
-        this.wheels.initPlugin(this.ctx!!)
+        this.wheels._init(this.ctx!!)
         this.wheels.init()
 
         this.linear_slides_store = LinearSlides()
-        this.linear_slides.initPlugin(this.ctx!!)
+        this.linear_slides._init(this.ctx!!)
         this.linear_slides.init()
 
         this.distance_sensor_store = DistanceSensors()
-        this.distance_sensor.initPlugin(this.ctx!!)
+        this.distance_sensor._init(this.ctx!!)
         this.distance_sensor.init()
 
         val cameraMonitorViewId = hardwareMap.appContext.resources.getIdentifier(
@@ -89,24 +86,29 @@ class ConeParking : LinearOpMode() {
 
         if (coneColor == ConeScanPipeline.Color.Green) {
             while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
-                wheels.powerDirection(2 * PI / 3 + 0.1, 0.5)
+                wheels.powerDirection(PI, 0.5)
             }
         } else if (coneColor == ConeScanPipeline.Color.Blue) {
-            while (this.distance_sensor.getLeft() > 13 && opModeIsActive()) {
-                wheels.powerDirection(7 * PI / 6, 0.5)
+            while (this.distance_sensor.getLeft() > 12.75 && opModeIsActive()) {
+                wheels.powerDirection(PI / 2, 0.25)
             }; wheels.stop()
             while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
-                wheels.powerDirection(3 * PI / 4 , 0.5)
+                wheels.powerDirection(PI - 0.075, 0.25)
             }
         } else if (coneColor == ConeScanPipeline.Color.Red) {
-            while (runtime.seconds() < 1.25 && opModeIsActive()) {
-                wheels.powerDirection(PI / 6, 0.5)
+            while (distance_sensor.getLeft() > 36 && opModeIsActive()) {
+                wheels.powerDirection(3 * PI / 2, 0.25)
             }; wheels.stop()
             while (runtime.seconds() < 2.55 && opModeIsActive()) {
                 wheels.stop()
             }
+
+                while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
+                    wheels.powerDirection(3 * PI / 4, 0.5)
+                }
+
             while (runtime.seconds() < 4.0 && opModeIsActive()) {
-                wheels.powerDirection((2 * PI / 3) - 0.1, 0.5)
+                wheels.powerDirection(PI, 0.5)
             }
         }
     }

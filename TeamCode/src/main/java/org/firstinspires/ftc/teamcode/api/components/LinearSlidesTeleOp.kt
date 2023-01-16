@@ -1,22 +1,17 @@
 package org.firstinspires.ftc.teamcode.api.components
 
 import com.qualcomm.robotcore.hardware.DcMotor
-import org.firstinspires.ftc.teamcode.api.arch.Component
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
-const val SLIDE_UP_POWER = 0.8
-const val SLIDE_DOWN_POWER = 0.8
-const val CLAW_CLOSE_POSITION = 0.4
-const val CLAW_OPEN_POSITION = 1.0
+const val CLAW_CLOSE_POSITION = 0.3
+const val CLAW_OPEN_POSITION = 0.6
 
 /**
  * Component for moving the linear slide in a teleop.
  */
-class LinearSlidesTeleOp: Component() {
-    override val runMode = RunMode.TeleOp
-
+class LinearSlidesTeleOp : Component() {
     override val pre = fun(ctx: Context) {
         ctx.linear_slides.init()
 
@@ -28,30 +23,20 @@ class LinearSlidesTeleOp: Component() {
     }
 
     override val cycle = fun(ctx: Context) {
+        val joyY = -ctx.teleop.gamepad2.left_stick_y.toDouble()
+
         // The second linear slide is broken, so this prevents it from being used
-        if (ctx.teleop.gamepad1.x) {
-            // Bypass restrictions with left DPad
-            if (ctx.teleop.gamepad1.dpad_left) {
-                ctx.linear_slides.powerSlide1Unchecked(-SLIDE_DOWN_POWER)
-            } else {
-                ctx.linear_slides.powerSlide1(-SLIDE_DOWN_POWER)
-            }
-        } else if (ctx.teleop.gamepad1.y) {
-            if (ctx.teleop.gamepad1.dpad_left) {
-                ctx.linear_slides.powerSlide1Unchecked(SLIDE_UP_POWER)
-            } else {
-                ctx.linear_slides.powerSlide1(SLIDE_UP_POWER)
-            }
+        if (ctx.teleop.gamepad2.left_stick_y != 0f) {
+            ctx.linear_slides.powerSlide1(joyY * 5)
+
         } else {
             ctx.linear_slides.stopSlide1()
         }
 
-        if (ctx.teleop.gamepad1.a) {
+        if (ctx.teleop.gamepad2.a) {
             ctx.linear_slides.positionClaw1(CLAW_CLOSE_POSITION)
-        } else if (ctx.teleop.gamepad1.b) {
+        } else if (ctx.teleop.gamepad2.b) {
             ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
         }
-
-        ctx.teleop.telemetry.addData("LS", ctx.linear_slides.linearSlide1!!.currentPosition)
     }
 }

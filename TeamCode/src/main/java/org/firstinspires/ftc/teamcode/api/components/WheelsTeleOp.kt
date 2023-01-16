@@ -1,17 +1,18 @@
 package org.firstinspires.ftc.teamcode.api.components
 
-import org.firstinspires.ftc.teamcode.api.arch.Component
-import org.firstinspires.ftc.teamcode.api.arch.Context
-import org.firstinspires.ftc.teamcode.api.arch.RunMode
 import org.firstinspires.ftc.teamcode.api.plugins.wheels
-import kotlin.math.*
+import org.firstinspires.ftc.teamcode.arch.base.Context
+import org.firstinspires.ftc.teamcode.arch.runloop.Component
+import kotlin.math.PI
+import kotlin.math.atan2
+import kotlin.math.sqrt
+
+private const val DIRECTION_MULTIPLIER: Double = 1.0
 
 /**
  * A component for controlling the wheels in a teleop context.
  */
-class WheelsTeleOp: Component() {
-    override val runMode = RunMode.TeleOp
-
+class WheelsTeleOp : Component() {
     override val pre = fun(ctx: Context) {
         ctx.wheels.init()
     }
@@ -21,22 +22,32 @@ class WheelsTeleOp: Component() {
         val gamepad = ctx.teleop.gamepad1
 
         // Get rotation power as right stick left and right movement
-        var rotationPower = 0.4 * -gamepad.right_stick_x.toDouble()
+        var rotationPower = 0.6 * -gamepad.right_stick_x.toDouble()
 
         if (gamepad.left_bumper) {
-            rotationPower += 0.1
+            rotationPower += 0.3
         } else if (gamepad.right_bumper) {
-            rotationPower -= 0.1
+            rotationPower -= 0.3
         }
 
         // Use joystick input
         val joyX = gamepad.left_stick_x.toDouble()
         val joyY = -gamepad.left_stick_y.toDouble()
 
-        // Convert xy coords to polar coords, then calculate power
-        val directionPower = ctx.wheels.calculatePower(
-            atan2(joyY, joyX) - (PI / 2.0),
-            sqrt(joyY * joyY + joyX * joyX)
+        // Angle, adjusted so linear slide is front
+        val joyRadians = atan2(joyY, joyX) - (PI / 3.0) - (PI / 2.0)
+        // Strength
+        val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
+
+
+        // Calculate power of each wheel from polar coordinates
+        val rawPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)
+
+        // Multi
+        val directionPower = Triple(
+            rawPower.first * DIRECTION_MULTIPLIER,
+            rawPower.second * DIRECTION_MULTIPLIER,
+            rawPower.third * DIRECTION_MULTIPLIER,
         )
 
         // Combine the rotation and direction powers together
