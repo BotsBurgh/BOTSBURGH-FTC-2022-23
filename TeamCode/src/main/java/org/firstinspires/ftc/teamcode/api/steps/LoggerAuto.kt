@@ -1,16 +1,15 @@
 package org.firstinspires.ftc.teamcode.api.steps
 
+import org.firstinspires.ftc.teamcode.api.plugins.logger
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.sequential.Step
 
 class LoggerAuto : Step() {
     override val pre = fun(ctx: Context) {
-        ctx.teleop.telemetry.addData("Status", "Initializing")
-        ctx.teleop.telemetry.update()
+        ctx.logger.info("Initializing")
     }
 
     override val main = fun(ctx: Context) {
-        ctx.teleop.telemetry.addData("Status", "Beginning to run")
-        ctx.teleop.telemetry.update()
+        ctx.logger.info("Running")
     }
 }
