@@ -7,11 +7,6 @@ import kotlin.math.pow
  * A vector of two numbers.
  */
 data class Vec2(var x: Double, var y: Double) {
-    /**
-     * Also known as `splat`, this initializes a Vec2 with both [x] and [y] as the given [n].
-     */
-    constructor(n: Double) : this(n, n)
-
     companion object {
         /**
          * All zeroes.
@@ -22,6 +17,13 @@ data class Vec2(var x: Double, var y: Double) {
          * All ones.
          */
         val ONE: Vec2 = Vec2(1.0, 1.0)
+
+        /**
+         * This initializes a [Vec2] where [x] and [y] are both [n].
+         * 
+         * (This is shorthand for `Vec2(n, n)`.)
+         */
+        fun splat(n: Double) = Vec2(n, n)
     }
 
     // Vec2 by Vec2
