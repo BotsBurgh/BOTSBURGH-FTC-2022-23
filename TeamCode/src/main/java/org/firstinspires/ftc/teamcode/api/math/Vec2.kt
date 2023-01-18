@@ -19,8 +19,33 @@ data class Vec2(var x: Double, var y: Double) {
         val ONE: Vec2 = Vec2(1.0, 1.0)
 
         /**
+         * All negative ones.
+         */
+        val NEG_ONE: Vec2 = Vec2(-1.0, -1.0)
+
+        /**
+         * A unit vector pointing along the positive x axis.
+         */
+        val UNIT_X: Vec2 = Vec2(1.0, 0.0)
+
+        /**
+         * A unit vector pointing along the positive y axis.
+         */
+        val UNIT_Y: Vec2 = Vec2(0.0, 1.0)
+
+        /**
+         * A unit vector pointing along the negative x axis.
+         */
+        val UNIT_NEG_X: Vec2 = Vec2(-1.0, 0.0)
+
+        /**
+         * A unit vector pointing along the negative y axis.
+         */
+        val UNIT_NEG_Y: Vec2 = Vec2(0.0, 1.0)
+
+        /**
          * This initializes a [Vec2] where [x] and [y] are both [n].
-         * 
+         *
          * (This is shorthand for `Vec2(n, n)`.)
          */
         fun splat(n: Double) = Vec2(n, n)
@@ -99,4 +124,9 @@ data class Vec2(var x: Double, var y: Double) {
      * Returns a vector where x and y are raised to the power of [n].
      */
     fun pow(n: Double) = Vec2(this.x.pow(n), this.y.pow(n))
+
+    /**
+     * Returns the slope of a vector with `y / x`.
+     */
+    fun slope() = this.y / this.x
 }
