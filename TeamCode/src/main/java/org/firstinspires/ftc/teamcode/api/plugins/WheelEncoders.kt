@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
@@ -16,7 +17,10 @@ private const val ENCODER_RESOLUTION: Double = 537.689839572
 private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In centimeters
 private const val GEAR_Ratio: Double = 19.0/2.0/1/0
 
-
+@Config
+object WheelEncodersConfig {
+    @JvmField var TICKS_PER_INCH: Int = 42
+}
 
 class WheelEncoders : Plugin() {
     var wheelOne: DcMotor? = null
@@ -36,7 +40,7 @@ class WheelEncoders : Plugin() {
 
     private fun countPerInch(inches: Double) {
         //tick = inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
-        tick = 42 * inches
+        tick = WheelEncodersConfig.TICKS_PER_INCH * inches
     }
 
     private fun getWheelPosition(wheel: DcMotor?) {
