@@ -7,6 +7,11 @@ import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
+private object WheelsConfig {
+    @JvmField var ROTATION_MULTIPLIER: Double = 0.6
+    @JvmField var PRECISE_ROTATION_AMOUNT: Double = 0.3
+}
+
 /**
  * A component for controlling the wheels in a teleop context.
  */
@@ -20,12 +25,12 @@ class WheelsTeleOp : Component() {
         val gamepad = ctx.teleop.gamepad1
 
         // Get rotation power as right stick left and right movement
-        var rotationPower = 0.6 * -gamepad.right_stick_x.toDouble()
+        var rotationPower = WheelsConfig.ROTATION_MULTIPLIER * -gamepad.right_stick_x.toDouble()
 
         if (gamepad.left_bumper) {
-            rotationPower += 0.3
+            rotationPower += WheelsConfig.PRECISE_ROTATION_AMOUNT
         } else if (gamepad.right_bumper) {
-            rotationPower -= 0.3
+            rotationPower -= WheelsConfig.PRECISE_ROTATION_AMOUNT
         }
 
         // Use joystick input
@@ -36,7 +41,6 @@ class WheelsTeleOp : Component() {
         val joyRadians = atan2(joyY, joyX) - (PI / 3.0) - (PI / 2.0)
         // Strength
         val joyMagnitude = sqrt(joyY * joyY + joyX * joyX)
-
 
         // Calculate power of each wheel from polar coordinates
         val directionPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)

@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
 @Config
 private object LinearSlideConfig {
+    @JvmField var SLIDE_MOVEMENT_MULTIPLIER: Double = 5.0
+
     @JvmField var CLAW_CLOSE_POSITION: Double = 0.3
     @JvmField var CLAW_OPEN_POSITION: Double = 0.6
 }
@@ -22,17 +24,13 @@ class LinearSlidesTeleOp : Component() {
         // Reset encoders
         ctx.linear_slides.linearSlide1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         ctx.linear_slides.linearSlide1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
-
-        ctx.teleop.telemetry.addData("LS", ctx.linear_slides.linearSlide1!!.currentPosition)
     }
 
     override val cycle = fun(ctx: Context) {
         val joyY = -ctx.teleop.gamepad2.left_stick_y.toDouble()
 
-        // The second linear slide is broken, so this prevents it from being used
         if (ctx.teleop.gamepad2.left_stick_y != 0f) {
-            ctx.linear_slides.powerSlide1(joyY * 5)
-
+            ctx.linear_slides.powerSlide1(joyY * LinearSlideConfig.SLIDE_MOVEMENT_MULTIPLIER)
         } else {
             ctx.linear_slides.stopSlide1()
         }
