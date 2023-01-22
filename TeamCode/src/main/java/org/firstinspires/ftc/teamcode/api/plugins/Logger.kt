@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
+import com.acmerobotics.dashboard.FtcDashboard
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
@@ -12,13 +14,19 @@ val Context.logger
 /**
  * Easy interface for working with [Telemetry].
  */
-class Logger(private val level: Level = Level.Info): Plugin() {
+class Logger(private val level: Level = Level.Info) : Plugin() {
     init {
         loggerStore = this
     }
 
     // Lazy load on first call, to avoid null handling
-    private val t: Telemetry by lazy { ctx.teleop.telemetry }
+    private val t: Telemetry by lazy {
+        /*
+        The MultipleTelemetry stores each telemetry in a list, then distributes commands to each.
+        This may be inefficient for only two different telemetries, so we may just manually mimic it instead.
+         */
+        MultipleTelemetry(ctx.teleop.telemetry, FtcDashboard.getInstance().telemetry)
+    }
 
     /**
      * Adds data to the screen in the format of `$caption: $msg`.
