@@ -19,5 +19,7 @@ class TriRobotAutonomous(teleop: LinearOpMode) : SequentialRobot(teleop) {
             // Steps
             .registerStep(LoggerAuto())
             .registerStep(ScanAndParkSensors())
+
+            //
     }
 }
