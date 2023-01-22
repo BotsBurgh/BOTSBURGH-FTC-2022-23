@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.api.components
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.teamcode.api.plugins.linear_slides
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
-const val CLAW_CLOSE_POSITION = 0.3
-const val CLAW_OPEN_POSITION = 0.6
+@Config
+private object LinearSlideConfig {
+    @JvmField var CLAW_CLOSE_POSITION: Double = 0.3
+    @JvmField var CLAW_OPEN_POSITION: Double = 0.6
+}
 
 /**
  * Component for moving the linear slide in a teleop.
@@ -34,9 +38,9 @@ class LinearSlidesTeleOp : Component() {
         }
 
         if (ctx.teleop.gamepad2.a) {
-            ctx.linear_slides.positionClaw1(CLAW_CLOSE_POSITION)
+            ctx.linear_slides.positionClaw1(LinearSlideConfig.CLAW_CLOSE_POSITION)
         } else if (ctx.teleop.gamepad2.b) {
-            ctx.linear_slides.positionClaw1(CLAW_OPEN_POSITION)
+            ctx.linear_slides.positionClaw1(LinearSlideConfig.CLAW_OPEN_POSITION)
         }
     }
 }
