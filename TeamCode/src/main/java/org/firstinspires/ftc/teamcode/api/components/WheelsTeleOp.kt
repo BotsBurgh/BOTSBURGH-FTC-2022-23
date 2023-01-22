@@ -7,8 +7,6 @@ import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-private const val DIRECTION_MULTIPLIER: Double = 1.0
-
 /**
  * A component for controlling the wheels in a teleop context.
  */
@@ -41,14 +39,7 @@ class WheelsTeleOp : Component() {
 
 
         // Calculate power of each wheel from polar coordinates
-        val rawPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)
-
-        // Multi
-        val directionPower = Triple(
-            rawPower.first * DIRECTION_MULTIPLIER,
-            rawPower.second * DIRECTION_MULTIPLIER,
-            rawPower.third * DIRECTION_MULTIPLIER,
-        )
+        val directionPower = ctx.wheels.calculatePower(joyRadians, joyMagnitude)
 
         // Combine the rotation and direction powers together
         val totalPower = Triple(
