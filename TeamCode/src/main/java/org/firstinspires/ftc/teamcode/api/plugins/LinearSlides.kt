@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
@@ -12,12 +13,15 @@ val Context.linear_slides
     get() = linearSlidesStore!!
 
 private const val LINEAR_SLIDE_1_NAME = "linearSlide1"
-// private const val LINEAR_SLIDE_2_NAME = "linearSlide2"
-
 private const val CLAW_1_NAME = "claw1"
-// private const val CLAW_2_NAME = "claw2"
 
 private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (6600 - 5000)
+
+@Config
+private object LinearSlideConfig {
+    @JvmField var CLAW_CLOSE_POSITION: Double = 0.3
+    @JvmField var CLAW_OPEN_POSITION: Double = 0.6
+}
 
 /**
  * Plugin for controlling the 2 linear slides on the robot.
@@ -27,32 +31,24 @@ class LinearSlides : Plugin() {
         linearSlidesStore = this
     }
 
-    // Can be read by anything, but can only by set by itself (aka .init())
+    // Can be read by anything, but can only by set by itself
     var linearSlide1: DcMotor? = null
         private set
-    // var linearSlide2: DcMotor? = null
-    //     private set
 
     var claw1: Servo? = null
         private set
-    // var claw2: Servo? = null
-    //    private set
 
     override fun init() {
         this.linearSlide1 =
             this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_1_NAME)
-        // this.linearSlide2 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, LINEAR_SLIDE_2_NAME)
 
         this.claw1 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_1_NAME)
-        // this.claw2 = this.ctx.teleop.hardwareMap.get(Servo::class.java, CLAW_2_NAME)
 
         // Prevent slide from moving down due to gravity as best as possible.
         this.linearSlide1!!.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        // this.linearSlide2!!.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
         // Reverse slide direction
         this.linearSlide1!!.direction = DcMotorSimple.Direction.REVERSE
-        // this.linearSlide2!!.direction = DcMotorSimple.Direction.REVERSE
     }
 
     fun powerSlide1(power: Double) {
@@ -82,17 +78,11 @@ class LinearSlides : Plugin() {
         this.claw1!!.position = position
     }
 
-    /*
-    fun powerSlide2(power: Double) {
-        this.linearSlide2!!.power = power
+    fun openClaw1() {
+        this.positionClaw1(LinearSlideConfig.CLAW_OPEN_POSITION)
     }
 
-    fun stopSlide2() {
-        this.powerSlide2(0.0)
+    fun closeClaw1() {
+        this.positionClaw1(LinearSlideConfig.CLAW_CLOSE_POSITION)
     }
-
-    fun positionClaw2(position: Double) {
-        this.claw2!!.position = position
-    }
-     */
 }
