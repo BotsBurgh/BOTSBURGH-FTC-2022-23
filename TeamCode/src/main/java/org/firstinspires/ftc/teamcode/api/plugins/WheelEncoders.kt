@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
 
 import kotlin.math.PI
+import kotlin.math.round
 
 private var wheelsEncoderStore: WheelEncoders? = null
 
@@ -29,7 +30,7 @@ class WheelEncoders : Plugin() {
     var wheelCurrentDistanceOne: Double? = null
     var wheelCurrentDistanceTwo: Double? = null
 
-    var wheelFinalDistanceOne: Double? = null
+    var wheelFinalDistanceOne:  Double? = null
     var wheelFinalDistanceTwo: Double? = null
 
     var tick: Double? = null
@@ -41,6 +42,7 @@ class WheelEncoders : Plugin() {
     private fun countPerInch(inches: Double) {
         //tick = inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
         tick = WheelEncodersConfig.TICKS_PER_INCH * inches
+        round(tick!!)
     }
 
     private fun getWheelPosition(wheel: DcMotor?) {
@@ -80,14 +82,40 @@ class WheelEncoders : Plugin() {
 
          calculateTotalDistance(inches)
          getWheelPosition(wheelOne)
+         getWheelPosition(wheelTwo)
+         //wheelOne!!.targetPosition = 1000
+
+         //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
+
+         //while (abs(wheelOne!!.currentPosition - 1000) > 10)
+
+         //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
+            //while (wheelFinalDistanceOne!! >= wheelCurrentDistanceOne!!) {
+            //    ctx.teleop.telemetry.addData("wheel current", wheelCurrentDistanceOne)
+            //    ctx.teleop.telemetry.update()
+            //    ctx.wheels.powerDirection(PI, 0.25)
+            //    getWheelPosition(wheelOne)
+            //}; ctx.wheels.stop()
+
+         wheelOne!!.targetPosition = wheelFinalDistanceOne!!.toInt()
+         wheelTwo!!.targetPosition = wheelFinalDistanceTwo!!.toInt()
+         ctx.teleop.telemetry.addData("ettet", wheelOne!!.targetPosition)
+         //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
+
+         //ctx.teleop.sleep(1000)
+
+         //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+         while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!! || wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
+             if (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
+                 wheelOne!!.power = power
+             } else if (wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
+                 wheelTwo!!.power = power
+             }
 
 
-            while (wheelFinalDistanceOne!! >= wheelCurrentDistanceOne!!) {
-                ctx.teleop.telemetry.addData("wheel current", wheelCurrentDistanceOne)
-                ctx.teleop.telemetry.update()
-                ctx.wheels.powerDirection(PI, 0.25)
-                getWheelPosition(wheelOne)
-            }; ctx.wheels.stop()
+         }
+
 
 
 
