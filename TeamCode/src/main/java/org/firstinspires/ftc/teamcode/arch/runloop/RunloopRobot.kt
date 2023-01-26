@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.arch.base.IRobot
  */
 open class RunloopRobot(val teleop: LinearOpMode) : IRobot<RunloopRuntimeBuilder> {
     private val runtimeBuilder = RunloopRuntimeBuilder()
-    private val ctx = Context(teleop)
+    protected val ctx = Context(teleop)
 
     init {
         this.configure(this.runtimeBuilder)

@@ -7,8 +7,12 @@ import org.firstinspires.ftc.teamcode.api.components.WheelsTeleOp
 import org.firstinspires.ftc.teamcode.api.plugins.DistanceSensors
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
+import org.firstinspires.ftc.teamcode.api.plugins.logger.Logger
+import org.firstinspires.ftc.teamcode.api.plugins.logger.logger
 import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRobot
 import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRuntimeBuilder
+import java.io.File
+import java.io.FileWriter
 
 /**
  * This is the main robot configuration for the three-wheeled robot.
@@ -25,8 +29,19 @@ class TriRobotTeleOp(teleop: LinearOpMode) : RunloopRobot(teleop) {
             .registerComponent(LoggerTeleOp())
 
             // Plugins
+            .registerPlugin(Logger())
             .registerPlugin(Wheels())
             .registerPlugin(LinearSlides())
             .registerPlugin(DistanceSensors())
+    }
+
+    override fun run() {
+        try {
+            super.run()
+        } finally {
+            FileWriter(File("/FIRST/data_collected.csv")).use {
+                it.write(ctx.logger.dataCollector.export())
+            }
+        }
     }
 }
