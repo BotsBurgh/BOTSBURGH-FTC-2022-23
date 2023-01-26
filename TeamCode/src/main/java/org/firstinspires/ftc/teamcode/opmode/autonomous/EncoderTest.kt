@@ -71,9 +71,9 @@ class EncoderTest :LinearOpMode() {
 
         waitForStart()
 
-        wheel_encoder.wheelEncoderDirection(PI, 18.0, 0.15)
-        telemetry.addData("finalPosition", wheel_encoder.wheelFinalDistanceOne)
-        telemetry.update()
+        wheel_encoder.wheelEncoderDirection(PI, 24.0 * 20.0, 0.1)
+
+
 
 
 

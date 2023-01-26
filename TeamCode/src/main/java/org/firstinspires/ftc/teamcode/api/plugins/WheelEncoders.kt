@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
 
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.round
 
 private var wheelsEncoderStore: WheelEncoders? = null
@@ -16,27 +18,39 @@ val Context.wheel_encoders
 
 private const val ENCODER_RESOLUTION: Double = 537.689839572
 private const val WHEEL_CIRCUMFERENCE: Double = 9.6 * PI // In centimeters
-private const val GEAR_Ratio: Double = 19.0/2.0/1/0
+private const val GEAR_Ratio: Double = 19.0 / 2.0 / 1
 
 @Config
 object WheelEncodersConfig {
-    @JvmField var TICKS_PER_INCH: Int = 42
+    @JvmField
+    var TICKS_PER_INCH: Int = 42
+    var TICK_PER_DEGREE: Int = 10
 }
 
 class WheelEncoders : Plugin() {
     var wheelOne: DcMotor? = null
     var wheelTwo: DcMotor? = null
+    var wheelThree: DcMotor? = null
 
     var wheelCurrentDistanceOne: Double? = null
     var wheelCurrentDistanceTwo: Double? = null
+    var wheelCurrentDistanceThree: Double? = null
 
-    var wheelFinalDistanceOne:  Double? = null
+    var wheelFinalDistanceOne: Double? = null
     var wheelFinalDistanceTwo: Double? = null
+    var wheelFinalDistanceThree: Double? = null
 
     var tick: Double? = null
 
     init {
         wheelsEncoderStore = this
+    }
+
+    fun stopAndReset() {
+        ctx.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        ctx.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        ctx.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        ctx.wheels.stop()
     }
 
     private fun countPerInch(inches: Double) {
@@ -45,12 +59,18 @@ class WheelEncoders : Plugin() {
         round(tick!!)
     }
 
+    private fun countPerDegree(degrees: Double) {
+        tick = WheelEncodersConfig.TICK_PER_DEGREE * degrees
+        round(degrees!!)
+    }
+
     private fun getWheelPosition(wheel: DcMotor?) {
         if (wheel == wheelOne) {
-            wheelCurrentDistanceOne = wheelOne!!.currentPosition.toDouble() * -1
+            wheelCurrentDistanceOne = abs(wheelOne!!.currentPosition.toDouble())
         } else if (wheel == wheelTwo) {
-            wheelCurrentDistanceTwo = wheelTwo!!.currentPosition.toDouble()
-
+            wheelCurrentDistanceTwo = abs(wheelTwo!!.currentPosition.toDouble())
+        } else if (wheel == wheelThree) {
+            wheelCurrentDistanceThree = abs(wheelThree!!.currentPosition.toDouble())
         }
     }
 
@@ -58,20 +78,37 @@ class WheelEncoders : Plugin() {
 
         getWheelPosition(wheelOne)
         getWheelPosition(wheelTwo)
+        getWheelPosition(wheelTwo)
 
         countPerInch(inches)
 
 
         wheelFinalDistanceOne = wheelCurrentDistanceOne!! + tick!!
         wheelFinalDistanceTwo = wheelCurrentDistanceTwo!! + tick!!
+        wheelFinalDistanceThree = 0.0
 
     }
 
-     fun wheelEncoderDirection(front: Double, inches: Double, power: Double) {
+    private fun calculateTotalDegrees(degrees: Double) {
+        getWheelPosition(wheelOne)
+        getWheelPosition(wheelTwo)
+        getWheelPosition(wheelThree)
+
+        countPerDegree(degrees)
+
+        wheelFinalDistanceOne = wheelCurrentDistanceOne!! + tick!!
+        wheelFinalDistanceTwo = wheelCurrentDistanceTwo!! + tick!!
+        wheelFinalDistanceThree = wheelCurrentDistanceThree!! + tick!!
+    }
+
+    fun wheelEncoderDirection(front: Double, inches: Double, power: Double) {
         //three fronts are PI (camera), 7 * PI / 4 (Slide 1), and Pi  / 4 (Slide 2)
         if (front == PI) {
             wheelOne = ctx.wheels.motor2
             wheelTwo = ctx.wheels.motor3
+            wheelThree = ctx.wheels.motor1
+            wheelOne!!.direction = DcMotorSimple.Direction.REVERSE
+            wheelThree!!.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         } else if (front == 7 * PI / 4) {
             wheelOne = ctx.wheels.motor1
             wheelTwo = ctx.wheels.motor2
@@ -80,47 +117,74 @@ class WheelEncoders : Plugin() {
             wheelTwo = ctx.wheels.motor2
         }
 
-         calculateTotalDistance(inches)
-         getWheelPosition(wheelOne)
-         getWheelPosition(wheelTwo)
-         //wheelOne!!.targetPosition = 1000
+        calculateTotalDistance(inches)
+        getWheelPosition(wheelOne)
+        getWheelPosition(wheelTwo)
+        getWheelPosition(wheelThree)
+        //wheelOne!!.targetPosition = 1000
 
-         //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
+        //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
 
-         //while (abs(wheelOne!!.currentPosition - 1000) > 10)
+        //while (abs(wheelOne!!.currentPosition - 1000) > 10)
 
-         //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
 
-            //while (wheelFinalDistanceOne!! >= wheelCurrentDistanceOne!!) {
-            //    ctx.teleop.telemetry.addData("wheel current", wheelCurrentDistanceOne)
-            //    ctx.teleop.telemetry.update()
-            //    ctx.wheels.powerDirection(PI, 0.25)
-            //    getWheelPosition(wheelOne)
-            //}; ctx.wheels.stop()
+        //while (wheelFinalDistanceOne!! >= wheelCurrentDistanceOne!!) {
+        //    ctx.teleop.telemetry.addData("wheel current", wheelCurrentDistanceOne)
+        //    ctx.teleop.telemetry.update()
+        //    ctx.wheels.powerDirection(PI, 0.25)
+        //    getWheelPosition(wheelOne)
+        //}; ctx.wheels.stop()
 
-         wheelOne!!.targetPosition = wheelFinalDistanceOne!!.toInt()
-         wheelTwo!!.targetPosition = wheelFinalDistanceTwo!!.toInt()
-         ctx.teleop.telemetry.addData("ettet", wheelOne!!.targetPosition)
-         //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
+        wheelOne!!.targetPosition = wheelFinalDistanceOne!!.toInt()
+        wheelTwo!!.targetPosition = wheelFinalDistanceTwo!!.toInt()
+        wheelThree!!.targetPosition = wheelFinalDistanceThree!!.toInt()
 
-         //ctx.teleop.sleep(1000)
+        //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
 
-         //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
-         while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!! || wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
-             if (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
-                 wheelOne!!.power = power
-             } else if (wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
-                 wheelTwo!!.power = power
-             }
+        //ctx.teleop.sleep(1000)
 
+        //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!! || wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
+            if (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
 
-         }
+                wheelOne!!.power = power
+            }
 
+            if (wheelThree!!.currentPosition != 0) {
+                if (wheelThree!!.currentPosition > 0) {
+                    wheelThree!!.power = -0.1
+                } else if (wheelThree!!.currentPosition < 0) {
+                    wheelThree!!.power = 0.1
+                } else {
+                    wheelThree!!.power = 0.0
+                }
+            }
+            ctx.teleop.telemetry.addData("WheelOne Final Tick", wheelFinalDistanceOne)
+            ctx.teleop.telemetry.addData("WheelOne Current Position", wheelOne!!.currentPosition)
+            ctx.teleop.telemetry.addData("WheelTwo Final Tick", wheelFinalDistanceTwo)
+            ctx.teleop.telemetry.addData("WheelTwo Current Position", wheelTwo!!.currentPosition)
+            ctx.teleop.telemetry.addData("WheelThree Final Tick", wheelFinalDistanceThree)
+            ctx.teleop.telemetry.addData("WheelThree Current Position", ctx.wheels.motor1!!.currentPosition)
+            ctx.teleop.telemetry.update()
 
+        }; stopAndReset()
 
+        fun wheelEncoderSpin (degrees: Double, power: Double) {
+            countPerDegree(degrees)
 
+            getWheelPosition(wheelOne)
+            getWheelPosition(wheelTwo)
+            getWheelPosition(wheelThree)
 
+            wheelFinalDistanceOne = wheelCurrentDistanceOne!! + tick!!
+            wheelFinalDistanceTwo = wheelCurrentDistanceTwo!! + tick!!
+            wheelFinalDistanceThree = wheelCurrentDistanceThree!! + tick!!
 
+            while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
+                ctx.wheels.power(power)
+            }; stopAndReset()
+        }
 
     }
 }
