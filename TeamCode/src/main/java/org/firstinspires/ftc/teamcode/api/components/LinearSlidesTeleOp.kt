@@ -7,11 +7,8 @@ import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
 @Config
-private object LinearSlideConfig {
+private object LinearSlideTeleOpConfig {
     @JvmField var SLIDE_MOVEMENT_MULTIPLIER: Double = 5.0
-
-    @JvmField var CLAW_CLOSE_POSITION: Double = 0.3
-    @JvmField var CLAW_OPEN_POSITION: Double = 0.6
 }
 
 /**
@@ -30,15 +27,15 @@ class LinearSlidesTeleOp : Component() {
         val joyY = -ctx.teleop.gamepad2.left_stick_y.toDouble()
 
         if (ctx.teleop.gamepad2.left_stick_y != 0f) {
-            ctx.linear_slides.powerSlide1(joyY * LinearSlideConfig.SLIDE_MOVEMENT_MULTIPLIER)
+            ctx.linear_slides.powerSlide1(joyY * LinearSlideTeleOpConfig.SLIDE_MOVEMENT_MULTIPLIER)
         } else {
             ctx.linear_slides.stopSlide1()
         }
 
         if (ctx.teleop.gamepad2.a) {
-            ctx.linear_slides.positionClaw1(LinearSlideConfig.CLAW_CLOSE_POSITION)
+            ctx.linear_slides.closeClaw1()
         } else if (ctx.teleop.gamepad2.b) {
-            ctx.linear_slides.positionClaw1(LinearSlideConfig.CLAW_OPEN_POSITION)
+            ctx.linear_slides.openClaw1()
         }
     }
 }
