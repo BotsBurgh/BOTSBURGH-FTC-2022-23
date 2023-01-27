@@ -39,9 +39,7 @@ class TriRobotTeleOp(teleop: LinearOpMode) : RunloopRobot(teleop) {
         try {
             super.run()
         } finally {
-            FileWriter(File("/FIRST/data_collected.csv")).use {
-                it.write(ctx.logger.dataCollector.export())
-            }
+            ctx.logger.close()
         }
     }
 }

@@ -1,53 +1,37 @@
-package org.firstinspires.ftc.teamcode.api.utils
-
 import org.firstinspires.ftc.teamcode.api.utils.itertools.map
 import org.firstinspires.ftc.teamcode.api.utils.itertools.separatedBy
+import java.io.Writer
 
-class CSVWriter(header: Header) {
-    constructor(vararg header: String) : this(Header(*header))
-
+class CSVWriter(header: Header, private val writer: Writer) {
     val header = header.toArray()
-    private val data = emptyList<Array<String>>().toMutableList()
 
-    val width: Int
-        get() = header.size
-    val height: Int
-        get() = data.size
+    init {
+        writer.write(stringifyRow(header.iterator()) + '\n')
+    }
 
-    fun addRow(row: Array<String>) {
+    fun writeRow(row: Array<String>) {
         if (row.size != header.size) {
             throw IllegalArgumentException("Attempted to add row of size '${row.size}', when header row is of size '${header.size}'")
         }
 
-        data.add(row)
+        writer.write(stringifyRow(row.iterator()) + '\n')
     }
 
-    fun addRow(row: List<String>) = addRow(Array(row.size) {
+    fun writeRow(row: List<String>) = writeRow(Array(row.size) {
         row[it]
     })
 
     /**
-     * Same as [addRow], but it uses `vararg`s.
+     * Same as [writeRow], but it uses `vararg`s.
      *
      * # Implementation Detail
      *
      * In Kotlin on the JVM, the `vararg` and [Array] parameters compile to the same thing. This means we can't do
      * function overloading for both, which is why we've suffixed a `V` instead.
      */
-    fun addRowV(vararg row: String) = addRow(Array(row.size) {
+    fun writeRowV(vararg row: String) = writeRow(Array(row.size) {
         row[it]
     })
-
-    override fun toString(): String {
-        // Stringify the header row, then convert it to a string builder
-        val response = StringBuilder(stringifyRow(header.iterator()) + '\n')
-
-        for (row in data) {
-            response.append(stringifyRow(row.iterator()) + '\n')
-        }
-
-        return response.toString()
-    }
 
     private fun stringifyRow(row: Iterator<String>): String {
         val res = StringBuilder()
@@ -95,5 +79,7 @@ class CSVWriter(header: Header) {
                 header[it]
             }
         }
+
+        operator fun iterator() = header.iterator()
     }
 }
