@@ -27,7 +27,7 @@ class WheelsEx : Plugin() {
     /**
      * Stops the wheels and resets their encoder values.
      */
-    private fun stopAndResetEncoders() {
+    fun stopAndResetEncoders() {
         ctx.wheels.stop()
 
         ctx.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER

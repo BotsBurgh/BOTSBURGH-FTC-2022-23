@@ -47,13 +47,7 @@ class WheelEncoders : Plugin() {
     init {
         wheelsEncoderStore = this
     }
-
-    fun stopAndReset() {
-        ctx.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        ctx.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        ctx.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        ctx.wheels.stop()
-    }
+    
 
     private fun countPerInch(inches: Double) {
         //tick = inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
@@ -170,7 +164,7 @@ class WheelEncoders : Plugin() {
             ctx.teleop.telemetry.addData("WheelThree Current Position", ctx.wheels.motor1!!.currentPosition)
             ctx.teleop.telemetry.update()
 
-        }; stopAndReset()
+        }; ctx.wheels_ex.stopAndResetEncoders()
     }
 
         fun wheelEncoderSpin (degrees: Double, power: Double) {
@@ -190,7 +184,7 @@ class WheelEncoders : Plugin() {
 
             while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
                 ctx.wheels.power(power)
-            }; stopAndReset()
+            }; ctx.wheels_ex.stopAndResetEncoders()
         }
 
 
