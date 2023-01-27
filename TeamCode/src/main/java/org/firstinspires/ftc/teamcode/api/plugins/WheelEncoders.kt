@@ -143,17 +143,31 @@ class WheelEncoders : Plugin() {
             }
 
             if (abs(wheelOne!!.currentPosition - 10) >= wheelTwo!!.currentPosition) {
-                wheelTwo!!.power = power * WHEEL_CORRECTION_MULTIPLIER
+                //wheel one is too far ahead
+                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
+            }
+
+            if (abs(wheelOne!!.currentPosition + 10) <= wheelTwo!!.currentPosition) {
+                //wheel one is too far behind
+                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
             }
 
             if (abs(wheelTwo!!.currentPosition - 10) >= wheelOne!!.currentPosition) {
-                wheelTwo!!.power = power * WHEEL_CORRECTION_MULTIPLIER
+                //wheel two is too far ahead
+                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
             }
+
+            if (abs(wheelTwo!!.currentPosition + 10) <= wheelOne!!.currentPosition) {
+                //wheel two is too far behind
+                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
             }
+
             if (wheelThree!!.currentPosition != 0) {
                 if (wheelThree!!.currentPosition > 0) {
+                    //wheel three is going to to right
                     wheelThree!!.power = -0.1
                 } else if (wheelThree!!.currentPosition < 0) {
+                    //wheel three is going to the left
                     wheelThree!!.power = 0.1
                 } else {
                     wheelThree!!.power = 0.0
@@ -170,7 +184,10 @@ class WheelEncoders : Plugin() {
         }; ctx.wheels_ex.stopAndResetEncoders()
     }
 
-        fun wheelEncoderSpin (degrees: Double, power: Double) {
+    /**
+     * Rotates the robot a certain degree and power using encoder values
+     */
+    fun wheelEncoderSpin (degrees: Double, power: Double) {
             wheelOne = ctx.wheels.motor1
             wheelTwo = ctx.wheels.motor2
             wheelThree = ctx.wheels.motor3
