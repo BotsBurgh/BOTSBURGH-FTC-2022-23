@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
-
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.round
@@ -26,6 +25,8 @@ object WheelEncodersConfig {
     var TICKS_PER_INCH: Int = 42
     @JvmField
     var TICK_PER_DEGREE: Double = 6.5
+    @JvmField
+    var WHEEL_CORRECTION_MULTIPLIER: Double = 1.25
 }
 
 
@@ -47,17 +48,16 @@ class WheelEncoders : Plugin() {
     init {
         wheelsEncoderStore = this
     }
-    
+
 
     private fun countPerInch(inches: Double) {
-        //tick = inches * 2.54 / WHEEL_CIRCUMFERENCE * ENCODER_RESOLUTION
         tick = WheelEncodersConfig.TICKS_PER_INCH * inches
         round(tick!!)
     }
 
     private fun countPerDegree(degrees: Double) {
         tick = WheelEncodersConfig.TICK_PER_DEGREE * degrees
-        round(degrees!!)
+        round(tick!!)
     }
 
     private fun getWheelPosition(wheel: DcMotor?) {
@@ -66,15 +66,11 @@ class WheelEncoders : Plugin() {
         } else if (wheel == wheelTwo) {
             wheelCurrentDistanceTwo = abs(wheelTwo!!.currentPosition.toDouble())
         } else if (wheel == wheelThree) {
-            wheelCurrentDistanceThree = abs(wheelThree!!.currentPosition.toDouble())
+            wheelCurrentDistanceThree = wheelThree!!.currentPosition.toDouble()
         }
     }
 
     private fun calculateTotalDistance(inches: Double) {
-
-        getWheelPosition(wheelOne)
-        getWheelPosition(wheelTwo)
-        getWheelPosition(wheelTwo)
 
         countPerInch(inches)
 
@@ -86,9 +82,6 @@ class WheelEncoders : Plugin() {
     }
 
     private fun calculateTotalDegrees(degrees: Double) {
-        getWheelPosition(wheelOne)
-        getWheelPosition(wheelTwo)
-        getWheelPosition(wheelThree)
 
         countPerDegree(degrees)
 
@@ -114,9 +107,7 @@ class WheelEncoders : Plugin() {
         }
 
         calculateTotalDistance(inches)
-        getWheelPosition(wheelOne)
-        getWheelPosition(wheelTwo)
-        getWheelPosition(wheelThree)
+
         //wheelOne!!.targetPosition = 1000
 
         //wheelOne!!.mode = DcMotor.RunMode.RUN_TO_POSITION
@@ -142,11 +133,23 @@ class WheelEncoders : Plugin() {
 
         //wheelOne!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
         while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!! || wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
-            if (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
 
+            if (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
                 wheelOne!!.power = power
             }
 
+            if (wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
+                wheelTwo!!.power = power
+            }
+
+            if (abs(wheelOne!!.currentPosition - 10) >= wheelTwo!!.currentPosition) {
+                wheelTwo!!.power = power * WHEEL_CORRECTION_MULTIPLIER
+            }
+
+            if (abs(wheelTwo!!.currentPosition - 10) >= wheelOne!!.currentPosition) {
+                wheelTwo!!.power = power * WHEEL_CORRECTION_MULTIPLIER
+            }
+            }
             if (wheelThree!!.currentPosition != 0) {
                 if (wheelThree!!.currentPosition > 0) {
                     wheelThree!!.power = -0.1
