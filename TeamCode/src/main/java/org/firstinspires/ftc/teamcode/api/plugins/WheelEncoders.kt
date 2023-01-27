@@ -24,8 +24,10 @@ private const val GEAR_Ratio: Double = 19.0 / 2.0 / 1
 object WheelEncodersConfig {
     @JvmField
     var TICKS_PER_INCH: Int = 42
-    var TICK_PER_DEGREE: Int = 10
+    @JvmField
+    var TICK_PER_DEGREE: Double = 6.5
 }
+
 
 class WheelEncoders : Plugin() {
     var wheelOne: DcMotor? = null
@@ -169,8 +171,13 @@ class WheelEncoders : Plugin() {
             ctx.teleop.telemetry.update()
 
         }; stopAndReset()
+    }
 
         fun wheelEncoderSpin (degrees: Double, power: Double) {
+            wheelOne = ctx.wheels.motor1
+            wheelTwo = ctx.wheels.motor2
+            wheelThree = ctx.wheels.motor3
+
             countPerDegree(degrees)
 
             getWheelPosition(wheelOne)
@@ -186,5 +193,5 @@ class WheelEncoders : Plugin() {
             }; stopAndReset()
         }
 
-    }
+
 }

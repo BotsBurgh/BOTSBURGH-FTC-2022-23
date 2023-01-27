@@ -71,9 +71,21 @@ class EncoderTest :LinearOpMode() {
 
         waitForStart()
 
-        wheel_encoder.wheelEncoderDirection(PI, 24.0 * 20.0, 0.1)
-
-
+        telemetry.addLine("Testing 1")
+        telemetry.update()
+        wheel_encoder.wheelEncoderSpin(45.0, 0.1)
+        telemetry.addLine("Testing 2")
+        telemetry.update()
+        wheel_encoder.wheelEncoderSpin(45.0, 0.2)
+        telemetry.addLine("Testing 3")
+        telemetry.update()
+        wheel_encoder.wheelEncoderSpin(45.0, 0.4)
+        telemetry.addLine("Testing 4")
+        telemetry.update()
+        wheel_encoder.wheelEncoderSpin(45.0, 0.8)
+        telemetry.addLine("Done")
+        telemetry.update()
+        sleep(1000)
 
 
 
