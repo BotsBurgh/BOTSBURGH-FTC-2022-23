@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.api.components.InitAfterRunTeleOp
 import org.firstinspires.ftc.teamcode.api.components.LinearSlidesTeleOp
 import org.firstinspires.ftc.teamcode.api.components.LoggerTeleOp
 import org.firstinspires.ftc.teamcode.api.components.WheelsTeleOp
@@ -24,6 +25,7 @@ class TriRobotTeleOp(teleop: LinearOpMode) : RunloopRobot(teleop) {
         builder
 
             // Teleop components
+            .registerComponent(InitAfterRunTeleOp())
             .registerComponent(WheelsTeleOp())
             .registerComponent(LinearSlidesTeleOp())
             .registerComponent(LoggerTeleOp())

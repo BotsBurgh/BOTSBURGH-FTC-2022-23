@@ -7,17 +7,15 @@ import java.io.Closeable
 import java.io.File
 import java.io.FileWriter
 
-const val DATA_FILE_PATH = "$LOG_FILE_PATH/data.csv"
-
 class DataCollector: Closeable {
     private val callbacks = emptyMap<String, () -> String?>().toMutableMap()
     private var table: CSVWriter? = null
 
-    private val file = File(DATA_FILE_PATH)
-    private val writer by lazy {
-        // Lazy create new file, so Logger has time to create the /logs folder
+    private val file = File(BOTSBURGH_FOLDER, "/data.csv")
+    private val writer = BufferedWriter(FileWriter(file))
+
+    fun init() {
         file.createNewFile()
-        BufferedWriter(FileWriter(file))
     }
 
     override fun close() = writer.close()

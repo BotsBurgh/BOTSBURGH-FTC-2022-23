@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.api.plugins.logger
 import android.os.Environment
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
+import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 import java.io.BufferedWriter
@@ -19,17 +21,22 @@ private var loggerStore: Logger? = null
 val Context.logger
     get() = loggerStore!!
 
-const val LOG_FOLDER_PATH = "/FIRST/logs"
-const val LOG_FILE_PATH = "$LOG_FOLDER_PATH/latest.log"
+val BOTSBURGH_FOLDER: File by lazy {
+    val res = File(AppUtil.ROOT_FOLDER, "/BotsBurgh/")
+    res.mkdirs()
+    res
+}
 
 class Logger(private val levelFilter: Level = Level.Info) : Plugin(), Closeable {
     init {
         loggerStore = this
     }
 
+    private val runtime = ElapsedTime()
+
     val dataCollector = DataCollector().apply {
         registerCallback("time") {
-            ctx.teleop.runtime.roundToInt().toString()
+            String.format("%1.4f", runtime.time())
         }
     }
 
@@ -42,16 +49,19 @@ class Logger(private val levelFilter: Level = Level.Info) : Plugin(), Closeable 
         MultipleTelemetry(ctx.teleop.telemetry, FtcDashboard.getInstance().telemetry)
     }
 
-    private val logFile = File(LOG_FILE_PATH)
+    private val logFile = File(BOTSBURGH_FOLDER, "/latest.log")
     private val logWriter = BufferedWriter(FileWriter(logFile))
 
     override fun init() {
-        File(LOG_FOLDER_PATH).mkdir()
         logFile.createNewFile()
 
         logWriter.write("BotsBurgh 11792 FTC 2022-23 Season\n")
         logWriter.write("Running Arch API for the TriRobot\n\n")
         // logWriter.write("Starting robot at ${LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"))}\n\n")
+
+        dataCollector.init()
+
+        runtime.reset()
     }
 
     override fun close() {
