@@ -33,12 +33,7 @@ class EncoderTest :LinearOpMode() {
     private val wheel_encoder: WheelEncoders
         get() = wheel_encoder_store!!
 
-    private var wheelsExStore: WheelsEx? = null
-    private  val wheelsEX: WheelsEx
-        get() = wheelsExStore!!
     override fun runOpMode() {
-
-
         this.ctx = Context(this)
 
         this.wheelsStore = Wheels()
@@ -56,10 +51,6 @@ class EncoderTest :LinearOpMode() {
         this.wheel_encoder_store = WheelEncoders()
         this.wheel_encoder._init(this.ctx!!)
         this.wheel_encoder.init()
-
-        this.wheelsExStore = WheelsEx()
-        this.wheelsEX._init(this.ctx!!)
-        this.wheelsEX.init()
 
         this.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         this.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER

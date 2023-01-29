@@ -143,39 +143,7 @@ class WheelEncoders : Plugin() {
             if (wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
                 wheelTwo!!.power = power
             }
-            """"
-            if (abs(wheelOne!!.currentPosition - 10) >= wheelTwo!!.currentPosition) {
-                //wheel one is too far ahead
-                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
-            }
 
-            if (abs(wheelOne!!.currentPosition + 10) <= wheelTwo!!.currentPosition) {
-                //wheel one is too far behind
-                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
-            }
-
-            if (abs(wheelTwo!!.currentPosition - 10) >= wheelOne!!.currentPosition) {
-                //wheel two is too far ahead
-                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
-            }
-
-            if (abs(wheelTwo!!.currentPosition + 10) <= wheelOne!!.currentPosition) {
-                //wheel two is too far behind
-                wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
-            }
-
-            if (wheelThree!!.currentPosition != 0) {
-                if (wheelThree!!.currentPosition > 0) {
-                    //wheel three is going to to right
-                    wheelThree!!.power = -0.1
-                } else if (wheelThree!!.currentPosition < 0) {
-                    //wheel three is going to the left
-                    wheelThree!!.power = 0.1
-                } else {
-                    wheelThree!!.power = 0.0
-                }
-            }
-            """
             ctx.teleop.telemetry.addData("WheelOne Final Tick", wheelFinalDistanceOne)
             ctx.teleop.telemetry.addData("WheelOne Current Position", wheelOne!!.currentPosition)
             ctx.teleop.telemetry.addData("WheelTwo Final Tick", wheelFinalDistanceTwo)
@@ -184,7 +152,7 @@ class WheelEncoders : Plugin() {
             ctx.teleop.telemetry.addData("WheelThree Current Position", ctx.wheels.motor1!!.currentPosition)
             ctx.teleop.telemetry.update()
 
-        }; ctx.wheels_ex.stopAndResetEncoders()
+        }; ctx.wheels.stopAndResetEncoders()
 
 
     }
