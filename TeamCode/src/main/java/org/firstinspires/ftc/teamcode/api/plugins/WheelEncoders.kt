@@ -71,7 +71,9 @@ class WheelEncoders : Plugin() {
     }
 
     private fun calculateTotalDistance(inches: Double) {
-
+        getWheelPosition(wheelOne)
+        getWheelPosition(wheelTwo)
+        getWheelPosition(wheelThree)
         countPerInch(inches)
 
 
@@ -141,7 +143,7 @@ class WheelEncoders : Plugin() {
             if (wheelTwo!!.currentPosition <= wheelFinalDistanceTwo!!) {
                 wheelTwo!!.power = power
             }
-
+            """"
             if (abs(wheelOne!!.currentPosition - 10) >= wheelTwo!!.currentPosition) {
                 //wheel one is too far ahead
                 wheelTwo!!.power = power * WheelEncodersConfig.WHEEL_CORRECTION_MULTIPLIER
@@ -173,6 +175,7 @@ class WheelEncoders : Plugin() {
                     wheelThree!!.power = 0.0
                 }
             }
+            """
             ctx.teleop.telemetry.addData("WheelOne Final Tick", wheelFinalDistanceOne)
             ctx.teleop.telemetry.addData("WheelOne Current Position", wheelOne!!.currentPosition)
             ctx.teleop.telemetry.addData("WheelTwo Final Tick", wheelFinalDistanceTwo)
@@ -182,6 +185,8 @@ class WheelEncoders : Plugin() {
             ctx.teleop.telemetry.update()
 
         }; ctx.wheels_ex.stopAndResetEncoders()
+
+
     }
 
     /**
@@ -197,14 +202,34 @@ class WheelEncoders : Plugin() {
             getWheelPosition(wheelOne)
             getWheelPosition(wheelTwo)
             getWheelPosition(wheelThree)
+            if (abs(power) == power ) {
+                wheelFinalDistanceOne = wheelCurrentDistanceOne!! + tick!!
+                wheelFinalDistanceTwo = wheelCurrentDistanceTwo!! + tick!!
+                wheelFinalDistanceThree = wheelCurrentDistanceThree!! + tick!!
 
-            wheelFinalDistanceOne = wheelCurrentDistanceOne!! + tick!!
-            wheelFinalDistanceTwo = wheelCurrentDistanceTwo!! + tick!!
-            wheelFinalDistanceThree = wheelCurrentDistanceThree!! + tick!!
+                while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
+                    ctx.wheels.power(power)
+                }; ctx.wheels.stop(); ctx.teleop.sleep(1000)
 
-            while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
-                ctx.wheels.power(power)
-            }; ctx.wheels_ex.stopAndResetEncoders()
+                while (wheelOne!!.currentPosition >= wheelFinalDistanceOne!!) {
+                    ctx.wheels.power(-0.1)
+                }; ctx.wheels.stop(); ctx.teleop.sleep(1000)
+
+            } else if (abs(power) != power) {
+                wheelFinalDistanceOne = wheelCurrentDistanceOne!! - tick!!
+                wheelFinalDistanceTwo = wheelCurrentDistanceTwo!! - tick!!
+                wheelFinalDistanceThree = wheelCurrentDistanceThree!! - tick!!
+
+                while (wheelOne!!.currentPosition >= wheelFinalDistanceOne!!) {
+                    ctx.wheels.power(power)
+                }; ctx.wheels.stop(); ctx.teleop.sleep(1000)
+
+                while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!!) {
+                    ctx.wheels.power(0.1)
+                }; ctx.wheels.stop(); ctx.teleop.sleep(1000)
+            }
+
+
         }
 
 

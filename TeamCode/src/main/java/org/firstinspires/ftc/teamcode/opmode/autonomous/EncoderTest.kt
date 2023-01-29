@@ -33,6 +33,9 @@ class EncoderTest :LinearOpMode() {
     private val wheel_encoder: WheelEncoders
         get() = wheel_encoder_store!!
 
+    private var wheelsExStore: WheelsEx? = null
+    private  val wheelsEX: WheelsEx
+        get() = wheelsExStore!!
     override fun runOpMode() {
 
 
@@ -54,6 +57,10 @@ class EncoderTest :LinearOpMode() {
         this.wheel_encoder._init(this.ctx!!)
         this.wheel_encoder.init()
 
+        this.wheelsExStore = WheelsEx()
+        this.wheelsEX._init(this.ctx!!)
+        this.wheelsEX.init()
+
         this.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         this.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
         this.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -71,43 +78,17 @@ class EncoderTest :LinearOpMode() {
 
         waitForStart()
 
-        telemetry.addLine("Testing 1/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(45.0, 0.1)
-        telemetry.addLine("Testing 2/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(45.0, 0.2)
-        telemetry.addLine("Testing 3/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(45.0, 0.4)
-        telemetry.addLine("Testing 4/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(-45.0, 0.8)
-        telemetry.addLine("Testing 5/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(-45.0, 0.4)
-        telemetry.addLine("Testing 6/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(-45.0, 0.2)
-        telemetry.addLine("Testing 7/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(-45.0, 0.1)
-        telemetry.addLine("Testing 8/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderSpin(45.0, 0.8)
-        telemetry.addLine("Testing 9/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderDirection(PI, 24.0, 0.1)
-        telemetry.addLine("Testing 10/12")
-        telemetry.update()
+
+
+        //telemetry.addLine("Testing 1/3")
+        //telemetry.update()
+        //wheel_encoder.wheelEncoderSpin(360.0, 0.2)
+        //telemetry.addLine("Testing 2/3")
+        //telemetry.update()
+        //wheel_encoder.wheelEncoderSpin(360.0, -0.2)
+        //telemetry.addLine("Testing 3/3")
+        //telemetry.update()
         wheel_encoder.wheelEncoderDirection(PI, 24.0, 0.2)
-        telemetry.addLine("Testing 11/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderDirection(PI, 24.0, 0.4)
-        telemetry.addLine("Testing 12/12")
-        telemetry.update()
-        wheel_encoder.wheelEncoderDirection(PI, 24.0, 0.75)
-        telemetry.addLine("Done")
         telemetry.update()
         sleep(1000)
 
