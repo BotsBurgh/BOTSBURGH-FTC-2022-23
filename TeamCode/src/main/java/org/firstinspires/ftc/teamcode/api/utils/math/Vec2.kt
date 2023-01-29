@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.api.math
+package org.firstinspires.ftc.teamcode.api.utils.math
 
 import kotlin.math.abs
 import kotlin.math.pow

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.api.plugins
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.teamcode.api.plugins.logger.logger
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 import kotlin.math.PI
@@ -45,6 +46,18 @@ class Wheels : Plugin() {
         this.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
         this.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
         this.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
+        ctx.logger.dataCollector.registerCallback("wheel1 pos") {
+            this.motor1!!.currentPosition.toString()
+        }
+
+        ctx.logger.dataCollector.registerCallback("wheel2 pos") {
+            this.motor2!!.currentPosition.toString()
+        }
+
+        ctx.logger.dataCollector.registerCallback("wheel3 pos") {
+            this.motor3!!.currentPosition.toString()
+        }
     }
 
     /**
@@ -114,5 +127,20 @@ class Wheels : Plugin() {
             magnitude * sin(MOTOR_2_ANGLE - radians),
             magnitude * sin(MOTOR_3_ANGLE - radians),
         )
+    }
+
+    /**
+     * Stops the wheels and resets their encoder values.
+     */
+    fun stopAndResetEncoders() {
+        ctx.wheels.stop()
+
+        ctx.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        ctx.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        ctx.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+
+        ctx.wheels.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        ctx.wheels.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        ctx.wheels.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 }
