@@ -9,7 +9,7 @@ abstract class ColorSampler {
     abstract fun sample(input: Mat): Color
 }
 
-class PixelSampler: ColorSampler() {
+class PixelSampler : ColorSampler() {
     override fun sample(input: Mat): Color {
         val pixel = input.get(input.rows() / 2, input.cols() / 2)
 
