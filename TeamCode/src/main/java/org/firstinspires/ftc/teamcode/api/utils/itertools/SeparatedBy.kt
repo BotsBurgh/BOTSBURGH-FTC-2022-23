@@ -16,9 +16,9 @@ class SeparatedBy<T>(private val inner: Iterator<T>, private val separator: T) :
     }
 
     override fun next(): T {
-        if (separatorNext) {
+        return if (separatorNext) {
             separatorNext = false
-            return separator
+            separator
         } else {
             val res = inner.next()
 
@@ -26,7 +26,7 @@ class SeparatedBy<T>(private val inner: Iterator<T>, private val separator: T) :
                 separatorNext = true
             }
 
-            return res
+            res
         }
     }
 }
