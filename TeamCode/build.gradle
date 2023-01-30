@@ -8,13 +8,16 @@
 // please think carefully as to whether such customizations are really necessary
 // before doing so.
 
+plugins {
+    id 'org.jetbrains.dokka' version '1.7.20'
+}
 
 // Custom definitions may go here
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
-apply plugin: 'kotlin-android'
 apply from: '../build.dependencies.gradle'
+apply plugin: 'kotlin-android'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'

@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.api.plugins.logger
 
-import CSVWriter
-import android.os.Environment
+import org.firstinspires.ftc.teamcode.api.utils.CSVWriter
 import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.File
 import java.io.FileWriter
 
-class DataCollector: Closeable {
+class DataCollector : Closeable {
     private val callbacks = emptyMap<String, () -> String?>().toMutableMap()
     private var table: CSVWriter? = null
 

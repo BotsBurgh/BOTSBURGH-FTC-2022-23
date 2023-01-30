@@ -12,11 +12,9 @@ import org.firstinspires.ftc.teamcode.api.plugins.logger.Logger
 import org.firstinspires.ftc.teamcode.api.plugins.logger.logger
 import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRobot
 import org.firstinspires.ftc.teamcode.arch.runloop.RunloopRuntimeBuilder
-import java.io.File
-import java.io.FileWriter
 
 /**
- * This is the main robot configuration for the three-wheeled robot.
+ * This is the main robot class for the three-wheeled robot teleop.
  *
  * All components are registered below in [configure].
  */

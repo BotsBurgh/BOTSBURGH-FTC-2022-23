@@ -19,8 +19,11 @@ private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (6600 - 500
 
 @Config
 private object LinearSlideConfig {
-    @JvmField var CLAW_CLOSE_POSITION: Double = 0.3
-    @JvmField var CLAW_OPEN_POSITION: Double = 0.6
+    @JvmField
+    var CLAW_CLOSE_POSITION: Double = 0.3
+
+    @JvmField
+    var CLAW_OPEN_POSITION: Double = 0.6
 }
 
 /**
@@ -51,6 +54,9 @@ class LinearSlides : Plugin() {
         this.linearSlide1!!.direction = DcMotorSimple.Direction.REVERSE
     }
 
+    /**
+     * Moves slide up or down with a given speed of [power].
+     */
     fun powerSlide1(power: Double) {
         if (power > 0f && this.linearSlide1!!.currentPosition < 6600) {
             // Positive
@@ -70,18 +76,30 @@ class LinearSlides : Plugin() {
         }
     }
 
+    /**
+     * Stops of the slide from moving.
+     */
     fun stopSlide1() {
         this.linearSlide1!!.power = 0.0
     }
 
+    /**
+     * Moves the claw to a given [position].
+     */
     fun positionClaw1(position: Double) {
         this.claw1!!.position = position
     }
 
+    /**
+     * Opens the claw.
+     */
     fun openClaw1() {
         this.positionClaw1(LinearSlideConfig.CLAW_OPEN_POSITION)
     }
 
+    /**
+     * Closes the claw.
+     */
     fun closeClaw1() {
         this.positionClaw1(LinearSlideConfig.CLAW_CLOSE_POSITION)
     }

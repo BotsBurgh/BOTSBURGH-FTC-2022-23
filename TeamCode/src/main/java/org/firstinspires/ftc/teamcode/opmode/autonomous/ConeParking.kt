@@ -103,9 +103,9 @@ class ConeParking : LinearOpMode() {
                 wheels.stop()
             }
 
-                while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
-                    wheels.powerDirection(3 * PI / 4, 0.5)
-                }
+            while (this.distance_sensor.getBack() < 30 && opModeIsActive()) {
+                wheels.powerDirection(3 * PI / 4, 0.5)
+            }
 
             while (runtime.seconds() < 4.0 && opModeIsActive()) {
                 wheels.powerDirection(PI, 0.5)
