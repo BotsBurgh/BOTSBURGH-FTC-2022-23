@@ -8,6 +8,11 @@ import org.firstinspires.ftc.teamcode.api.steps.ScanAndParkSensors
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRobot
 import org.firstinspires.ftc.teamcode.arch.sequential.SequentialRuntimeBuilder
 
+/**
+ * This is the main robot class for the three-wheeled robot autonomous.
+ *
+ * All components are registered below in [configure].
+ */
 class TriRobotAutonomous(teleop: LinearOpMode) : SequentialRobot(teleop) {
     override fun configure(builder: SequentialRuntimeBuilder) {
         builder

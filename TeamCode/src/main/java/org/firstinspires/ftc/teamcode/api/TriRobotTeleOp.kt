@@ -16,7 +16,7 @@ import java.io.File
 import java.io.FileWriter
 
 /**
- * This is the main robot configuration for the three-wheeled robot.
+ * This is the main robot class for the three-wheeled robot teleop.
  *
  * All components are registered below in [configure].
  */

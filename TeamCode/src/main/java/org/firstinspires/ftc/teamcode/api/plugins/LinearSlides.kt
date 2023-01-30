@@ -51,6 +51,9 @@ class LinearSlides : Plugin() {
         this.linearSlide1!!.direction = DcMotorSimple.Direction.REVERSE
     }
 
+    /**
+     * Moves slide up or down with a given speed of [power].
+     */
     fun powerSlide1(power: Double) {
         if (power > 0f && this.linearSlide1!!.currentPosition < 6600) {
             // Positive
@@ -70,18 +73,30 @@ class LinearSlides : Plugin() {
         }
     }
 
+    /**
+     * Stops of the slide from moving.
+     */
     fun stopSlide1() {
         this.linearSlide1!!.power = 0.0
     }
 
+    /**
+     * Moves the claw to a given [position].
+     */
     fun positionClaw1(position: Double) {
         this.claw1!!.position = position
     }
 
+    /**
+     * Opens the claw.
+     */
     fun openClaw1() {
         this.positionClaw1(LinearSlideConfig.CLAW_OPEN_POSITION)
     }
 
+    /**
+     * Closes the claw.
+     */
     fun closeClaw1() {
         this.positionClaw1(LinearSlideConfig.CLAW_CLOSE_POSITION)
     }

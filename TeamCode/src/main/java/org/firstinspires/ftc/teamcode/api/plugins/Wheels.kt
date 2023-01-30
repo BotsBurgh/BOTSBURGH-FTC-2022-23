@@ -9,6 +9,11 @@ import kotlin.math.sin
 
 private var wheels_store: Wheels? = null
 
+/**
+ * A reference to the latest initialized [Wheels] plugin.
+ *
+ * @throws NullPointerException If accessed before a [Wheels] plugin has been created.
+ */
 val Context.wheels
     get() = wheels_store!!
 
@@ -28,15 +33,34 @@ class Wheels : Plugin() {
         wheels_store = this
     }
 
+    /**
+     * One of the robot's wheels.
+     *
+     * The property will be `null` until the the plugin has been initialized.
+     */
     var motor1: DcMotor? = null
         private set
+
+    /**
+     * One of the robot's wheels.
+     *
+     * @see motor1
+     */
     var motor2: DcMotor? = null
         private set
+
+    /**
+     * One of the robot's wheels.
+     *
+     * @see motor1
+     */
     var motor3: DcMotor? = null
         private set
 
     /**
-     * Initializes the motors from the given hardwareMap.
+     * Initializes the wheel motors.
+     *
+     * After run, [motor1], [motor2], and [motor3] will be non-null.
      */
     override fun init() {
         this.motor1 = this.ctx.teleop.hardwareMap.get(DcMotor::class.java, MOTOR_1_NAME)
@@ -103,9 +127,7 @@ class Wheels : Plugin() {
     }
 
     /**
-     * Rotates the robot with the given power.
-     *
-     * @param power The power to apply to each motor to affect how fast it spins.
+     * Rotates the robot with the given [power].
      */
     fun powerRotation(power: Double) {
         this.power(power)
@@ -119,7 +141,8 @@ class Wheels : Plugin() {
     }
 
     /**
-     * Calculates the power needed for each of the wheels, with motor1 at 0 radians.
+     * Calculates the power needed for each of the wheels with a given direction with [radians] and
+     * strength with [magnitude]. The strength should be a value between 0 and 1 inclusively.
      */
     fun calculatePower(radians: Double, magnitude: Double): Triple<Double, Double, Double> {
         return Triple(
