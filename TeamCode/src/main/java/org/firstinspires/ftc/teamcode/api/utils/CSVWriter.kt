@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode.api.utils
+
 import org.firstinspires.ftc.teamcode.api.utils.itertools.map
 import org.firstinspires.ftc.teamcode.api.utils.itertools.separatedBy
 import java.io.Writer

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.api.plugins.logger
 
-import CSVWriter
-import android.os.Environment
+import org.firstinspires.ftc.teamcode.api.utils.CSVWriter
 import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.File
