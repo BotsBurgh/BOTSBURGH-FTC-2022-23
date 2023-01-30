@@ -8,8 +8,11 @@ import kotlin.math.atan2
 import kotlin.math.sqrt
 
 private object WheelsConfig {
-    @JvmField var ROTATION_MULTIPLIER: Double = 0.6
-    @JvmField var PRECISE_ROTATION_AMOUNT: Double = 0.3
+    @JvmField
+    var ROTATION_MULTIPLIER: Double = 0.6
+
+    @JvmField
+    var PRECISE_ROTATION_AMOUNT: Double = 0.3
 }
 
 /**

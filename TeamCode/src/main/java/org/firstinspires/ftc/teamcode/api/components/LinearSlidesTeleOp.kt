@@ -8,7 +8,8 @@ import org.firstinspires.ftc.teamcode.arch.runloop.Component
 
 @Config
 private object LinearSlideTeleOpConfig {
-    @JvmField var SLIDE_MOVEMENT_MULTIPLIER: Double = 5.0
+    @JvmField
+    var SLIDE_MOVEMENT_MULTIPLIER: Double = 5.0
 }
 
 /**

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.api.plugins.logger
 
-import android.os.Environment
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -12,9 +11,6 @@ import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.File
 import java.io.FileWriter
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import kotlin.math.roundToInt
 
 private var loggerStore: Logger? = null
 

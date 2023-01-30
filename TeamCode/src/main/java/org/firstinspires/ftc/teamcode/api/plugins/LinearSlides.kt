@@ -19,8 +19,11 @@ private const val LINEAR_SLIDE_REDUCTION_SLOPE: Double = (0 - 0.8) / (6600 - 500
 
 @Config
 private object LinearSlideConfig {
-    @JvmField var CLAW_CLOSE_POSITION: Double = 0.3
-    @JvmField var CLAW_OPEN_POSITION: Double = 0.6
+    @JvmField
+    var CLAW_CLOSE_POSITION: Double = 0.3
+
+    @JvmField
+    var CLAW_OPEN_POSITION: Double = 0.6
 }
 
 /**

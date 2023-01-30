@@ -6,7 +6,7 @@ import java.io.Closeable
 import java.io.File
 import java.io.FileWriter
 
-class DataCollector: Closeable {
+class DataCollector : Closeable {
     private val callbacks = emptyMap<String, () -> String?>().toMutableMap()
     private var table: CSVWriter? = null
 
