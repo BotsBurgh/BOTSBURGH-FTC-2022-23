@@ -18,6 +18,7 @@ enum class ColorSamplers {
     @Deprecated("This sampler is inaccurate.")
     SINGLE_PIXEL {
         override fun sample(input: Mat): Color {
+            // Find the center pixel
             val pixel = input.get(input.rows() / 2, input.cols() / 2)
 
             return if (pixel[0] >= pixel[1] && pixel[0] >= pixel[2]) {
@@ -37,8 +38,42 @@ enum class ColorSamplers {
      * @throws NotImplementedError Does not work yet.
      */
     RANDOM {
+        /**
+         * The amount of times to sample a random pixel.
+         */
+        private val sampleIterations = 10
+
         override fun sample(input: Mat): Color {
-            TODO()
+            val samples = emptyList<DoubleArray>().toMutableList()
+
+            // Sample random X and Y coordinates in the input
+            repeat(sampleIterations) {
+                val x = (0 until input.rows()).random()
+                val y = (0 until input.cols()).random()
+
+                samples.add(input.get(x, y))
+            }
+
+            var rgb = arrayOf(0.0, 0.0, 0.0)
+
+            // Sum up all of the samples
+            for (color in samples) {
+                rgb[0] += color[0]
+                rgb[1] += color[1]
+                rgb[2] += color[2]
+            }
+
+            // Find the average from the sum of the colors
+            rgb = arrayOf(rgb[0] / samples.size, rgb[1] / samples.size, rgb[2] / samples.size)
+
+            // Return which color is brightest
+            return if (rgb[0] >= rgb[1] && rgb[0] >= rgb[2]) {
+                Color.Red
+            } else if (rgb[1] >= rgb[0] && rgb[1] >= rgb[2]) {
+                Color.Green
+            } else {
+                Color.Blue
+            }
         }
     };
 
