@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmode.autonomous
 
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.teamcode.api.components.CLAW_CLOSE_POSITION
+import org.firstinspires.ftc.teamcode.api.components.CLAW_OPEN_POSITION
 import org.firstinspires.ftc.teamcode.api.plugins.*
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
 import org.firstinspires.ftc.teamcode.arch.base.Context
@@ -12,88 +15,96 @@ import org.openftc.easyopencv.OpenCvCameraRotation
 import org.openftc.easyopencv.OpenCvInternalCamera
 import kotlin.math.PI
 
-@Autonomous(name = "Encoder Test")
-class EncoderTest :LinearOpMode() {
-    private var ctx: Context? = null
-
-    private var wheelsStore: Wheels? = null
-    private val wheels: Wheels
-        get() = wheelsStore!!
+@Config
+object AutoClawConfig {
+    @JvmField
+    var CLAW_OPEN: Double = 1.0
 
 
-    private var linear_slides_store: LinearSlides? = null
-    private val linear_slides: LinearSlides
-        get() = linear_slides_store!!
+    @Autonomous(name = "Encoder Test")
+    class EncoderTest : LinearOpMode() {
+        private var ctx: Context? = null
 
-    private var distance_sensor_store: DistanceSensors? = null
-    private val distance_sensor: DistanceSensors
-        get() = distance_sensor_store!!
-
-    private var wheel_encoder_store: WheelEncoders? = null
-    private val wheel_encoder: WheelEncoders
-        get() = wheel_encoder_store!!
-
-    private var wheelsExStore: WheelsEx? = null
-    private  val wheelsEX: WheelsEx
-        get() = wheelsExStore!!
-    override fun runOpMode() {
+        private var wheelsStore: Wheels? = null
+        private val wheels: Wheels
+            get() = wheelsStore!!
 
 
-        this.ctx = Context(this)
+        private var linear_slides_store: LinearSlides? = null
+        private val linear_slides: LinearSlides
+            get() = linear_slides_store!!
 
-        this.wheelsStore = Wheels()
-        this.wheels._init(this.ctx!!)
-        this.wheels.init()
+        private var distance_sensor_store: DistanceSensors? = null
+        private val distance_sensor: DistanceSensors
+            get() = distance_sensor_store!!
 
-        this.linear_slides_store = LinearSlides()
-        this.linear_slides._init(this.ctx!!)
-        this.linear_slides.init()
+        private var wheel_encoder_store: WheelEncoders? = null
+        private val wheel_encoder: WheelEncoders
+            get() = wheel_encoder_store!!
 
-        this.distance_sensor_store = DistanceSensors()
-        this.distance_sensor._init(this.ctx!!)
-        this.distance_sensor.init()
+        private var wheelsExStore: WheelsEx? = null
+        private val wheelsEX: WheelsEx
+            get() = wheelsExStore!!
 
-        this.wheel_encoder_store = WheelEncoders()
-        this.wheel_encoder._init(this.ctx!!)
-        this.wheel_encoder.init()
+        override fun runOpMode() {
 
-        this.wheelsExStore = WheelsEx()
-        this.wheelsEX._init(this.ctx!!)
-        this.wheelsEX.init()
 
-        this.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        this.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        this.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+            this.ctx = Context(this)
 
-        this.wheels.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.wheels.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
-        this.wheels.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+            this.wheelsStore = Wheels()
+            this.wheels._init(this.ctx!!)
+            this.wheels.init()
 
-        while (opModeInInit()) {
-            telemetry.addData("WheelOne", this.wheels.motor1!!.currentPosition)
-            telemetry.addData("WheelTwo", this.wheels.motor2!!.currentPosition)
-            telemetry.addData("WheelThree", this.wheels.motor3!!.currentPosition)
-            telemetry.update()
+            this.linear_slides_store = LinearSlides()
+            this.linear_slides._init(this.ctx!!)
+            this.linear_slides.init()
+
+            this.distance_sensor_store = DistanceSensors()
+            this.distance_sensor._init(this.ctx!!)
+            this.distance_sensor.init()
+
+            this.wheel_encoder_store = WheelEncoders()
+            this.wheel_encoder._init(this.ctx!!)
+            this.wheel_encoder.init()
+
+            this.wheelsExStore = WheelsEx()
+            this.wheelsEX._init(this.ctx!!)
+            this.wheelsEX.init()
+
+            this.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+            this.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+            this.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+
+            this.wheels.motor1!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+            this.wheels.motor2!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+            this.wheels.motor3!!.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
+            while (opModeInInit()) {
+                telemetry.addData("WheelOne", this.wheels.motor1!!.currentPosition)
+                telemetry.addData("WheelTwo", this.wheels.motor2!!.currentPosition)
+                telemetry.addData("WheelThree", this.wheels.motor3!!.currentPosition)
+                telemetry.addData("Claw Position", this.linear_slides.claw1!!.position)
+                telemetry.update()
+            }
+
+            waitForStart()
+
+            this.wheelsEX.stopAndResetEncoders()
+
+            sleep(2500)
+
+            linear_slides.setToPosition(1000, 0.5)
+            wheel_encoder.wheelEncoderDirection(PI, 34.0, 0.2)
+            wheel_encoder.wheelEncoderSpin(70.0, 0.25)
+            linear_slides.setToPosition(5000, 0.5)
+            wheel_encoder.wheelEncoderDirection(7 * PI / 4, 12.0, 0.1)
+            linear_slides.claw1!!.position = CLAW_OPEN_POSITION
+            sleep(750)
+            wheel_encoder.wheelEncoderDirection(7 * PI / 4, 12.0, -0.1)
+            linear_slides.setToPosition(0, 0.5)
+
+
+
         }
-
-        waitForStart()
-
-
-
-        //telemetry.addLine("Testing 1/3")
-        //telemetry.update()
-        //wheel_encoder.wheelEncoderSpin(360.0, 0.2)
-        //telemetry.addLine("Testing 2/3")
-        //telemetry.update()
-        //wheel_encoder.wheelEncoderSpin(360.0, -0.2)
-        //telemetry.addLine("Testing 3/3")
-        //telemetry.update()
-        wheel_encoder.wheelEncoderDirection(PI, 24.0, 0.2)
-        telemetry.update()
-        sleep(1000)
-
-
-
-
     }
 }
