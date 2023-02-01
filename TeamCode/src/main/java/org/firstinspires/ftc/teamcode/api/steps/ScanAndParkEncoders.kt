@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.api.steps
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline.Color
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.opencv
-import org.firstinspires.ftc.teamcode.api.plugins.wheels_ex
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.sequential.Step
 import kotlin.math.PI
@@ -20,6 +19,8 @@ private const val GRID_SIDE: Double = 24.0
  */
 class ScanAndPark : Step() {
     override val main = fun(ctx: Context) {
+        throw Exception("Attempted to use ScanAndPark step, which does not function properly")
+
         // OpenCV cone scanning //
 
         val pipeline = ConeScanPipeline()
@@ -36,15 +37,15 @@ class ScanAndPark : Step() {
 
         // Driving //
 
-        ctx.wheels_ex.driveEncoderDirection(LEFT, GRID_SIDE)
+        // ctx.wheels_ex.driveEncoderDirection(LEFT, GRID_SIDE)
         ctx.teleop.sleep(1000)
-        ctx.wheels_ex.driveEncoderDirection(FORWARD, 3.0 * GRID_SIDE)
+        // ctx.wheels_ex.driveEncoderDirection(FORWARD, 3.0 * GRID_SIDE)
         ctx.teleop.sleep(1000)
 
         when (color) {
             Color.Red -> {}
-            Color.Green -> ctx.wheels_ex.driveEncoderDirection(RIGHT, GRID_SIDE)
-            Color.Blue -> ctx.wheels_ex.driveEncoderDirection(RIGHT, 2.0 * GRID_SIDE)
+            Color.Green -> {} // ctx.wheels_ex.driveEncoderDirection(RIGHT, GRID_SIDE)
+            Color.Blue -> {} // ctx.wheels_ex.driveEncoderDirection(RIGHT, 2.0 * GRID_SIDE)
         }
     }
 }

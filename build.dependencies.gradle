@@ -8,6 +8,7 @@ repositories {
 }
 
 dependencies {
+    // FTC Libraries
     implementation 'org.firstinspires.ftc:Inspection:8.1.1'
     implementation 'org.firstinspires.ftc:Blocks:8.1.1'
     implementation 'org.firstinspires.ftc:Tfod:8.1.1'
@@ -16,8 +17,16 @@ dependencies {
     implementation 'org.firstinspires.ftc:OnBotJava:8.1.1'
     implementation 'org.firstinspires.ftc:Hardware:8.1.1'
     implementation 'org.firstinspires.ftc:FtcCommon:8.1.1'
-    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.2.0'
     implementation 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
-    implementation 'com.acmerobotics.dashboard:dashboard:0.4.6'
 
+    // FTC Associated Libraries
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.2.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+
+    // FTC Dashboard
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.8'
+
+    // Kotlinx Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 }
