@@ -42,10 +42,6 @@ object AutoClawConfig {
         private val wheel_encoder: WheelEncoders
             get() = wheel_encoder_store!!
 
-        private var wheelsExStore: WheelsEx? = null
-        private val wheelsEX: WheelsEx
-            get() = wheelsExStore!!
-
         override fun runOpMode() {
 
 
@@ -67,10 +63,6 @@ object AutoClawConfig {
             this.wheel_encoder._init(this.ctx!!)
             this.wheel_encoder.init()
 
-            this.wheelsExStore = WheelsEx()
-            this.wheelsEX._init(this.ctx!!)
-            this.wheelsEX.init()
-
             this.wheels.motor1!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             this.wheels.motor2!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             this.wheels.motor3!!.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
@@ -89,7 +81,7 @@ object AutoClawConfig {
 
             waitForStart()
 
-            this.wheelsEX.stopAndResetEncoders()
+            this.wheels.stopAndResetEncoders()
 
             sleep(2500)
 
@@ -102,7 +94,6 @@ object AutoClawConfig {
             sleep(750)
             wheel_encoder.wheelEncoderDirection(7 * PI / 4, 12.0, -0.1)
             linear_slides.setToPosition(0, 0.5)
-
 
 
         }

@@ -113,7 +113,7 @@ class WheelEncoders : Plugin() {
             wheelTwo = ctx.wheels.motor2
         }
 
-        ctx.wheels_ex.stopAndResetEncoders()
+        ctx.wheels.stopAndResetEncoders()
 
 
 
@@ -171,7 +171,7 @@ class WheelEncoders : Plugin() {
                 }
 
 
-            }; ctx.wheels_ex.stopAndResetEncoders()
+            }; ctx.wheels.stopAndResetEncoders()
 
 
     } else if (abs(power) != power) {
@@ -194,7 +194,7 @@ class WheelEncoders : Plugin() {
                 }
 
 
-            }; ctx.wheels_ex.stopAndResetEncoders()
+            }; ctx.wheels.stopAndResetEncoders()
         }
 
         }
