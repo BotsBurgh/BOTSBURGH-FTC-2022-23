@@ -101,7 +101,7 @@ class LinearSlides : Plugin() {
                 linearSlide1!!.power = power
             }
             stopSlide1()
-        } else if (linearSlide1!!.currentPosition >= tick){
+        } else if (linearSlide1!!.currentPosition >= tick) {
             while (linearSlide1!!.currentPosition >= tick) {
                 linearSlide1!!.power = -power
             }

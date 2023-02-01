@@ -95,7 +95,6 @@ object AutoClawConfig {
             wheel_encoder.wheelEncoderDirection(7 * PI / 4, 12.0, -0.1)
             linear_slides.setToPosition(0, 0.5)
 
-
         }
     }
 }
