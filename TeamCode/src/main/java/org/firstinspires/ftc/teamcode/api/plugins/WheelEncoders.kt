@@ -194,7 +194,7 @@ class WheelEncoders : Plugin() {
             while (wheelOne!!.currentPosition <= wheelFinalDistanceOne!! && ctx.teleop.opModeIsActive()) {
                 ctx.wheels.power(0.1)
             }
-            
+
             ctx.wheels.stop()
             ctx.teleop.sleep(1000)
         }
