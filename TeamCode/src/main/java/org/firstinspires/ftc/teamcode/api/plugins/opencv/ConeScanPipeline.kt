@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.api.plugins.opencv
 
 import com.acmerobotics.dashboard.config.Config
 import org.opencv.core.Mat
+import org.opencv.core.Rect
+import org.opencv.core.Scalar
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import org.openftc.easyopencv.OpenCvPipeline
@@ -22,10 +24,19 @@ private object ConeScanConfig {
      */
     @JvmField var IMAGE_OFFSET: Double = 0.0
 
-    @JvmField var BLUR_KERNEL_SIZE: Int = 2
+    /**
+     * Size of blur kernel, A.K.A. the amount of surrounding pixels a single pixel is allowed to
+     * sample.
+     */
+    @JvmField var BLUR_KERNEL_SIZE: Double = 2.0
+
+    @JvmField var IMAGE_X: Int = 0
+    @JvmField var IMAGE_Y: Int = 0
+    @JvmField var IMAGE_WIDTH: Int = 240
+    @JvmField var IMAGE_HEIGHT: Int = 320
 }
 
-class ConeScanPipeline(private val sampler: ColorSampler = defaultColorSample()) : OpenCvPipeline() {
+class ConeScanPipeline(private val sampler: ColorSamplers = ColorSamplers.RANDOM) : OpenCvPipeline() {
     enum class Color {
         Red,
         Green,
@@ -36,13 +47,22 @@ class ConeScanPipeline(private val sampler: ColorSampler = defaultColorSample())
         private set
 
     // Matrix phases
+    private var cropped = Mat()
     private var filtered = Mat()
+    private var blurred = Mat()
 
     override fun processFrame(input: Mat?): Mat {
         input!!.convertTo(filtered, -1, ConeScanConfig.IMAGE_MULTIPLIER, ConeScanConfig.IMAGE_OFFSET)
+        Imgproc.blur(filtered, blurred, Size(ConeScanConfig.BLUR_KERNEL_SIZE, ConeScanConfig.BLUR_KERNEL_SIZE))
 
-        output = sampler.sample(filtered)
+        cropped.release()
+        val croppedDimensions = Rect(ConeScanConfig.IMAGE_X, ConeScanConfig.IMAGE_Y, ConeScanConfig.IMAGE_WIDTH, ConeScanConfig.IMAGE_HEIGHT)
+        cropped = blurred.submat(croppedDimensions)
 
-        return filtered
+        output = sampler.sample(blurred)
+
+        Imgproc.rectangle(blurred, croppedDimensions, Scalar(0.0, 255.0, 0.0))
+
+        return blurred
     }
 }

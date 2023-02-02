@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.api.plugins.opencv
 
 import org.opencv.core.Mat
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline.Color
+import org.opencv.core.Point
+import org.opencv.core.Scalar
+import org.opencv.imgproc.Imgproc
 
 /**
  * An enum of color samplers.
@@ -34,8 +37,6 @@ enum class ColorSamplers {
     /**
      * Samples 15 random pixels in the image, and calculates the color based on the average of those
      * sampled colors.
-     *
-     * @throws NotImplementedError Does not work yet.
      */
     RANDOM {
         /**
@@ -52,6 +53,8 @@ enum class ColorSamplers {
                 val y = (0 until input.cols()).random()
 
                 samples.add(input.get(x, y))
+
+                Imgproc.drawMarker(input, Point(x.toDouble(), y.toDouble()), Scalar(0.0, 255.0, 0.0))
             }
 
             var rgb = arrayOf(0.0, 0.0, 0.0)

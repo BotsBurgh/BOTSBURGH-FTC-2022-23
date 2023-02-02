@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmode.autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import org.firstinspires.ftc.teamcode.api.plugins.logger.Logger
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.OpenCV
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.opencv
@@ -24,6 +25,8 @@ private class OpenCVTestRobot(teleop: LinearOpMode) : SequentialRobot(teleop) {
                     it.teleop.telemetry.addData("Status", "Streaming during Pre")
                     it.teleop.telemetry.addData("Color", pipeline.output)
                     it.teleop.telemetry.update()
+
+                    it.teleop.idle()
                 }
 
                 it.opencv.end()
