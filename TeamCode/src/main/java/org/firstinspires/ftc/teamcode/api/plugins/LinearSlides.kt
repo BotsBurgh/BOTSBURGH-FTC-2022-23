@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.Servo
+import org.firstinspires.ftc.teamcode.api.plugins.logger.logger
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.firstinspires.ftc.teamcode.arch.base.Plugin
 
@@ -52,6 +53,10 @@ class LinearSlides : Plugin() {
 
         // Reverse slide direction
         this.linearSlide1!!.direction = DcMotorSimple.Direction.REVERSE
+
+        ctx.logger.dataCollector.registerCallback("slide pos") {
+            this.linearSlide1!!.currentPosition.toString()
+        }
     }
 
     /**
