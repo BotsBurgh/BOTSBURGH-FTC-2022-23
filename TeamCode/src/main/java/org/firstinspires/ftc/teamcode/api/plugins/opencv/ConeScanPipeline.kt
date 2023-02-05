@@ -30,24 +30,29 @@ private object ConeScanConfig {
      */
     @JvmField var BLUR_KERNEL_SIZE: Double = 2.0
 
-    @JvmField var IMAGE_X: Int = 0
-    @JvmField var IMAGE_Y: Int = 0
-    @JvmField var IMAGE_WIDTH: Int = 240
-    @JvmField var IMAGE_HEIGHT: Int = 320
+    @JvmField var IMAGE_X: Int = 107
+    @JvmField var IMAGE_Y: Int = 125
+    @JvmField var IMAGE_WIDTH: Int = 40
+    @JvmField var IMAGE_HEIGHT: Int = 70
 }
 
 class ConeScanPipeline(private val sampler: ColorSamplers = ColorSamplers.RANDOM) : OpenCvPipeline() {
     enum class Color {
         Red,
+        Orange,
+        Yellow,
         Green,
         Blue,
+        Purple,
+        White,
+        Black,
+        Gray,
     }
 
     var output = Color.Green
         private set
 
     // Matrix phases
-    private var cropped = Mat()
     private var filtered = Mat()
     private var blurred = Mat()
 
@@ -55,13 +60,11 @@ class ConeScanPipeline(private val sampler: ColorSamplers = ColorSamplers.RANDOM
         input!!.convertTo(filtered, -1, ConeScanConfig.IMAGE_MULTIPLIER, ConeScanConfig.IMAGE_OFFSET)
         Imgproc.blur(filtered, blurred, Size(ConeScanConfig.BLUR_KERNEL_SIZE, ConeScanConfig.BLUR_KERNEL_SIZE))
 
-        cropped.release()
-        val croppedDimensions = Rect(ConeScanConfig.IMAGE_X, ConeScanConfig.IMAGE_Y, ConeScanConfig.IMAGE_WIDTH, ConeScanConfig.IMAGE_HEIGHT)
-        cropped = blurred.submat(croppedDimensions)
+        val size = Rect(ConeScanConfig.IMAGE_X, ConeScanConfig.IMAGE_Y, ConeScanConfig.IMAGE_WIDTH, ConeScanConfig.IMAGE_HEIGHT)
 
-        output = sampler.sample(blurred)
+        output = sampler.sample(blurred, size)
 
-        Imgproc.rectangle(blurred, croppedDimensions, Scalar(0.0, 255.0, 0.0))
+        Imgproc.rectangle(blurred, size, Scalar(0.0, 255.0, 0.0))
 
         return blurred
     }
