@@ -15,7 +15,7 @@ private object ConeScanConfig {
      *
      * `NEW_IMG = IMAGE_MULTIPLIER * IMG + IMAGE_OFFSET`
      */
-    @JvmField var IMAGE_MULTIPLIER: Double = 0.6
+    @JvmField var IMAGE_MULTIPLIER: Double = 1.5
 
     /**
      * The value to add against a pixel's color in order increase / decrease **brightness**.
@@ -28,22 +28,19 @@ private object ConeScanConfig {
      * Size of blur kernel, A.K.A. the amount of surrounding pixels a single pixel is allowed to
      * sample.
      */
-    @JvmField var BLUR_KERNEL_SIZE: Double = 2.0
+    @JvmField var BLUR_KERNEL_SIZE: Double = 8.0
 
-    @JvmField var IMAGE_X: Int = 107
-    @JvmField var IMAGE_Y: Int = 125
-    @JvmField var IMAGE_WIDTH: Int = 40
-    @JvmField var IMAGE_HEIGHT: Int = 70
+    @JvmField var IMAGE_X: Int = 114
+    @JvmField var IMAGE_Y: Int = 132
+    @JvmField var IMAGE_WIDTH: Int = 30
+    @JvmField var IMAGE_HEIGHT: Int = 63
 }
 
 class ConeScanPipeline(private val sampler: ColorSamplers = ColorSamplers.RANDOM) : OpenCvPipeline() {
     enum class Color {
         Red,
-        Orange,
-        Yellow,
         Green,
         Blue,
-        Purple,
         White,
         Black,
         Gray,
@@ -58,7 +55,8 @@ class ConeScanPipeline(private val sampler: ColorSamplers = ColorSamplers.RANDOM
 
     override fun processFrame(input: Mat?): Mat {
         input!!.convertTo(filtered, -1, ConeScanConfig.IMAGE_MULTIPLIER, ConeScanConfig.IMAGE_OFFSET)
-        Imgproc.blur(filtered, blurred, Size(ConeScanConfig.BLUR_KERNEL_SIZE, ConeScanConfig.BLUR_KERNEL_SIZE))
+        // Imgproc.blur(filtered, blurred, Size(ConeScanConfig.BLUR_KERNEL_SIZE, ConeScanConfig.BLUR_KERNEL_SIZE))
+        Imgproc.medianBlur(filtered, blurred, ConeScanConfig.BLUR_KERNEL_SIZE)
 
         val size = Rect(ConeScanConfig.IMAGE_X, ConeScanConfig.IMAGE_Y, ConeScanConfig.IMAGE_WIDTH, ConeScanConfig.IMAGE_HEIGHT)
 

@@ -27,13 +27,7 @@ enum class ColorSamplers {
             // Find the center pixel
             val pixel = input.get(input.rows() / 2, input.cols() / 2)
 
-            return if (pixel[0] >= pixel[1] && pixel[0] >= pixel[2]) {
-                Color.Red
-            } else if (pixel[1] >= pixel[0] && pixel[1] >= pixel[2]) {
-                Color.Green
-            } else {
-                Color.Blue
-            }
+            return detectColor(pixel[0].toInt(), pixel[1].toInt(), pixel[2].toInt())
         }
     },
 
@@ -57,7 +51,11 @@ enum class ColorSamplers {
 
                 samples.add(input.get(x, y))
 
-                Imgproc.drawMarker(input, Point(x.toDouble(), y.toDouble()), Scalar(255.0, 255.0, 0.0))
+                Imgproc.drawMarker(
+                    input,
+                    Point(x.toDouble(), y.toDouble()),
+                    Scalar(255.0, 255.0, 0.0)
+                )
             }
 
             var rgb = arrayOf(0.0, 0.0, 0.0)
@@ -72,7 +70,48 @@ enum class ColorSamplers {
             // Find the average from the sum of the colors
             rgb = arrayOf(rgb[0] / samples.size, rgb[1] / samples.size, rgb[2] / samples.size)
 
-            return detectColor(rgb[0].toInt(), rgb[1].toInt(), rgb[2].toInt()) ?: Color.Blue
+            return detectColor(rgb[0].toInt(), rgb[1].toInt(), rgb[2].toInt())
+        }
+    },
+
+    GRID {
+        private val widthSamples = 3
+        private val heightSamples = 3
+
+        override fun sample(input: Mat, size: Rect): Color {
+            val samples = emptyList<DoubleArray>().toMutableList()
+
+            val incrementWidth = size.width / (widthSamples + 1)
+            val incrementHeight = size.height / (heightSamples + 1)
+
+            repeat(widthSamples) {
+                repeat(heightSamples) {
+                    val point = Pair<Int, Int>(
+                        (widthSamples + 1) * incrementWidth,
+                        (heightSamples + 1) * incrementHeight,
+                    )
+
+                    samples.add(input.get(point.first, point.second))
+
+                    Imgproc.drawMarker(
+                        input,
+                        Point(point.first.toDouble(), point.second.toDouble()),
+                        Scalar(255.0, 255.0, 0.0)
+                    )
+                }
+            }
+
+            var rgb = arrayOf(0.0, 0.0, 0.0)
+
+            for (color in samples) {
+                rgb[0] += color[0]
+                rgb[1] += color[1]
+                rgb[2] += color[2]
+            }
+
+            rgb = arrayOf(rgb[0] / samples.size, rgb[1] / samples.size, rgb[2] / samples.size)
+
+            return detectColor(rgb[0].toInt(), rgb[1].toInt(), rgb[2].toInt())
         }
     };
 
@@ -107,21 +146,12 @@ private fun detectColor(r: Int, g: Int, b: Int): Color {
         return Color.Black
     }
 
-    if ((hsv[0] > 320) || (hsv[0] <= 20)) {
+    if ((hsv[0] > 40) && (hsv[0] <= 60)) {
         return Color.Red
-    } else if ((hsv[0] > 20) && (hsv[0] <= 46)) {
-        // Orange
-        return Color.Orange
-    } else if ((hsv[0] > 46) && (hsv[0] <= 64)) {
-        // Yellow
-        return Color.Yellow
-    } else if ((hsv[0] > 70) && (hsv[0] <= 100)) {
+    } else if ((hsv[0] > 70) && (hsv[0] <= 85)) {
         return Color.Green
-    } else if ((hsv[0] > 160) && (hsv[0] <= 248)) {
+    } else if ((hsv[0] > 75) && (hsv[0] <= 100)) {
         return Color.Blue
-    } else if ((hsv[0] > 248) && (hsv[0] <= 320)) {
-        // Purple
-        return Color.Purple
     }
 
     // No idea if nothing else worked
