@@ -90,11 +90,9 @@ object AutoClawConfig {
             linear_slides.setToPosition(1000, 0.5)
             wheel_encoder.moveDirection(PI, 34.0, 0.2)
             wheel_encoder.wheelEncoderSpin(70.0, 0.25)
-<<<<<<< Updated upstream
-            linear_slides.setToPosition(5000, 0.5)
-=======
+            linear_slides.setToPosition(5000, 0.0 )
             linear_slides.setToPosition(4500, 0.5)
->>>>>>> Stashed changes
+
             wheel_encoder.moveDirection(7 * PI / 4, 12.0, 0.1)
             linear_slides.claw1!!.position = CLAW_OPEN_POSITION
             sleep(750)
