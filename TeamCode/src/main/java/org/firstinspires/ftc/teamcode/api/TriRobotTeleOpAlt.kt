@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.api
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.firstinspires.ftc.teamcode.api.components.InitAfterRunTeleOp
-import org.firstinspires.ftc.teamcode.api.components.LinearSlidesTeleOp
-import org.firstinspires.ftc.teamcode.api.components.LoggerTeleOp
-import org.firstinspires.ftc.teamcode.api.components.WheelsTeleOp
+import org.firstinspires.ftc.teamcode.api.components.*
 import org.firstinspires.ftc.teamcode.api.plugins.LinearSlides
 import org.firstinspires.ftc.teamcode.api.plugins.Wheels
 import org.firstinspires.ftc.teamcode.api.plugins.logger.Logger
@@ -19,14 +16,14 @@ import java.io.FileWriter
  *
  * All components are registered below in [configure].
  */
-class TriRobotTeleOp(teleop: LinearOpMode) : RunloopRobot(teleop) {
+class TriRobotTeleOpAlt(teleop: LinearOpMode) : RunloopRobot(teleop) {
     override fun configure(builder: RunloopRuntimeBuilder) {
         builder
 
             // Teleop components
             .registerComponent(InitAfterRunTeleOp())
             .registerComponent(WheelsTeleOp())
-            .registerComponent(LinearSlidesTeleOp())
+            .registerComponent(LinearSlidesTeleOpOneControl())
             .registerComponent(LoggerTeleOp())
 
             // Plugins

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.teamcode.api.components.CLAW_CLOSE_POSITION
 import org.firstinspires.ftc.teamcode.api.components.CLAW_OPEN_POSITION
 import org.firstinspires.ftc.teamcode.api.plugins.*
+import org.firstinspires.ftc.teamcode.api.plugins.logger.Logger
 import org.firstinspires.ftc.teamcode.api.plugins.opencv.ConeScanPipeline
 import org.firstinspires.ftc.teamcode.arch.base.Context
 import org.openftc.easyopencv.OpenCvCameraFactory
@@ -25,6 +26,10 @@ object AutoClawConfig {
     class EncoderTest : LinearOpMode() {
         private var ctx: Context? = null
 
+        private  var loggerStore: Logger? = null
+        private  val logger: Logger
+            get() = loggerStore!!
+
         private var wheelsStore: Wheels? = null
         private val wheels: Wheels
             get() = wheelsStore!!
@@ -34,9 +39,6 @@ object AutoClawConfig {
         private val linear_slides: LinearSlides
             get() = linear_slides_store!!
 
-        private var distance_sensor_store: DistanceSensors? = null
-        private val distance_sensor: DistanceSensors
-            get() = distance_sensor_store!!
 
         private var wheel_encoder_store: WheelEncoders? = null
         private val wheel_encoder: WheelEncoders
@@ -47,6 +49,10 @@ object AutoClawConfig {
 
             this.ctx = Context(this)
 
+            this.loggerStore = Logger()
+            this.logger._init(this.ctx!!)
+            this.logger.init()
+
             this.wheelsStore = Wheels()
             this.wheels._init(this.ctx!!)
             this.wheels.init()
@@ -54,10 +60,6 @@ object AutoClawConfig {
             this.linear_slides_store = LinearSlides()
             this.linear_slides._init(this.ctx!!)
             this.linear_slides.init()
-
-            this.distance_sensor_store = DistanceSensors()
-            this.distance_sensor._init(this.ctx!!)
-            this.distance_sensor.init()
 
             this.wheel_encoder_store = WheelEncoders()
             this.wheel_encoder._init(this.ctx!!)
@@ -88,7 +90,11 @@ object AutoClawConfig {
             linear_slides.setToPosition(1000, 0.5)
             wheel_encoder.moveDirection(PI, 34.0, 0.2)
             wheel_encoder.wheelEncoderSpin(70.0, 0.25)
+<<<<<<< Updated upstream
             linear_slides.setToPosition(5000, 0.5)
+=======
+            linear_slides.setToPosition(4500, 0.5)
+>>>>>>> Stashed changes
             wheel_encoder.moveDirection(7 * PI / 4, 12.0, 0.1)
             linear_slides.claw1!!.position = CLAW_OPEN_POSITION
             sleep(750)
